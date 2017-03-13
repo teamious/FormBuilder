@@ -1,0 +1,11 @@
+{
+  "name": "form-fe",
+  "version": "1.0.0",
+  "dependencies": {
+    "tscr": "^1.0.10"
+  },
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack-dev-server"
+  }
+}

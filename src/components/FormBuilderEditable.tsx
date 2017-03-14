@@ -13,6 +13,8 @@ interface IProps {
 interface IState {
 }
 
+// FormBuilderEditable is a wrapper component that will wrap a field and display controls
+// for editing and deleting a field.
 export default class FormBuilderEditable extends React.Component<IProps, IState> {
     constructor() {
         super();
@@ -30,7 +32,7 @@ export default class FormBuilderEditable extends React.Component<IProps, IState>
 
     render() {
         const editButtonText = this.props.editButtonText || 'Edit';
-        const deleteButtonText = this.props.deleteButtonText || 'Edit';
+        const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
             <div>
                 <button type='button' onClick={this.onEdit}>

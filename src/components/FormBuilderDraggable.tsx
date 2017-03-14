@@ -13,6 +13,9 @@ interface IDNDProps {
     connectDragSource: ConnectDragSource;
 }
 
+// FormBuilderField wraps a field in a draggable DOM node. When the user starts
+// dragging this field, it will send the index and field to the drag and drop context
+// that can be consumed by a drop target.
 class FormBuilderField extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const {connectDragSource} = this.props;

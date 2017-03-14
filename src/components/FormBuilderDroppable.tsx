@@ -16,6 +16,11 @@ interface IDNDProps {
     connectDropTarget: ConnectDropTarget;
 }
 
+// FormBuilderDroppable provides a droppable container that can be used to wrap a field.
+// When a field is dropped into the component, it will call the onDrop method and pass
+// the field and index of the source field as well as the current field.
+// Since the FormBuilder inserts at the index, an insertion line is displayed
+// at the top of the droppable space (or above the field).
 class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const {connectDropTarget} = this.props;

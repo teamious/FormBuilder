@@ -52,6 +52,9 @@ interface IDNDProps {
     connectDropTarget: ConnectDropTarget;
 }
 
+// FormBuilder expects a list of field definitions and will wrap each field definition
+// in utility components for editing, dragging, and dropping. The FormBuilder uses
+// a registry to determine which class is responsible for rendering the field type.
 class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
     constructor(props: IProps) {
         super(props)
@@ -62,16 +65,45 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
         this.state = {};
     }
 
+    // onEditField is called when the user wants to edit a field.
+    // If the `onBeforeEditField` hook is provided, it will be used
+    // to determine if the field can be edited.
     private onEditField(field: data.IField) {
+        const hook = this.props.onBeforeEditField;
+        if (hook && hook(field)) {
+            this.props.onEditField(field);
+            return
+        }
         this.props.onEditField(field);
     }
 
+    // onDeleteField is called when the user wants to delete a field.
+    // If the `onBeforeDeleteField` hook is provided, it will be used
+    // to determine if the field can be deleted.
     private onDeleteField(index: number) {
         let fields = this.props.fields.concat([]);
+        const field = this.props.fields[index];
+        const hook = this.props.onBeforeDeleteField;
+        if (hook && hook(field)) {
+            fields.splice(index, 1);
+            this.props.onDeleteField(fields);
+            return
+        }
         fields.splice(index, 1);
         this.props.onDeleteField(fields);
     }
 
+    // onDrop is called whenever a field is dropped on a <Droppable> component.
+    // The field being dropped can come from one of two places:
+    //      1. The FieldSelector component
+    //      2. A <Draggable/> component being reordered.
+    // target and source both contain the index and the IField of the field
+    // being dragged, and the field being dropped on.
+    // If a field is being dragged from <FieldSelector> then it will not have an index
+    // and should simply be inserted.
+    // If the source field comes from a <Draggable> component then it must
+    // go through removal and insertion. Removal and insertion depend
+    // on the source index to keep the integrity of the target index.
     private onDrop(target: data.IDropTargetItem, source: data.IDragSourceItem) {
         if (target.index === source.index) {
             return;
@@ -89,13 +121,16 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
         this.props.onChange(fields);
     }
 
+    // renderField takes the field.type to be rendered and looks up the
+    // appropriate component class in the registry that can render the component.
+    // The rendered component is passed the field as a prop.
     private renderField(field: data.IField, index: number) {
         const componentClass = this.props.registry[field.type];
         if (!componentClass) {
             console.warn('Component not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(componentClass, field);
+        const component = React.createElement(componentClass, {field});
 
         return (
             <Editable
@@ -120,6 +155,9 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
         )
     }
 
+    // render displays a list of fields that have been wrapped in components for
+    // providing editing, dragging, and dropping functionality. At the end of the list
+    // is a <Droppable> field.
     render() {
         const {connectDropTarget} = this.props;
         return connectDropTarget(
@@ -134,11 +172,18 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
 }
 
 const spec: DropTargetSpec<IProps> = {
+    // drop is called when a field is dropped into the FormBuilder. This should only be called
+    // when no fields are present.
     drop(props, monitor) {
         const item: data.IDragSourceItem = monitor.getItem() as any;
         props.onChange([item.field]);
     },
 
+    // The FormBuilder itself is a valid drop area but only while no fields
+    // are present so that the first field can be dropped into it.
+    //
+    // TODO(andrews): I think we can remove this so long as a <Droppable/> component
+    // is dislayed at the end of the list.
     canDrop(props): boolean {
         return props.fields.length == 0;
     }

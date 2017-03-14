@@ -14,6 +14,9 @@ interface IDNDProps {
     connectDragSource: ConnectDragSource;
 }
 
+// FieldSelectorOption displays an option that can be drag and dropped into the FormBuilder.
+// When an option is dragged, it will send the field and index (always null) of the option
+// to the drag an drop context.
 class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const {connectDragSource, field} = this.props;

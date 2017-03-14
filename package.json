@@ -2,6 +2,10 @@
   "name": "form-fe",
   "version": "1.0.0",
   "dependencies": {
+    "@types/react-dnd": "^2.0.32",
+    "@types/react-dnd-html5-backend": "^2.1.7",
+    "react-dnd": "^2.2.4",
+    "react-dnd-html5-backend": "^2.2.4",
     "tscr": "^1.0.10"
   },
   "scripts": {

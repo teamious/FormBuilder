@@ -1,6 +1,6 @@
 # ReactJS open-source Spreadsheets and Data grids
 
-## Minimum requirements
+## Some requirements
 1. Should be a table/list/spreadsheet
 2. Nested headers
 3. Fixed bottom row
@@ -19,8 +19,8 @@
         1. Managed by Jingoal.
         2. Nested headers.
     - Cons:
-        2. Does not support lazy loading.
-        3. Does not support virtual rendering.
+        1. Does not support lazy loading.
+        2. Does not support virtual rendering.
 
 2. handsontable
     - Stars: 7678
@@ -45,3 +45,5 @@
         2. Nested headers
     - Cons: 
         1. The original repo is no longer maintained
+
+5. table based on d3.js

@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
+import OrderedListInput from './Controls/OrderedListInput';
 
 const options: data.IField[] = [
     {
@@ -25,6 +26,8 @@ const options: data.IField[] = [
         }
     }
 ];
+
+const testOpts = ['string', 'int', 'boolean'];
 
 interface IProps {
 }
@@ -65,6 +68,7 @@ class App extends React.Component<IProps, IState> {
     render() {
         return (
             <div>
+                <OrderedListInput options={testOpts} />
                 <FieldSelector
                     fields={options}
                 />

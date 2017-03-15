@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
+import SingleSelector from './Fields/SingleSelector';
 
 const options: data.IField[] = [
     {
@@ -16,6 +17,13 @@ const options: data.IField[] = [
         label: 'Long text area',
         type: 'LongText',
     },
+    {
+        label: 'Single selector',
+        type: 'SingleSelector',
+        options: {
+            selectOpts: ['a', 'b', 'c']
+        }
+    }
 ];
 
 interface IProps {
@@ -28,14 +36,15 @@ interface IState {
 const registry = {
     ShortText,
     LongText,
+    SingleSelector
 };
 
 class App extends React.Component<IProps, IState> {
     constructor() {
         super()
-        this.onChangeFields =  this.onChangeFields.bind(this);
-        this.onEditField =  this.onEditField.bind(this);
-        this.onDeleteField =  this.onDeleteField.bind(this);
+        this.onChangeFields = this.onChangeFields.bind(this);
+        this.onEditField = this.onEditField.bind(this);
+        this.onDeleteField = this.onDeleteField.bind(this);
         this.state = {
             fields: [],
         }
@@ -46,11 +55,11 @@ class App extends React.Component<IProps, IState> {
     }
 
     private onDeleteField(fields: data.IField[]) {
-        this.setState({fields} as IState);
+        this.setState({ fields } as IState);
     }
 
     private onChangeFields(fields: data.IField[]) {
-        this.setState({fields} as IState);
+        this.setState({ fields } as IState);
     }
 
     render() {

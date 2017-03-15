@@ -11,6 +11,8 @@ export interface IDropTargetItem {
 export interface IField {
     label: string;
     type: string;
+    hint?: string;
+    options?: any;
 }
 export const FORM_BUILDER_FIELD = 'FORM_BUILDER_FIELD'
 export const FIELD_SELECTOR_FIELD = 'FIELD_SELECTOR_FIELD';

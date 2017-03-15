@@ -7,7 +7,7 @@ import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
-import SingleLineTextField from './SingleLineTextField';
+import SingleLineTextField from './Fields/SingleLineTextField';
 
 const options: data.IField[] = [
     {

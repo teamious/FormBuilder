@@ -1,19 +1,16 @@
 import * as React from 'react';
 
 interface IState {
-    options: Array<string>;
 }
 
 interface IProps {
     options: Array<string>;
+    optionsChanged: (options: Array<string>) => void;
 }
 
 export default class OrderedListInput extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = {
-            options: this.props.options
-        };
 
         this.createOpt = this.createOpt.bind(this);
         this.deleteOpt = this.deleteOpt.bind(this);
@@ -24,7 +21,7 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
 
     public render() {
         console.log('OrderedListInput render')
-        const opts = this.state.options;
+        const opts = this.props.options;
         return (<div>
             {opts.map((opt, index) =>
                 <OrderedItemInput key={index} index={index} optValue={opt} moveUp={this.moveUpOpt} moveDown={this.moveDownOpt} delete={this.deleteOpt} valueChange={this.optValueChange} />)}
@@ -33,14 +30,14 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
     }
 
     private createOpt() {
-        let options = this.state.options.concat(['']);
-        this.setState({ options: options });
+        let options = this.props.options.concat(['']);
+        this.props.optionsChanged(options);
     }
 
     private deleteOpt(index: number) {
-        let options = this.state.options.splice(0)
+        let options = this.props.options.splice(0)
         options.splice(index, 1);
-        this.setState({ options: options });
+        this.props.optionsChanged(options);
     }
 
     private moveUpOpt(index: number) {
@@ -48,25 +45,25 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
             return;
         }
 
-        let options = this.state.options.splice(0);
+        let options = this.props.options.splice(0);
         this.swap(options, index, index - 1);
-        this.setState({ options: options });
+        this.props.optionsChanged(options);
     }
 
     private moveDownOpt(index: number) {
-        if (index === this.state.options.length - 1) {
+        if (index === this.props.options.length - 1) {
             return;
         }
 
-        let options = this.state.options.splice(0);
+        let options = this.props.options.splice(0);
         this.swap(options, index, index + 1);
-        this.setState({ options: options });
+        this.props.optionsChanged(options);
     }
 
     private optValueChange(index: number, optValue: string) {
-        let options = this.state.options.splice(0);
+        let options = this.props.options.splice(0);
         options[index] = optValue;
-        this.setState({ options: options });
+        this.props.optionsChanged(options);
     }
 
     private swap(arr: Array<string>, index1: number, index2: number) {

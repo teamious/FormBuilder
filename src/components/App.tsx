@@ -27,13 +27,12 @@ const options: data.IField[] = [
     }
 ];
 
-const testOpts = ['string', 'int', 'boolean'];
-
 interface IProps {
 }
 
 interface IState {
     fields: data.IField[],
+    options: Array<string>,
 }
 
 const registry = {
@@ -48,9 +47,11 @@ class App extends React.Component<IProps, IState> {
         this.onChangeFields = this.onChangeFields.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
+        this.onOptionsChanged = this.onOptionsChanged.bind(this);
         this.state = {
             fields: [],
-        }
+            options: ['string', 'int', 'boolean'],
+        };
     }
 
     private onEditField(field: data.IField) {
@@ -65,10 +66,14 @@ class App extends React.Component<IProps, IState> {
         this.setState({ fields } as IState);
     }
 
+    private onOptionsChanged(options: Array<string>) {
+        this.setState({ options: options } as IState)
+    }
+
     render() {
         return (
             <div>
-                <OrderedListInput options={testOpts} />
+                <OrderedListInput options={this.state.options} optionsChanged={this.onOptionsChanged} />
                 <FieldSelector
                     fields={options}
                 />

@@ -9,7 +9,7 @@ interface IState {
 
 interface IProps { }
 
-export default class ShortText extends React.Component<IProps, IState> {
+export default class SingleLineTextField extends React.Component<IProps, IState> {
     constructor() {
         super();
         this.state = {
@@ -23,6 +23,7 @@ export default class ShortText extends React.Component<IProps, IState> {
         this.requiredOnChange = this.requiredOnChange.bind(this);
         this.allowDuplicatesOnChange = this.allowDuplicatesOnChange.bind(this);
     }
+    
     render() {
         return (
             <div>

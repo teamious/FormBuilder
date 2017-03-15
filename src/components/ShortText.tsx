@@ -4,7 +4,7 @@ interface IState {}
 
 interface IProps {}
 
-export default class SingleLineTextField extends React.Component<IProps, IState> {
+export default class ShortText extends React.Component<IProps, IState> {
     render() {
         return <input/>
     }

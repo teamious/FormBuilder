@@ -18,6 +18,10 @@ export default class ShortText extends React.Component<IProps, IState> {
             required: false,
             allowDuplicates: true,
         }
+        this.labelOnChange = this.labelOnChange.bind(this);
+        this.hitOnChange = this.hitOnChange.bind(this);
+        this.requiredOnChange = this.requiredOnChange.bind(this);
+        this.allowDuplicatesOnChange = this.allowDuplicatesOnChange.bind(this);
     }
     render() {
         return (

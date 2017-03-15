@@ -6,6 +6,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
+import SingleLineTextField from './SingleLineTextField';
 
 const options: data.IField[] = [
     {
@@ -16,6 +17,10 @@ const options: data.IField[] = [
         label: 'Long text area',
         type: 'LongText',
     },
+    {
+        label: 'Single Line Text Field',
+        type: 'SingleLineTextField',
+    }
 ];
 
 interface IProps {
@@ -28,6 +33,7 @@ interface IState {
 const registry = {
     ShortText,
     LongText,
+    SingleLineTextField,
 };
 
 class App extends React.Component<IProps, IState> {

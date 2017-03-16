@@ -6,7 +6,7 @@ interface IState {
 
 interface IProps {
     field: IField;
-    textFieldValue: string,
+    textFieldValue: string;
     textFieldOnChange: (newValue: string) => void;
 }
 

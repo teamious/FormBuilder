@@ -1,3 +1,5 @@
+import { IOptionEditorProps } from './components/Fields/AbstractOptionEditor'
+
 export interface IDragSourceItem {
     index: number;
     field: IField;
@@ -17,7 +19,7 @@ export interface IField {
 
 // FieldRegistry maps field types to the class responsible for rendering the field and the class responsible for editing the field.
 export interface FieldRegistry {
-    [key:string]: {render: React.ComponentClass<any>, editor?: React.ComponentClass<any>};
+    [key: string]: { render: React.ComponentClass<any>, editor?: React.ComponentClass<IOptionEditorProps> };
 }
 
 export const FORM_BUILDER_FIELD = 'FORM_BUILDER_FIELD'

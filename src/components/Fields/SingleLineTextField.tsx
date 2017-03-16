@@ -22,7 +22,7 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
         return (
             <div>
                 <label>{label}</label><br />
-                <input type='text' placeholder={hint} value={this.state.textFieldValue} onChange={this.textFieldOnChange} required={required}/>
+                <input type='text' placeholder={hint} required={required} value={this.state.textFieldValue} onChange={this.textFieldOnChange}/>
             </div>
         );
     }

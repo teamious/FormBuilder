@@ -33,7 +33,7 @@ const options: data.IField[] = [
             label: 'Name',
             hint: 'Please enter your name',
             required: true,
-            allowDuplicates: true,
+            allowMutiple: true,
         }
     }
 ];

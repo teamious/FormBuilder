@@ -2,32 +2,31 @@ import * as React from 'react';
 import { IField } from '../../data'
 
 interface IState {
-    textFieldValue: string,
 }
 
 interface IProps {
     field: IField;
+    textFieldValue: string,
+    textFieldOnChange: (newValue: string) => void;
 }
 
 export default class SingleLineTextField extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.state = {
-            textFieldValue: '',
-        };
+        this.textFieldOnChange = this.textFieldOnChange.bind(this);
     }
 
     public render() {
-        const { label, hint, required } = this.props.field.options ? this.props.field.options : null;
+        const { label, hint, required, allowMutiple } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
                 <label>{label}</label><br />
-                <input type='text' placeholder={hint} required={required} value={this.state.textFieldValue} onChange={this.textFieldOnChange}/>
+                <input type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.textFieldOnChange}/>
             </div>
         );
     }
 
     private textFieldOnChange(event: any) {
-        this.setState({ textFieldValue: event.target.value } as IState);
+        this.props.textFieldOnChange(event.target.value);
     }
 }

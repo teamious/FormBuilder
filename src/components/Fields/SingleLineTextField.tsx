@@ -20,10 +20,8 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
         const { label, hint, required, unique } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
-                <div>
-                    {label}
-                </div>
-                <input type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.textFieldOnChange}/>
+                <span>{label}</span><br />
+                <input type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.textFieldOnChange} />
             </div>
         );
     }

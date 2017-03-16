@@ -7,8 +7,10 @@ import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
+import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './Fields/SingleLineTextField';
 import OrderedListInput from './Controls/OrderedListInput';
+import FieldOptionEditor from './FieldOptionEditor'
 
 const options: data.IField[] = [
     {
@@ -43,13 +45,13 @@ interface IProps {
 
 interface IState {
     fields: data.IField[],
-    options: Array<string>,
+    selectedField: data.IField,
 }
 
-const registry = {
-    ShortText,
-    LongText,
-    SingleSelector,
+const registry: data.FieldRegistry = {
+    'ShortText': { render: ShortText },
+    'LongText': { render: LongText },
+    'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
     SingleLineTextField,
 };
 
@@ -59,15 +61,15 @@ class App extends React.Component<IProps, IState> {
         this.onChangeFields = this.onChangeFields.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
-        this.onOptionsChanged = this.onOptionsChanged.bind(this);
+        this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.state = {
             fields: [],
-            options: ['string', 'int', 'boolean'],
+            selectedField: null,
         };
     }
 
     private onEditField(field: data.IField) {
-        alert('editing field ' + field.type);
+        this.setState({ selectedField: field } as IState);
     }
 
     private onDeleteField(fields: data.IField[]) {
@@ -78,14 +80,16 @@ class App extends React.Component<IProps, IState> {
         this.setState({ fields } as IState);
     }
 
-    private onOptionsChanged(options: Array<string>) {
-        this.setState({ options: options } as IState)
+    private onFieldOptionChanged(field: data.IField) {
+        const index = this.state.fields.indexOf(this.state.selectedField);
+        const fields = this.state.fields.slice();
+        fields[index] = field;
+        this.setState({ selectedField: field, fields } as IState);
     }
 
     render() {
         return (
             <div>
-                <OrderedListInput options={this.state.options} optionsChanged={this.onOptionsChanged} />
                 <FieldSelector
                     fields={options}
                 />
@@ -96,6 +100,12 @@ class App extends React.Component<IProps, IState> {
                     onChange={this.onChangeFields}
                     registry={registry}
                     fields={this.state.fields}
+                />
+
+                <FieldOptionEditor
+                    registry={registry}
+                    field={this.state.selectedField}
+                    onChange={this.onFieldOptionChanged}
                 />
             </div>
         );

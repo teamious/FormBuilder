@@ -21,6 +21,7 @@ export default class MultiLineTextField extends React.PureComponent<IProps, ISta
         this.state = {
             textFieldValue: '',
         };
+        this.textFieldOnChange = this.textFieldOnChange.bind(this);
     }
 
     public render() {

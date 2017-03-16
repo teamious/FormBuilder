@@ -1,17 +1,13 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 
-import { IField } from '../../data'
-import OrderedListInput from '../Controls/OrderedListInput'
+import { IField } from '../../data';
+import { AbstractOptionEditor, IOptionEditorProps} from './AbstractOptionEditor';
+import OrderedListInput from '../Controls/OrderedListInput';
 
 interface IState { }
 
-interface IProps {
-    field: IField;
-    onChange: (field: IField) => void;
-}
-
-export default class SingleSelectorOptionEditor extends React.PureComponent<IProps, IState> {
+export default class SingleSelectorOptionEditor extends AbstractOptionEditor<IOptionEditorProps, IState> {
     constructor() {
         super();
         this.onLabelChange = this.onLabelChange.bind(this);

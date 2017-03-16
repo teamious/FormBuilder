@@ -6,20 +6,18 @@ interface IProps {
     fields: data.IField[];
 }
 
-interface IState {}
+interface IState { }
 
-export default class FieldSelector extends React.Component<IProps, IState> {
+export default class FieldSelector extends React.PureComponent<IProps, IState> {
     constructor() {
         super()
-        this.renderOption = this.renderOption.bind(this);
-    }
-
-    renderOption(field: data.IField) {
-        return <FieldSelectorOption field={field}/>
     }
 
     render() {
-        const options = this.props.fields.map(this.renderOption);
+        const options = this.props.fields.map(
+            (field: data.IField, index: number) => <FieldSelectorOption field={field} key={index} />
+        );
+
         return (
             <div>
                 {options}

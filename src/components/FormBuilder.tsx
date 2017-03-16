@@ -5,11 +5,6 @@ import {default as Draggable} from './FormBuilderDraggable';
 import {default as Editable} from './FormBuilderEditable';
 import {default as Droppable} from './FormBuilderDroppable';
 
-// IRegistry maps field types to the class responsible for rendering the field.
-interface IRegistry {
-    [key:string]: React.ComponentClass<any>;
-}
-
 interface IProps {
     fields: data.IField[];
 
@@ -19,7 +14,7 @@ interface IProps {
 
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
-    registry: IRegistry;
+    registry: data.FieldRegistry;
 
     // onEditField is called whenever the user
     onEditField: (field: data.IField) => void;
@@ -125,12 +120,12 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
     private renderField(field: data.IField, index: number) {
-        const componentClass = this.props.registry[field.type];
-        if (!componentClass) {
-            console.warn('Component not registered: ' + field.type);
+        const fieldDef = this.props.registry[field.type];
+        if (!fieldDef || !fieldDef.render) {
+            console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(componentClass, {field});
+        const component = React.createElement(fieldDef.render, {field});
 
         return (
             <Editable

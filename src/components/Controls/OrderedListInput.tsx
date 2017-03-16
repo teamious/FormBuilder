@@ -20,7 +20,6 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
     }
 
     public render() {
-        console.log('OrderedListInput render')
         const opts = this.props.options;
         return (<div>
             {opts.map((opt, index) =>
@@ -35,7 +34,7 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
     }
 
     private deleteOpt(index: number) {
-        let options = this.props.options.splice(0)
+        let options = this.props.options.slice()
         options.splice(index, 1);
         this.props.optionsChanged(options);
     }
@@ -45,7 +44,7 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
             return;
         }
 
-        let options = this.props.options.splice(0);
+        let options = this.props.options.slice();
         this.swap(options, index, index - 1);
         this.props.optionsChanged(options);
     }
@@ -55,13 +54,13 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
             return;
         }
 
-        let options = this.props.options.splice(0);
+        let options = this.props.options.slice();
         this.swap(options, index, index + 1);
         this.props.optionsChanged(options);
     }
 
     private optValueChange(index: number, optValue: string) {
-        let options = this.props.options.splice(0);
+        let options = this.props.options.slice();
         options[index] = optValue;
         this.props.optionsChanged(options);
     }

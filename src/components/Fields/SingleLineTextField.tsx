@@ -6,14 +6,14 @@ interface IState {
 
 interface IProps {
     field: IField;
-    textFieldValue: string,
-    textFieldOnChange: (newValue: string) => void;
+    value: string,
+    onChange: (newValue: string) => void;
 }
 
 export default class SingleLineTextField extends React.PureComponent<IProps, IState> {
     constructor(props: IProps) {
         super(props);
-        this.textFieldOnChange = this.textFieldOnChange.bind(this);
+        this.onChange = this.onChange.bind(this);
     }
 
     public render() {
@@ -21,12 +21,12 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
         return (
             <div>
                 <label>{label}</label><br />
-                <input type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.textFieldOnChange}/>
+                <input type='text' placeholder={hint} required={required} value={this.props.value} onChange={this.onChange}/>
             </div>
         );
     }
 
-    private textFieldOnChange(event: any) {
-        this.props.textFieldOnChange(event.target.value);
+    private onChange(event: any) {
+        this.props.onChange(event.target.value);
     }
 }

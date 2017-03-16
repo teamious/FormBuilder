@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
+import MultiLineTextField from './Fields/MultiLineTextField';
 import OrderedListInput from './Controls/OrderedListInput';
 
 const options: data.IField[] = [
@@ -24,6 +25,15 @@ const options: data.IField[] = [
         options: {
             selectOpts: ['a', 'b', 'c']
         }
+    },
+    {
+        label: 'Multiple lines text field',
+        type: 'MultiLineTextField',
+        options: {
+            label: 'Personal information',
+            hint: 'Please introduce yourself',
+            required: false,
+        }
     }
 ];
 
@@ -38,7 +48,8 @@ interface IState {
 const registry = {
     ShortText,
     LongText,
-    SingleSelector
+    SingleSelector,
+    MultiLineTextField,
 };
 
 class App extends React.Component<IProps, IState> {

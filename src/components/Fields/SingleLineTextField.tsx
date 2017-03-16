@@ -17,7 +17,7 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
     }
 
     public render() {
-        const { label, hint, required, allowMutiple } = this.props.field.options ? this.props.field.options : null;
+        const { label, hint, required, unique } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
                 <label>{label}</label><br />

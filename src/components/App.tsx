@@ -35,7 +35,7 @@ const options: data.IField[] = [
             label: 'Name',
             hint: 'Please enter your name',
             required: true,
-            allowMutiple: true,
+            unique: true,
         }
     }
 ];
@@ -52,7 +52,7 @@ const registry: data.FieldRegistry = {
     'ShortText': { render: ShortText },
     'LongText': { render: LongText },
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
-    SingleLineTextField,
+    'SingleLineTextField': { render: SingleLineTextField },
 };
 
 class App extends React.Component<IProps, IState> {

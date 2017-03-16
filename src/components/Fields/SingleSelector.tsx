@@ -7,7 +7,7 @@ interface IProps {
     field: IField;
 }
 
-export default class SingleSelector extends React.Component<IProps, IState> {
+export default class SingleSelector extends React.PureComponent<IProps, IState> {
     render() {
         const selectOpts = this.props.field.options ? this.props.field.options.selectOpts : null;
         return (<select>

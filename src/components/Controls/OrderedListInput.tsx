@@ -20,7 +20,6 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
     }
 
     public render() {
-        console.log('OrderedListInput render')
         const opts = this.props.options;
         return (<div>
             {opts.map((opt, index) =>

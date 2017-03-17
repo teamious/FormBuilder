@@ -72,10 +72,14 @@ class App extends React.Component<IProps, IState> {
         const index = this.state.fields.indexOf(this.state.selectedField);
         const fields = this.state.fields.slice();
         fields[index] = field;
+
+        console.log(index, field, fields);
         this.setState({ selectedField: field, fields } as IState);
     }
 
     render() {
+        const form = JSON.stringify(this.state.fields);
+
         return (
             <div>
                 <FieldSelector
@@ -95,6 +99,11 @@ class App extends React.Component<IProps, IState> {
                     field={this.state.selectedField}
                     onChange={this.onFieldOptionChanged}
                 />
+
+                <div>
+                    <div>Debug: Form definitions</div>
+                    <textarea style={{width: 500}} readOnly value={form} />
+                </div>
             </div>
         );
     }

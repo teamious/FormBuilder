@@ -103,15 +103,22 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
         if (target.index === source.index) {
             return;
         }
+
+        let sourceField = source.field;
+        if (!source.index) {
+            // NOTE: If source is from the FieldSelector, we should create a clone field.
+            sourceField = JSON.parse(JSON.stringify(sourceField));
+        }
+
         let fields = this.props.fields.concat([]);
         if (source.index == null) {
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
         } else if (source.index < target.index) {
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
             fields.splice(source.index, 1);
         } else {
             fields.splice(source.index, 1);
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
         }
         this.props.onChange(fields);
     }

@@ -1,17 +1,12 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 
-import { IField } from '../../data'
-import OrderedListInput from '../Controls/OrderedListInput'
+import { IFieldOptionEditorProps } from '../../data';
+import OrderedListInput from '../Controls/OrderedListInput';
 
 interface IState { }
 
-interface IProps {
-    field: IField;
-    onChange: (field: IField) => void;
-}
-
-export default class SingleSelectorOptionEditor extends React.PureComponent<IProps, IState> {
+export default class SingleSelectorOptionEditor extends React.PureComponent<IFieldOptionEditorProps, IState> {
     constructor() {
         super();
         this.onLabelChange = this.onLabelChange.bind(this);
@@ -20,7 +15,6 @@ export default class SingleSelectorOptionEditor extends React.PureComponent<IPro
 
     render() {
         const { label, options } = this.props.field;
-        console.log(this.props.field);
         return (
             <div>
                 <div><span>Label</span><input type='string' value={label} onChange={this.onLabelChange} /></div>

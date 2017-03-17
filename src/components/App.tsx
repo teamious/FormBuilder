@@ -9,6 +9,7 @@ import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './Fields/SingleLineTextField';
+import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
 import OrderedListInput from './Controls/OrderedListInput';
 import FieldOptionEditor from './FieldOptionEditor'
 
@@ -52,7 +53,7 @@ const registry: data.FieldRegistry = {
     'ShortText': { render: ShortText },
     'LongText': { render: LongText },
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
-    'SingleLineTextField': { render: SingleLineTextField },
+    'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
 };
 
 class App extends React.Component<IProps, IState> {

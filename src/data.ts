@@ -15,9 +15,18 @@ export interface IField {
     options?: any;
 }
 
+export interface IFieldOptionEditorProps {
+    field: IField;
+    onChange: (field: IField) => void;
+}
+
+export interface IFieldOptionEditorComponent extends React.ComponentClass<IFieldOptionEditorProps> {
+
+}
+
 // FieldRegistry maps field types to the class responsible for rendering the field and the class responsible for editing the field.
 export interface FieldRegistry {
-    [key:string]: {render: React.ComponentClass<any>, editor?: React.ComponentClass<any>};
+    [key: string]: { render: React.ComponentClass<any>, editor?: IFieldOptionEditorComponent };
 }
 
 export const FORM_BUILDER_FIELD = 'FORM_BUILDER_FIELD'

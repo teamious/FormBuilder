@@ -1,18 +1,13 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 
-import { IField } from '../../data';
+import { IFieldOptionEditorProps } from '../../data';
 
 interface IState { }
 
-interface IProps {
-    field: IField;
-    onChange: (field: IField) => void;
-}
-
-export default class SingleLineTextFieldOptionEditor extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
-        super(props);
+export default class SingleLineTextFieldOptionEditor extends React.PureComponent<IFieldOptionEditorProps, IState> {
+    constructor() {
+        super();
 
         this.onFieldLabelChange = this.onFieldLabelChange.bind(this);
         this.onLabelChange = this.onLabelChange.bind(this);

@@ -43,14 +43,10 @@ interface IProps {
 interface IState {
 }
 
-interface IDNDProps {
-    connectDropTarget: ConnectDropTarget;
-}
-
 // FormBuilder expects a list of field definitions and will wrap each field definition
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
-class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
+class FormBuilder extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
@@ -103,15 +99,22 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
         if (target.index === source.index) {
             return;
         }
+
+        let sourceField = source.field;
+        if (!source.index) {
+            // NOTE: If source is from the FieldSelector, we should create a clone field.
+            sourceField = JSON.parse(JSON.stringify(sourceField));
+        }
+
         let fields = this.props.fields.concat([]);
         if (source.index == null) {
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
         } else if (source.index < target.index) {
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
             fields.splice(source.index, 1);
         } else {
             fields.splice(source.index, 1);
-            fields.splice(target.index, 0, source.field)
+            fields.splice(target.index, 0, sourceField)
         }
         this.props.onChange(fields);
     }
@@ -154,8 +157,7 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
     // providing editing, dragging, and dropping functionality. At the end of the list
     // is a <Droppable> field.
     render() {
-        const {connectDropTarget} = this.props;
-        return connectDropTarget(
+        return (
             <div>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
@@ -166,28 +168,4 @@ class FormBuilder extends React.Component<IProps & IDNDProps, IState> {
     }
 }
 
-const spec: DropTargetSpec<IProps> = {
-    // drop is called when a field is dropped into the FormBuilder. This should only be called
-    // when no fields are present.
-    drop(props, monitor) {
-        const item: data.IDragSourceItem = monitor.getItem() as any;
-        props.onChange([item.field]);
-    },
-
-    // The FormBuilder itself is a valid drop area but only while no fields
-    // are present so that the first field can be dropped into it.
-    //
-    // TODO(andrews): I think we can remove this so long as a <Droppable/> component
-    // is dislayed at the end of the list.
-    canDrop(props): boolean {
-        return props.fields.length == 0;
-    }
-}
-
-const collect: DropTargetCollector = (connect, monitor): IDNDProps => {
-    return {
-        connectDropTarget: connect.dropTarget(),
-    }
-}
-
-export default DropTarget(data.FIELD_SELECTOR_FIELD, spec, collect)(FormBuilder) as React.ComponentClass<IProps>;
+export default FormBuilder;

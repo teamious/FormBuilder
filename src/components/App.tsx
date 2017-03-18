@@ -7,7 +7,9 @@ import { DragDropContext } from 'react-dnd';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
-import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor'
+import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
+import SingleLineTextField from './Fields/SingleLineTextField';
+import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
 import OrderedListInput from './Controls/OrderedListInput';
 import FieldOptionEditor from './FieldOptionEditor'
 
@@ -26,6 +28,16 @@ const options: data.IField[] = [
         options: {
             selectOpts: ['a', 'b', 'c']
         }
+    },
+    {
+        label: 'Single line text field',
+        type: 'SingleLineTextField',
+        options: {
+            label: 'Name',
+            hint: 'Please enter your name',
+            required: true,
+            unique: false,
+        }
     }
 ];
 
@@ -41,6 +53,7 @@ const registry: data.FieldRegistry = {
     'ShortText': { render: ShortText },
     'LongText': { render: LongText },
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
+    'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
 };
 
 class App extends React.Component<IProps, IState> {

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
-import {default as Draggable} from './FormBuilderDraggable';
-import {default as Editable} from './FormBuilderEditable';
-import {default as Droppable} from './FormBuilderDroppable';
+import { default as Draggable } from './FormBuilderDraggable';
+import { default as Editable } from './FormBuilderEditable';
+import { default as Droppable } from './FormBuilderDroppable';
 
 interface IProps {
     fields: data.IField[];
@@ -53,6 +53,7 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.onDrop = this.onDrop.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
+        this.onFieldChanged = this.onFieldChanged.bind(this);
         this.state = {};
     }
 
@@ -95,7 +96,11 @@ class FormBuilder extends React.Component<IProps, IState> {
     // If the source field comes from a <Draggable> component then it must
     // go through removal and insertion. Removal and insertion depend
     // on the source index to keep the integrity of the target index.
-    private onDrop(target: data.IDropTargetItem, source: data.IDragSourceItem) {
+    private onDrop(target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) {
+        if (didDrop) {
+            return;
+        }
+
         if (target.index === source.index) {
             return;
         }
@@ -119,6 +124,12 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.props.onChange(fields);
     }
 
+    private onFieldChanged(field: data.IField, index: number) {
+        let fields = this.props.fields.slice();
+        fields[index] = field;
+        this.props.onChange(fields);
+    }
+
     // renderField takes the field.type to be rendered and looks up the
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
@@ -128,7 +139,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, {field});
+        const component = React.createElement(fieldDef.render, { field, index, registry: this.props.registry, onChange: this.onFieldChanged });
 
         return (
             <Editable
@@ -158,10 +169,10 @@ class FormBuilder extends React.Component<IProps, IState> {
     // is a <Droppable> field.
     render() {
         return (
-            <div>
+            <div style={{ border: "solid red 1px" }}>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{padding: 25}}/>
+                    <div style={{ padding: 25 }} />
                 </Droppable>
             </div>
         );

@@ -4,24 +4,15 @@ import FormBuilder from './FormBuilder';
 import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import ShortText from './ShortText';
-import LongText from './LongText';
+import FieldOptionEditor from './FieldOptionEditor'
+
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './Fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
-import OrderedListInput from './Controls/OrderedListInput';
-import FieldOptionEditor from './FieldOptionEditor'
+import NestedField from './Fields/NestedField';
 
 const options: data.IField[] = [
-    {
-        label: 'Short text area',
-        type: 'ShortText',
-    },
-    {
-        label: 'Long text area',
-        type: 'LongText',
-    },
     {
         label: 'Single selector',
         type: 'SingleSelector',
@@ -38,6 +29,11 @@ const options: data.IField[] = [
             required: true,
             unique: false,
         }
+    },
+    {
+        label: 'Detail',
+        type: 'Detail',
+        fields: [],
     }
 ];
 
@@ -50,10 +46,9 @@ interface IState {
 }
 
 const registry: data.FieldRegistry = {
-    'ShortText': { render: ShortText },
-    'LongText': { render: LongText },
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
     'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
+    'Detail': { render: NestedField }
 };
 
 class App extends React.Component<IProps, IState> {
@@ -115,7 +110,7 @@ class App extends React.Component<IProps, IState> {
 
                 <div>
                     <div>Debug: Form definitions</div>
-                    <textarea style={{width: 500}} readOnly value={form} />
+                    <textarea style={{ width: 500 }} readOnly value={form} />
                 </div>
             </div>
         );

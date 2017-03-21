@@ -4,6 +4,7 @@ import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } fr
 import { default as Draggable } from './FormBuilderDraggable';
 import { default as Editable } from './FormBuilderEditable';
 import { default as Droppable } from './FormBuilderDroppable';
+import FormBuilderEvent from './FormBuilderEvent';
 
 interface IProps {
     fields: data.IField[];
@@ -15,9 +16,6 @@ interface IProps {
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
     registry: data.FieldRegistry;
-
-    // onEditField is called whenever the user
-    onEditField: (field: data.IField) => void;
 
     // onDeleteField is called whenever the user has deleted a field.
     // it returns the list of fields after the field has been removed.
@@ -38,6 +36,9 @@ interface IProps {
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
     deleteButtonText?: string;
+
+    // The events inject into FormBuilder and nested fields.
+    formBuilderEvent: FormBuilderEvent;
 }
 
 interface IState {
@@ -47,6 +48,8 @@ interface IState {
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
 class FormBuilder extends React.Component<IProps, IState> {
+    private editingIndex: number;
+
     constructor(props: IProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
@@ -54,7 +57,7 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
-        this.state = {};
+        this.onFieldEdited = this.onFieldEdited.bind(this);
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -62,11 +65,18 @@ class FormBuilder extends React.Component<IProps, IState> {
     // to determine if the field can be edited.
     private onEditField(field: data.IField) {
         const hook = this.props.onBeforeEditField;
-        if (hook && hook(field)) {
-            this.props.onEditField(field);
-            return
+        if (hook && !hook(field)) {
+            return;
         }
-        this.props.onEditField(field);
+
+        this.editingIndex = this.props.fields.indexOf(field);
+        this.props.formBuilderEvent.fieldEditing(field, this.onFieldEdited);
+    }
+
+    private onFieldEdited(field: data.IField) {
+        let fields = this.props.fields.slice();
+        fields[this.editingIndex] = field;
+        this.props.onChange(fields);
     }
 
     // onDeleteField is called when the user wants to delete a field.
@@ -76,13 +86,11 @@ class FormBuilder extends React.Component<IProps, IState> {
         let fields = this.props.fields.concat([]);
         const field = this.props.fields[index];
         const hook = this.props.onBeforeDeleteField;
-        if (hook && hook(field)) {
-            fields.splice(index, 1);
-            this.props.onDeleteField(fields);
-            return
+        if (hook && !hook(field)) {
+            return;
         }
         fields.splice(index, 1);
-        this.props.onDeleteField(fields);
+        this.props.onChange(fields);
     }
 
     // onDrop is called whenever a field is dropped on a <Droppable> component.
@@ -139,7 +147,13 @@ class FormBuilder extends React.Component<IProps, IState> {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, { field, index, registry: this.props.registry, onChange: this.onFieldChanged });
+        const component = React.createElement(fieldDef.render, {
+            field,
+            index,
+            registry: this.props.registry,
+            formBuilderEvent: this.props.formBuilderEvent,
+            onChange: this.onFieldChanged
+        });
 
         return (
             <Editable

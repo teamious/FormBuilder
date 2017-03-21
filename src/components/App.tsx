@@ -1,10 +1,11 @@
 import * as React from 'react';
-import FieldSelector from './FieldSelector';
-import FormBuilder from './FormBuilder';
 import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import FieldOptionEditor from './FieldOptionEditor'
+import FieldSelector from './FieldSelector';
+import FormBuilder from './FormBuilder';
+import FormBuilderEvent from './FormBuilderEvent';
 
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
@@ -51,11 +52,15 @@ const registry: data.FieldRegistry = {
     'Detail': { render: NestedField }
 };
 
+const formBuilderEvent = new FormBuilderEvent();
+
 class App extends React.Component<IProps, IState> {
+    private fieldEdited: (field: data.IField) => void;
+
     constructor() {
         super()
         this.onChangeFields = this.onChangeFields.bind(this);
-        this.onEditField = this.onEditField.bind(this);
+        this.onFieldEditing = this.onFieldEditing.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.state = {
@@ -64,8 +69,13 @@ class App extends React.Component<IProps, IState> {
         };
     }
 
-    private onEditField(field: data.IField) {
+    componentDidMount() {
+        formBuilderEvent.fieldEditing = this.onFieldEditing;
+    }
+
+    private onFieldEditing(field: data.IField, done: (field: data.IField) => void) {
         this.setState({ selectedField: field } as IState);
+        this.fieldEdited = done;
     }
 
     private onDeleteField(fields: data.IField[]) {
@@ -77,12 +87,8 @@ class App extends React.Component<IProps, IState> {
     }
 
     private onFieldOptionChanged(field: data.IField) {
-        const index = this.state.fields.indexOf(this.state.selectedField);
-        const fields = this.state.fields.slice();
-        fields[index] = field;
-
-        console.log(index, field, fields);
-        this.setState({ selectedField: field, fields } as IState);
+        this.setState({ selectedField: field } as IState);
+        this.fieldEdited(field);
     }
 
     render() {
@@ -95,10 +101,10 @@ class App extends React.Component<IProps, IState> {
                 />
 
                 <FormBuilder
-                    onEditField={this.onEditField}
                     onDeleteField={this.onDeleteField}
                     onChange={this.onChangeFields}
                     registry={registry}
+                    formBuilderEvent={formBuilderEvent}
                     fields={this.state.fields}
                 />
 

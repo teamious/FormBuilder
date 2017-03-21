@@ -5,7 +5,6 @@ import { DragDropContext } from 'react-dnd';
 import FieldOptionEditor from './FieldOptionEditor'
 import FieldSelector from './FieldSelector';
 import FormBuilder from './FormBuilder';
-import FormBuilderEvent from './FormBuilderEvent';
 
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
@@ -52,8 +51,6 @@ const registry: data.FieldRegistry = {
     'Detail': { render: NestedField }
 };
 
-const formBuilderEvent = new FormBuilderEvent();
-
 class App extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;
 
@@ -67,10 +64,6 @@ class App extends React.Component<IProps, IState> {
             fields: [],
             selectedField: null,
         };
-    }
-
-    componentDidMount() {
-        formBuilderEvent.fieldEditing = this.onFieldEditing;
     }
 
     private onFieldEditing(field: data.IField, done: (field: data.IField) => void) {
@@ -101,10 +94,9 @@ class App extends React.Component<IProps, IState> {
                 />
 
                 <FormBuilder
-                    onDeleteField={this.onDeleteField}
+                    onFieldEditing={this.onFieldEditing}
                     onChange={this.onChangeFields}
                     registry={registry}
-                    formBuilderEvent={formBuilderEvent}
                     fields={this.state.fields}
                 />
 

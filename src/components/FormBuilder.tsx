@@ -4,22 +4,20 @@ import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } fr
 import { default as Draggable } from './FormBuilderDraggable';
 import { default as Editable } from './FormBuilderEditable';
 import { default as Droppable } from './FormBuilderDroppable';
-import FormBuilderEvent from './FormBuilderEvent';
 
 interface IProps {
     fields: data.IField[];
-
-    // onChange is called whenever the user has reordered or added
-    // fields to the editor via drag and drop.
-    onChange: (fields: data.IField[]) => void;
 
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
     registry: data.FieldRegistry;
 
-    // onDeleteField is called whenever the user has deleted a field.
-    // it returns the list of fields after the field has been removed.
-    onDeleteField: (fields: data.IField[]) => void;
+    // onChange is called whenever the user has reordered or added
+    // fields to the editor via drag and drop.
+    onChange: (fields: data.IField[]) => void;
+
+    // fieldEditing is called when the user want to edit field options.
+    onFieldEditing: (field: data.IField, done: (field: data.IField) => void) => void;
 
     // onBeforeDeleteField is called before calling the onDeleteField method.
     // If this method returns false, onDeleteField will not be called.
@@ -36,9 +34,6 @@ interface IProps {
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
     deleteButtonText?: string;
-
-    // The events inject into FormBuilder and nested fields.
-    formBuilderEvent: FormBuilderEvent;
 }
 
 interface IState {
@@ -70,7 +65,7 @@ class FormBuilder extends React.Component<IProps, IState> {
         }
 
         this.editingIndex = this.props.fields.indexOf(field);
-        this.props.formBuilderEvent.fieldEditing(field, this.onFieldEdited);
+        this.props.onFieldEditing(field, this.onFieldEdited);
     }
 
     private onFieldEdited(field: data.IField) {
@@ -151,7 +146,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             field,
             index,
             registry: this.props.registry,
-            formBuilderEvent: this.props.formBuilderEvent,
+            onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged
         });
 

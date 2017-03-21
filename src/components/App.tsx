@@ -27,7 +27,8 @@ const options: data.IField[] = [
         label: 'Single selector',
         type: 'SingleSelector',
         options: {
-            selectOpts: ['a', 'b', 'c']
+            label: 'Select something',
+            selectOpts: ['a', 'b', 'c'],
         }
     },
     {
@@ -96,7 +97,7 @@ class App extends React.Component<IProps, IState> {
 
         return (
             <div>
-                <Grid>
+                <Grid fluid={true}>
                     <Row>
                         <Col md={3}>
                             <span>Field Selector</span>

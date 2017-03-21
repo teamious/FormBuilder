@@ -1,8 +1,6 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector, DragSourceSpec } from 'react-dnd';
-import ShortText from './ShortText';
-import LongText from './LongText';
 
 interface IProps {
     field: data.IField;

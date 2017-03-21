@@ -4,6 +4,7 @@ import FormBuilder from './FormBuilder';
 import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
+import { Panel, FormControl } from 'react-bootstrap';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
@@ -95,28 +96,34 @@ class App extends React.Component<IProps, IState> {
 
         return (
             <div>
-                <FieldSelector
-                    fields={options}
-                />
+                <Panel>
+                    <FieldSelector
+                        fields={options}
+                    />
+                </Panel>
 
-                <FormBuilder
-                    onEditField={this.onEditField}
-                    onDeleteField={this.onDeleteField}
-                    onChange={this.onChangeFields}
-                    registry={registry}
-                    fields={this.state.fields}
-                />
+                <Panel>
+                    <FormBuilder
+                        onEditField={this.onEditField}
+                        onDeleteField={this.onDeleteField}
+                        onChange={this.onChangeFields}
+                        registry={registry}
+                        fields={this.state.fields}
+                    />
+                </Panel>
 
-                <FieldOptionEditor
-                    registry={registry}
-                    field={this.state.selectedField}
-                    onChange={this.onFieldOptionChanged}
-                />
+                <Panel>
+                    <FieldOptionEditor
+                        registry={registry}
+                        field={this.state.selectedField}
+                        onChange={this.onFieldOptionChanged}
+                    />
+                </Panel>
 
-                <div>
+                <Panel>
                     <div>Debug: Form definitions</div>
-                    <textarea style={{width: 500}} readOnly value={form} />
-                </div>
+                    <FormControl componentClass='textarea' style={{ width: 500 }} readOnly value={form} />
+                </Panel>
             </div>
         );
     }

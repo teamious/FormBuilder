@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormControl } from 'react-bootstrap';
 import { IField } from '../../data'
 
 interface IState { }
@@ -10,9 +11,11 @@ interface IProps {
 export default class SingleSelector extends React.PureComponent<IProps, IState> {
     render() {
         const selectOpts = this.props.field.options ? this.props.field.options.selectOpts : null;
-        return (<select>
-            {selectOpts && this.renderOpts(selectOpts)}
-        </select>);
+        return (
+            <FormControl componentClass="select">
+                {selectOpts && this.renderOpts(selectOpts)}
+            </FormControl>
+        );
     }
 
     renderOpts(opts: Array<any>) {

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormControl } from 'react-bootstrap';
 import { IField } from '../../data'
 
 interface IState {
@@ -20,8 +21,8 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
         const { label, hint, required } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
-                <span>{label}</span><br />
-                <input type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.onTextFieldChange} />
+                <span>{label}</span>
+                <FormControl type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.onTextFieldChange} />
             </div>
         );
     }

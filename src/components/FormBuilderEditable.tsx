@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button } from 'react-bootstrap';
 import * as data from '../data';
 
 interface IProps {
@@ -35,12 +36,12 @@ export default class FormBuilderEditable extends React.Component<IProps, IState>
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
             <div>
-                <button type='button' onClick={this.onEdit}>
+                <Button onClick={this.onEdit}>
                     {editButtonText}
-                </button>
-                <button type='button' onClick={this.onDelete}>
+                </Button>
+                <Button onClick={this.onDelete}>
                     {deleteButtonText}
-                </button>
+                </Button>
                 {this.props.children}
             </div>
         );

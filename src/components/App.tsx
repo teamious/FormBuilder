@@ -4,7 +4,7 @@ import FormBuilder from './FormBuilder';
 import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import { Panel, FormControl } from 'react-bootstrap';
+import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
 import ShortText from './ShortText';
 import LongText from './LongText';
 import SingleSelector from './Fields/SingleSelector';
@@ -96,34 +96,48 @@ class App extends React.Component<IProps, IState> {
 
         return (
             <div>
-                <Panel>
-                    <FieldSelector
-                        fields={options}
-                    />
-                </Panel>
-
-                <Panel>
-                    <FormBuilder
-                        onEditField={this.onEditField}
-                        onDeleteField={this.onDeleteField}
-                        onChange={this.onChangeFields}
-                        registry={registry}
-                        fields={this.state.fields}
-                    />
-                </Panel>
-
-                <Panel>
-                    <FieldOptionEditor
-                        registry={registry}
-                        field={this.state.selectedField}
-                        onChange={this.onFieldOptionChanged}
-                    />
-                </Panel>
-
-                <Panel>
-                    <div>Debug: Form definitions</div>
-                    <FormControl componentClass='textarea' style={{ width: 500 }} readOnly value={form} />
-                </Panel>
+                <Grid>
+                    <Row>
+                        <Col md={3}>
+                            <span>Field Selector</span>
+                            <Panel>
+                                <FieldSelector
+                                    fields={options}
+                                />
+                            </Panel>
+                        </Col>
+                        <Col md={5}>
+                            <span>Form Builder</span>
+                            <Panel>
+                                <FormBuilder
+                                    onEditField={this.onEditField}
+                                    onDeleteField={this.onDeleteField}
+                                    onChange={this.onChangeFields}
+                                    registry={registry}
+                                    fields={this.state.fields}
+                                />
+                            </Panel>
+                        </Col>
+                        <Col md={4}>
+                            <span>Option Editor</span>
+                            <Panel>
+                                <FieldOptionEditor
+                                    registry={registry}
+                                    field={this.state.selectedField}
+                                    onChange={this.onFieldOptionChanged}
+                                />
+                            </Panel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={8}>
+                            <Panel>
+                                <div>Debug: Form definitions</div>
+                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
+                            </Panel>
+                        </Col>
+                    </Row>
+                </Grid>
             </div>
         );
     }

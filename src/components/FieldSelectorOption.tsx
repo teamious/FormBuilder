@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Panel } from 'react-bootstrap';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector, DragSourceSpec } from 'react-dnd';
 import ShortText from './ShortText';
@@ -8,7 +9,7 @@ interface IProps {
     field: data.IField;
 }
 
-interface IState {}
+interface IState { }
 
 interface IDNDProps {
     connectDragSource: ConnectDragSource;
@@ -19,10 +20,12 @@ interface IDNDProps {
 // to the drag an drop context.
 class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
-        const {connectDragSource, field} = this.props;
+        const { connectDragSource, field } = this.props;
         return connectDragSource(
             <div>
-                {field.label}
+                <Panel>
+                    {field.label}
+                </Panel>
             </div>
         );
     }

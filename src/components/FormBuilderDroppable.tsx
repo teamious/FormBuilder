@@ -23,10 +23,10 @@ interface IDNDProps {
 // at the top of the droppable space (or above the field).
 class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
     render() {
-        const {connectDropTarget} = this.props;
+        const { connectDropTarget } = this.props;
         return connectDropTarget(
-            <div style={{padding: 10}}>
-                {this.props.isOver && <div style={{background: '#CCC', height: 1}}/>}
+            <div>
+                {this.props.isOver && <div style={{ background: '#CCC', height: 1 }} />}
                 {this.props.children}
             </div>
         );
@@ -35,14 +35,14 @@ class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
 
 const spec: DropTargetSpec<IProps> = {
     drop(props, monitor) {
-        const {index, field} = props;
+        const { index, field } = props;
         const source: data.IDragSourceItem = monitor.getItem() as any;
-        const target: data.IDropTargetItem = {field, index}
+        const target: data.IDropTargetItem = { field, index }
         props.onDrop(target, source);
     },
 }
 
-const collect: DropTargetCollector = (connect, monitor): IDNDProps  => {
+const collect: DropTargetCollector = (connect, monitor): IDNDProps => {
     return {
         isOver: monitor.isOver(),
         connectDropTarget: connect.dropTarget(),

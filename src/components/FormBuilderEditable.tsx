@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 import * as data from '../data';
 
 interface IProps {
@@ -36,13 +36,19 @@ export default class FormBuilderEditable extends React.Component<IProps, IState>
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
             <div>
-                <Button onClick={this.onEdit}>
-                    {editButtonText}
-                </Button>
-                <Button onClick={this.onDelete}>
-                    {deleteButtonText}
-                </Button>
-                {this.props.children}
+                <Row>
+                    <Col md={8}>
+                        {this.props.children}
+                    </Col>
+                    <Col md={4}>
+                        <Button onClick={this.onEdit}>
+                            {editButtonText}
+                        </Button>
+                        <Button onClick={this.onDelete}>
+                            {deleteButtonText}
+                        </Button>
+                    </Col>
+                </Row>
             </div>
         );
     }

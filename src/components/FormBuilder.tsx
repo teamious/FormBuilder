@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { Panel } from 'react-bootstrap';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
-import {default as Draggable} from './FormBuilderDraggable';
-import {default as Editable} from './FormBuilderEditable';
-import {default as Droppable} from './FormBuilderDroppable';
+import { default as Draggable } from './FormBuilderDraggable';
+import { default as Editable } from './FormBuilderEditable';
+import { default as Droppable } from './FormBuilderDroppable';
 
 interface IProps {
     fields: data.IField[];
@@ -128,7 +129,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, {field});
+        const component = React.createElement(fieldDef.render, { field });
 
         return (
             <Editable
@@ -146,7 +147,9 @@ class FormBuilder extends React.Component<IProps, IState> {
                         onDrop={this.onDrop}
                         field={field}
                     >
-                        {component}
+                        <Panel>
+                            {component}
+                        </Panel>
                     </Droppable>
                 </Draggable>
             </Editable>
@@ -161,7 +164,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             <div>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{padding: 25}}/>
+                    <div style={{ padding: 25 }} />
                 </Droppable>
             </div>
         );

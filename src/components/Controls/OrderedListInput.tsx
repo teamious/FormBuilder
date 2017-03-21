@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { FormControl, Button } from 'react-bootstrap';
+import { FormControl, Button, Row, Col } from 'react-bootstrap';
 
 interface IState {
 }
@@ -22,11 +22,13 @@ export default class OrderedListInput extends React.PureComponent<IProps, IState
 
     public render() {
         const opts = this.props.options;
-        return (<div>
-            {opts.map((opt, index) =>
-                <OrderedItemInput key={index} index={index} optValue={opt} moveUp={this.moveUpOpt} moveDown={this.moveDownOpt} delete={this.deleteOpt} valueChange={this.optValueChange} />)}
-            <Button onClick={this.createOpt}>Create</Button>
-        </div>);
+        return (
+            <div>
+                {opts.map((opt, index) =>
+                    <OrderedItemInput key={index} index={index} optValue={opt} moveUp={this.moveUpOpt} moveDown={this.moveDownOpt} delete={this.deleteOpt} valueChange={this.optValueChange} />)}
+                <Button onClick={this.createOpt}>Create</Button>
+            </div>
+        );
     }
 
     private createOpt() {
@@ -95,12 +97,20 @@ class OrderedItemInput extends React.PureComponent<IItemInputProps, {}> {
 
     public render() {
         const optValue = this.props.optValue;
-        return <div>
-            <FormControl type="text" value={optValue} onChange={this.valueChange} />
-            <Button onClick={this.moveUp}>Up</Button>
-            <Button onClick={this.moveDown}>Down</Button>
-            <Button onClick={this.delete}>Delete</Button>
-        </div>;
+        return (
+            <div>
+                <Row>
+                    <Col md={5}>
+                        <FormControl type="text" value={optValue} onChange={this.valueChange} />
+                    </Col>
+                    <Col md={7}>
+                        <Button onClick={this.moveUp}>Up</Button>
+                        <Button onClick={this.moveDown}>Down</Button>
+                        <Button onClick={this.delete}>Delete</Button>
+                    </Col>
+                </Row>
+            </div>
+        );
     }
 
     private moveUp() {

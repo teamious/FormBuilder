@@ -5,7 +5,7 @@ import { DropTarget, DropTargetSpec, DropTargetCollector, ConnectDropTarget } fr
 interface IProps {
     index: number;
     field: data.IField;
-    onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem) => void;
+    onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) => void;
 }
 
 interface IState {
@@ -37,8 +37,9 @@ const spec: DropTargetSpec<IProps> = {
     drop(props, monitor) {
         const { index, field } = props;
         const source: data.IDragSourceItem = monitor.getItem() as any;
-        const target: data.IDropTargetItem = { field, index }
-        props.onDrop(target, source);
+        const target: data.IDropTargetItem = { field, index };
+        const didDrop = monitor.didDrop();
+        props.onDrop(target, source, didDrop);
     },
 }
 

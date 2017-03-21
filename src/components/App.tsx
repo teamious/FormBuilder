@@ -1,28 +1,19 @@
 import * as React from 'react';
-import FieldSelector from './FieldSelector';
-import FormBuilder from './FormBuilder';
+import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
 import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
-import ShortText from './ShortText';
-import LongText from './LongText';
+import FieldOptionEditor from './FieldOptionEditor'
+import FieldSelector from './FieldSelector';
+import FormBuilder from './FormBuilder';
+
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './Fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
-import OrderedListInput from './Controls/OrderedListInput';
-import FieldOptionEditor from './FieldOptionEditor'
+import NestedField from './Fields/NestedField';
 
 const options: data.IField[] = [
-    {
-        label: 'Short text area',
-        type: 'ShortText',
-    },
-    {
-        label: 'Long text area',
-        type: 'LongText',
-    },
     {
         label: 'Single selector',
         type: 'SingleSelector',
@@ -40,6 +31,11 @@ const options: data.IField[] = [
             required: true,
             unique: false,
         }
+    },
+    {
+        label: 'Detail',
+        type: 'Detail',
+        fields: [],
     }
 ];
 
@@ -52,17 +48,18 @@ interface IState {
 }
 
 const registry: data.FieldRegistry = {
-    'ShortText': { render: ShortText },
-    'LongText': { render: LongText },
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
     'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
+    'Detail': { render: NestedField }
 };
 
 class App extends React.Component<IProps, IState> {
+    private fieldEdited: (field: data.IField) => void;
+
     constructor() {
         super()
         this.onChangeFields = this.onChangeFields.bind(this);
-        this.onEditField = this.onEditField.bind(this);
+        this.onFieldEditing = this.onFieldEditing.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.state = {
@@ -71,8 +68,9 @@ class App extends React.Component<IProps, IState> {
         };
     }
 
-    private onEditField(field: data.IField) {
+    private onFieldEditing(field: data.IField, done: (field: data.IField) => void) {
         this.setState({ selectedField: field } as IState);
+        this.fieldEdited = done;
     }
 
     private onDeleteField(fields: data.IField[]) {
@@ -84,12 +82,8 @@ class App extends React.Component<IProps, IState> {
     }
 
     private onFieldOptionChanged(field: data.IField) {
-        const index = this.state.fields.indexOf(this.state.selectedField);
-        const fields = this.state.fields.slice();
-        fields[index] = field;
-
-        console.log(index, field, fields);
-        this.setState({ selectedField: field, fields } as IState);
+        this.setState({ selectedField: field } as IState);
+        this.fieldEdited(field);
     }
 
     render() {
@@ -111,8 +105,7 @@ class App extends React.Component<IProps, IState> {
                             <span>Form Builder</span>
                             <Panel>
                                 <FormBuilder
-                                    onEditField={this.onEditField}
-                                    onDeleteField={this.onDeleteField}
+                                    onFieldEditing={this.onFieldEditing}
                                     onChange={this.onChangeFields}
                                     registry={registry}
                                     fields={this.state.fields}

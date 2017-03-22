@@ -81,7 +81,7 @@ const propsData: Array<IPropRow> = [
         type: '(fields: Array<IField>) => void',
         default: 'undefined',
         required: true,
-        description: 'onChange() is called whenever the form definition changes. The form definition changes whenever a new field is added, fields are re-ordered, or a field is deleted',
+        description: 'onChange() is called whenever the form definition changes eg. a field is added, fields are re-ordered, or a field is deleted.',
     },
     {
         name: 'registry',

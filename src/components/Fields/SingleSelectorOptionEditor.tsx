@@ -15,19 +15,19 @@ export default class SingleSelectorOptionEditor extends React.PureComponent<IFie
     }
 
     render() {
-        const { label, options } = this.props.field;
+        const { label, selectOpts } = this.props.field.options;
         return (
             <div>
                 <span>Label</span>
                 <FormControl type='text' value={label} onChange={this.onLabelChange} />
-                <OrderedListInput options={options.selectOpts} optionsChanged={this.onOptionsChanged} />
+                <OrderedListInput options={selectOpts} optionsChanged={this.onOptionsChanged} />
             </div>
         );
     }
 
     private onLabelChange(event: any) {
         let field = assign({}, this.props.field);
-        field.label = event.target.value;
+        field.options.label = event.target.value;
         this.props.onChange(field);
     }
 

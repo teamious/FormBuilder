@@ -25,8 +25,9 @@ class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const {connectDropTarget} = this.props;
         return connectDropTarget(
-            <div style={{padding: 10}}>
-                {this.props.isOver && <div style={{background: '#CCC', height: 1}}/>}
+            <div className='form-builder-droppable'>
+                 {/*<div className='form-builder-droppable-indicator'/>*/}
+                {this.props.isOver && <div className='form-builder-droppable-indicator'/>}
                 {this.props.children}
             </div>
         );

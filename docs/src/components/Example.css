@@ -1,0 +1,42 @@
+.example {
+    background: #FFF;
+    padding-top: 30px;
+    position: relative;
+    border: 1px solid #CCC;
+}
+
+.example-header {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background: #fefefe;
+    height: 30px;
+    font-size: 12px;
+    line-height: 30px;
+    padding-left: 15px;
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    color: #999;
+}
+
+.example-body {
+    padding: 15px;
+    position: relative;
+}
+
+.example-footer .snippet {
+    margin-left: -1px;
+    margin-right: -1px;
+    margin-bottom: -1px;
+}
+
+.example-show-code-button {
+    padding: 10px;
+    position: absolute;
+    font-size: 12px;
+    bottom: -1px;
+    left: -1px;
+    border: 1px solid #CCC;
+    background: #FFF;
+}

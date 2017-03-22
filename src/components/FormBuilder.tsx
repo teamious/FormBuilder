@@ -33,11 +33,11 @@ interface IProps {
 
     // editButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "edit".
-    editButtonText?: string;
+    editButtonText?: React.ReactNode;
 
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
-    deleteButtonText?: string;
+    deleteButtonText?: React.ReactNode;
 }
 
 interface IState {
@@ -131,25 +131,27 @@ class FormBuilder extends React.Component<IProps, IState> {
         const component = React.createElement(fieldDef.render, {field});
 
         return (
-            <Editable
-                onEdit={this.onEditField}
-                onDelete={this.onDeleteField}
-                index={index}
-                field={field}
-            >
-                <Draggable
+            <div className='form-builder-field'>
+                <Droppable
+                    index={index}
+                    onDrop={this.onDrop}
+                    field={field}
+                >
+                <Editable
+                    onEdit={this.onEditField}
+                    onDelete={this.onDeleteField}
                     index={index}
                     field={field}
                 >
-                    <Droppable
+                    <Draggable
                         index={index}
-                        onDrop={this.onDrop}
                         field={field}
                     >
-                        {component}
-                    </Droppable>
-                </Draggable>
-            </Editable>
+                            {component}
+                    </Draggable>
+                </Editable>
+                </Droppable>
+            </div>
         )
     }
 
@@ -158,7 +160,7 @@ class FormBuilder extends React.Component<IProps, IState> {
     // is a <Droppable> field.
     render() {
         return (
-            <div>
+            <div className='form-builder'>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
                     <div style={{padding: 25}}/>

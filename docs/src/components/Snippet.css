@@ -1,0 +1,12 @@
+.snippet {
+    margin-bottom: 15px;
+}
+
+.snippet pre {
+    border-radius: 0px;
+    margin: 0;
+}
+.snippet pre code {
+    font-family: monospace;
+    font-size: 14px;
+}

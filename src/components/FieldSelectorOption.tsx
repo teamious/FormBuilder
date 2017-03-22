@@ -21,8 +21,10 @@ class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const {connectDragSource, field} = this.props;
         return connectDragSource(
-            <div>
-                {field.label}
+            <div className='field-selector-option'>
+                <span className='field-selector-option-label'>
+                    {field.label}
+                </span>
             </div>
         );
     }

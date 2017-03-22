@@ -32,7 +32,7 @@ const options: data.IField[] = [
     },
     {
         label: 'Detail',
-        type: 'Detail',
+        type: NestedField.type,
         fields: [],
     }
 ];
@@ -48,8 +48,9 @@ interface IState {
 const registry: data.FieldRegistry = {
     'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
     'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
-    'Detail': { render: NestedField }
 };
+
+registry[NestedField.type] = { render: NestedField };
 
 class App extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;

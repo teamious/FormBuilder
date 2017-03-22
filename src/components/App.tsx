@@ -90,7 +90,7 @@ class App extends React.Component<IProps, IState> {
         const form = JSON.stringify(this.state.fields);
 
         return (
-            <div>
+            <div style={{ minWidth: '640px' }}>
                 <Grid fluid={true}>
                     <Row>
                         <Col md={3}>
@@ -103,14 +103,12 @@ class App extends React.Component<IProps, IState> {
                         </Col>
                         <Col md={5}>
                             <span>Form Builder</span>
-                            <Panel>
-                                <FormBuilder
-                                    onFieldEditing={this.onFieldEditing}
-                                    onChange={this.onChangeFields}
-                                    registry={registry}
-                                    fields={this.state.fields}
-                                />
-                            </Panel>
+                            <FormBuilder
+                                onFieldEditing={this.onFieldEditing}
+                                onChange={this.onChangeFields}
+                                registry={registry}
+                                fields={this.state.fields}
+                            />
                         </Col>
                         <Col md={4}>
                             <span>Option Editor</span>

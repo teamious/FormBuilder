@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Panel, Form } from 'react-bootstrap';
+import { Panel, Row } from 'react-bootstrap';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
 import { default as Draggable } from './FormBuilderDraggable';
@@ -182,12 +182,16 @@ class FormBuilder extends React.Component<IProps, IState> {
     render() {
         return (
             <div>
-                <Form horizontal>
-                    {this.props.fields.map(this.renderField)}
-                </Form>
-                <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{ padding: 25 }} />
-                </Droppable>
+                <Panel>
+                    <div className='form-horizontal'>
+                        <Row>
+                            {this.props.fields.map(this.renderField)}
+                        </Row>
+                        <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                            <div style={{ padding: 25 }} />
+                        </Droppable>
+                    </div>
+                </Panel>
             </div>
         );
     }

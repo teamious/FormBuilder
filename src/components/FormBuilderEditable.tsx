@@ -35,16 +35,16 @@ export default class FormBuilderEditable extends React.Component<IProps, IState>
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
             <div>
-                <div>
-                    <button onClick={this.onEdit}>
+                <div className='col-md-8'>
+                    {this.props.children}
+                </div>
+                <div className='col-md-4' style={{ padding: '5px 0px' }}>
+                    <button className='btn btn-default' type='button' onClick={this.onEdit}>
                         {editButtonText}
                     </button>
-                    <button onClick={this.onDelete}>
+                    <button className='btn btn-default' type='button' onClick={this.onDelete}>
                         {deleteButtonText}
                     </button>
-                </div>
-                <div>
-                    {this.props.children}
                 </div>
             </div>
         );

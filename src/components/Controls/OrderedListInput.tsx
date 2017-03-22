@@ -98,7 +98,7 @@ class OrderedItemInput extends React.PureComponent<IItemInputProps, {}> {
     public render() {
         const optValue = this.props.optValue;
         return (
-            <div>
+            <div style={{ padding: '5px 0px' }}>
                 <Row>
                     <Col md={5}>
                         <FormControl type="text" value={optValue} onChange={this.valueChange} />

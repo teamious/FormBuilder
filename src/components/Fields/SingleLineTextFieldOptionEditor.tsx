@@ -10,7 +10,6 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
     constructor() {
         super();
 
-        this.onFieldLabelChange = this.onFieldLabelChange.bind(this);
         this.onLabelChange = this.onLabelChange.bind(this);
         this.onHintChange = this.onHintChange.bind(this);
         this.onRequiredChange = this.onRequiredChange.bind(this);
@@ -18,34 +17,24 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
     }
 
     render() {
-        const { label, options } = this.props.field
+        const { label, hint, required, unique } = this.props.field.options;
         return (
             <div>
                 <div>
-                    <span>Field Label</span>
-                    <FormControl type='text' value={label} onChange={this.onFieldLabelChange} />
-                </div>
-                <div>
                     <span>Label</span>
-                    <FormControl type='text' value={options.label} onChange={this.onLabelChange} />
+                    <FormControl type='text' value={label} onChange={this.onLabelChange} />
                 </div>
                 <div>
                     <span>Hint</span>
-                    <FormControl type='text' value={options.hint} onChange={this.onHintChange} />
+                    <FormControl type='text' value={hint} onChange={this.onHintChange} />
                 </div>
                 <div>
                     <span>Setting</span>
-                    <Checkbox checked={options.required} onChange={this.onRequiredChange}>Required</Checkbox>
-                    <Checkbox checked={options.unique} onChange={this.onUniqueChange}>Unique</Checkbox>
+                    <Checkbox checked={required} onChange={this.onRequiredChange}>Required</Checkbox>
+                    <Checkbox checked={unique} onChange={this.onUniqueChange}>Unique</Checkbox>
                 </div>
             </div>
         )
-    }
-
-    private onFieldLabelChange(event: any) {
-        let field = assign({}, this.props.field);
-        field.label = event.target.value;
-        this.props.onChange(field);
     }
 
     private onLabelChange(event: any) {

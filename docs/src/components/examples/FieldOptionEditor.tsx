@@ -18,12 +18,14 @@ interface IState {
 }
 
 export default class extends React.Component<IProps, IState> {
+    private callback: (field: data.IField) => void;
+
     constructor() {
         super();
         this.onChangeField = this.onChangeField.bind(this);
+        this.onFieldEditing = this.onFieldEditing.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onChangeFields = this.onChangeFields.bind(this);
-        this.onEditField = this.onEditField.bind(this);
         this.state = {
             field: null,
             fields: JSON.parse(JSON.stringify(constants.fields)),
@@ -44,14 +46,13 @@ export default class extends React.Component<IProps, IState> {
 
 
     private onChangeField(field: data.IField) {
-        const index = this.state.fields.indexOf(this.state.field)
-        if (index === -1) {
-            console.warn('Field not found');
-            return;
-        }
-        const fields = this.state.fields.concat([]);
-        fields.splice(index, 1, field);
-        this.setState({ fields, field } as IState);
+        this.setState({field} as IState);
+        this.callback(field);
+    }
+
+    private onFieldEditing(field: data.IField, callback: (field: data.IField) => void) {
+        this.setState({field} as IState);
+        this.callback = callback;
     }
 
     render() {
@@ -75,9 +76,8 @@ export default class extends React.Component<IProps, IState> {
                     </Modal>
 
                     <FormBuilder
+                        onFieldEditing={this.onFieldEditing}
                         registry={constants.registry}
-                        onDeleteField={constants.noop}
-                        onEditField={this.onEditField}
                         onChange={this.onChangeFields}
                         fields={this.state.fields}/>
                 </FormBuilderContext>

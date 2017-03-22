@@ -36,9 +36,8 @@ export default class extends React.Component<IProps, IState> {
         const body = (
             <FormBuilderContext>
                 <FormBuilder
+                    onFieldEditing={constants.noop}
                     registry={constants.registry}
-                    onEditField={noop}
-                    onDeleteField={noop}
                     onChange={this.onChangeFields}
                     fields={this.state.fields}/>
             </FormBuilderContext>
@@ -93,21 +92,11 @@ const propsData: Array<IPropRow> = [
     },
 
     {
-
-        name: 'onEditField',
-        type: '(field: IField) => void',
+        name: 'onFieldEditing',
+        type: '(field: IField, callback: (field: IField) => void)',
         default: 'undefined',
         required: true,
-        description: 'onEditField() is called whenever a user clicks the edit button on a form. You can use this callback to show an editor for the field.'
-    },
-
-    {
-
-        name: 'onDeleteField',
-        type: '(fields: Array<IField>) => void',
-        default: 'undefined',
-        required: true,
-        description: 'onDeleteField() is called whenever a user clicks the delete button on a form and returns the new set of fields with the selected field removed.'
+        description: 'onFieldEditing() is called when the user clicks the "Edit" button. It passes two arguments: the field to edit and a callback function. The callback function should be called from context when a change has been made to the field.',
     },
 
     {

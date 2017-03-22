@@ -58,8 +58,7 @@ export default class extends React.Component<IProps, IState> {
             <FormBuilderContext>
                 <FormBuilder
                     registry={registry}
-                    onEditField={null}
-                    onDeleteField={null}
+                    onFieldEditing={null}
                     onChange={this.onChangeFields}
                     fields={this.state.fields}/>
             </FormBuilderContext>

@@ -21,13 +21,14 @@ interface IState {
 }
 
 export default class extends React.Component<IProps, IState> {
+    private callback: (field: data.IField) => void;
+
     constructor() {
         super();
         this.onChangeField = this.onChangeField.bind(this);
         this.closeModal = this.closeModal.bind(this);
         this.onChangeFields = this.onChangeFields.bind(this);
-        this.onDeleteField = this.onDeleteField.bind(this);
-        this.onEditField = this.onEditField.bind(this);
+        this.onFieldEditing = this.onFieldEditing.bind(this);
         this.state = {
             fields: [],
             field: null,
@@ -35,36 +36,25 @@ export default class extends React.Component<IProps, IState> {
         };
     }
 
-    private onDeleteField(fields: data.IField[]) {
-        this.onChangeFields(fields);
-    }
-
     private onChangeFields(fields: data.IField[]) {
         this.setState({ fields } as IState);
     }
 
-    private onEditField(field: data.IField) {
-        this.setState({ field } as IState);
-    }
-
     private onChangeField(field: data.IField) {
-        const index = this.state.fields.indexOf(this.state.field)
-        if (index === -1) {
-            console.warn('Field not found');
-            return;
-        }
-        const fields = this.state.fields.concat([]);
-        fields.splice(index, 1, field);
-        this.setState({ fields, field } as IState);
+        this.setState({field} as IState);
+        this.callback(field);
     }
 
     private closeModal() {
         this.setState({field: null} as IState);
     }
 
+    private onFieldEditing(field: data.IField, callback: (field: data.IField) => void) {
+        this.setState({field} as IState);
+        this.callback = callback;
+    }
+
     render() {
-
-
         const body = (
             <div>
                 <FormBuilderContext>
@@ -90,8 +80,7 @@ export default class extends React.Component<IProps, IState> {
 
                     <FormBuilder
                         registry={constants.registry}
-                        onEditField={this.onEditField}
-                        onDeleteField={this.onDeleteField}
+                        onFieldEditing={this.onFieldEditing}
                         onChange={this.onChangeFields}
                         fields={this.state.fields}
                     />

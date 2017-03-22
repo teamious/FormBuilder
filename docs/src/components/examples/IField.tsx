@@ -16,18 +16,19 @@ export default function() {
                 The <strong>IField</strong> interface represents the basic unit of the form definition.
                 The IField interface contains all of the information necessary to:
 
-                <ul>
-                    <li>
-                        Render your control as an option inside the <strong>FieldSelector</strong>
-                    </li>
-                    <li>
-                        Render your control inside the <strong>FormBuilder</strong>
-                    </li>
-                    <li>
-                        Edit options for your control in the <strong>FieldOptionEditor</strong>
-                    </li>
-                </ul>
             </p>
+
+            <ul>
+                <li>
+                    Render your control as an option inside the <strong>FieldSelector</strong>
+                </li>
+                <li>
+                    Render your control inside the <strong>FormBuilder</strong>
+                </li>
+                <li>
+                    Edit options for your control in the <strong>FieldOptionEditor</strong>
+                </li>
+            </ul>
 
             <div>
                 <Snippet code={code} lang='typescript'/>

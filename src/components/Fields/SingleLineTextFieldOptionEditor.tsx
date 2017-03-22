@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormControl, Checkbox } from 'react-bootstrap';
 import * as assign from 'object-assign';
 
 import { IFieldOptionEditorProps } from '../../data';
@@ -21,21 +22,21 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
         return (
             <div>
                 <div>
-                    <span>Field Label</span><br />
-                    <input type='string' value={label} onChange={this.onFieldLabelChange} />
+                    <span>Field Label</span>
+                    <FormControl type='text' value={label} onChange={this.onFieldLabelChange} />
                 </div>
                 <div>
-                    <span>Label</span><br />
-                    <input type='text' value={options.label} onChange={this.onLabelChange} /><br />
+                    <span>Label</span>
+                    <FormControl type='text' value={options.label} onChange={this.onLabelChange} />
                 </div>
                 <div>
-                    <span>Hint</span><br />
-                    <input type='text' value={options.hint} onChange={this.onHintChange} /><br />
+                    <span>Hint</span>
+                    <FormControl type='text' value={options.hint} onChange={this.onHintChange} />
                 </div>
                 <div>
-                    <span>Setting</span><br />
-                    <span><input type='checkbox' checked={options.required} onChange={this.onRequiredChange} />Required</span><br />
-                    <span><input type='checkbox' checked={options.unique} onChange={this.onUniqueChange} />Unique</span><br />
+                    <span>Setting</span>
+                    <Checkbox checked={options.required} onChange={this.onRequiredChange}>Required</Checkbox>
+                    <Checkbox checked={options.unique} onChange={this.onUniqueChange}>Unique</Checkbox>
                 </div>
             </div>
         )

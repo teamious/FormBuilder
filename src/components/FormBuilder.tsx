@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Panel, Row } from 'react-bootstrap';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
 import { default as Draggable } from './FormBuilderDraggable';
@@ -166,7 +167,9 @@ class FormBuilder extends React.Component<IProps, IState> {
                         onDrop={this.onDrop}
                         field={field}
                     >
-                        {component}
+                        <div style={{ padding: '5px 0px' }}>
+                            {component}
+                        </div>
                     </Droppable>
                 </Draggable>
             </Editable>
@@ -178,11 +181,17 @@ class FormBuilder extends React.Component<IProps, IState> {
     // is a <Droppable> field.
     render() {
         return (
-            <div style={{ border: "solid red 1px" }}>
-                {this.props.fields.map(this.renderField)}
-                <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{ padding: 25 }} />
-                </Droppable>
+            <div>
+                <Panel>
+                    <div className='form-horizontal'>
+                        <Row>
+                            {this.props.fields.map(this.renderField)}
+                        </Row>
+                        <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                            <div style={{ padding: 25 }} />
+                        </Droppable>
+                    </div>
+                </Panel>
             </div>
         );
     }

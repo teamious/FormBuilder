@@ -31,7 +31,6 @@ export default class FieldOptionEditor extends React.PureComponent<IProps, IStat
 
         return (
             <div>
-                <div>Options Editor</div>
                 {component}
             </div>
         );

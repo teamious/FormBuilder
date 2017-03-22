@@ -25,7 +25,7 @@ class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const { connectDropTarget } = this.props;
         return connectDropTarget(
-            <div style={{ padding: 10 }}>
+            <div>
                 {this.props.isOver && <div style={{ background: '#CCC', height: 1 }} />}
                 {this.props.children}
             </div>

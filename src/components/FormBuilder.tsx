@@ -1,27 +1,23 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
-import {default as Draggable} from './FormBuilderDraggable';
-import {default as Editable} from './FormBuilderEditable';
-import {default as Droppable} from './FormBuilderDroppable';
+import { default as Draggable } from './FormBuilderDraggable';
+import { default as Editable } from './FormBuilderEditable';
+import { default as Droppable } from './FormBuilderDroppable';
 
 interface IProps {
     fields: data.IField[];
-
-    // onChange is called whenever the user has reordered or added
-    // fields to the editor via drag and drop.
-    onChange: (fields: data.IField[]) => void;
 
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
     registry: data.FieldRegistry;
 
-    // onEditField is called whenever the user
-    onEditField: (field: data.IField) => void;
+    // onChange is called whenever the user has reordered or added
+    // fields to the editor via drag and drop.
+    onChange: (fields: data.IField[]) => void;
 
-    // onDeleteField is called whenever the user has deleted a field.
-    // it returns the list of fields after the field has been removed.
-    onDeleteField: (fields: data.IField[]) => void;
+    // fieldEditing is called when the user want to edit field options.
+    onFieldEditing: (field: data.IField, done: (field: data.IField) => void) => void;
 
     // onBeforeDeleteField is called before calling the onDeleteField method.
     // If this method returns false, onDeleteField will not be called.
@@ -47,13 +43,16 @@ interface IState {
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
 class FormBuilder extends React.Component<IProps, IState> {
+    private editingIndex: number;
+
     constructor(props: IProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
-        this.state = {};
+        this.onFieldChanged = this.onFieldChanged.bind(this);
+        this.onFieldEdited = this.onFieldEdited.bind(this);
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -61,11 +60,18 @@ class FormBuilder extends React.Component<IProps, IState> {
     // to determine if the field can be edited.
     private onEditField(field: data.IField) {
         const hook = this.props.onBeforeEditField;
-        if (hook && hook(field)) {
-            this.props.onEditField(field);
-            return
+        if (hook && !hook(field)) {
+            return;
         }
-        this.props.onEditField(field);
+
+        this.editingIndex = this.props.fields.indexOf(field);
+        this.props.onFieldEditing(field, this.onFieldEdited);
+    }
+
+    private onFieldEdited(field: data.IField) {
+        let fields = this.props.fields.slice();
+        fields[this.editingIndex] = field;
+        this.props.onChange(fields);
     }
 
     // onDeleteField is called when the user wants to delete a field.
@@ -75,13 +81,11 @@ class FormBuilder extends React.Component<IProps, IState> {
         let fields = this.props.fields.concat([]);
         const field = this.props.fields[index];
         const hook = this.props.onBeforeDeleteField;
-        if (hook && hook(field)) {
-            fields.splice(index, 1);
-            this.props.onDeleteField(fields);
-            return
+        if (hook && !hook(field)) {
+            return;
         }
         fields.splice(index, 1);
-        this.props.onDeleteField(fields);
+        this.props.onChange(fields);
     }
 
     // onDrop is called whenever a field is dropped on a <Droppable> component.
@@ -95,7 +99,11 @@ class FormBuilder extends React.Component<IProps, IState> {
     // If the source field comes from a <Draggable> component then it must
     // go through removal and insertion. Removal and insertion depend
     // on the source index to keep the integrity of the target index.
-    private onDrop(target: data.IDropTargetItem, source: data.IDragSourceItem) {
+    private onDrop(target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) {
+        if (didDrop) {
+            return;
+        }
+
         if (target.index === source.index) {
             return;
         }
@@ -119,6 +127,12 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.props.onChange(fields);
     }
 
+    private onFieldChanged(field: data.IField, index: number) {
+        let fields = this.props.fields.slice();
+        fields[index] = field;
+        this.props.onChange(fields);
+    }
+
     // renderField takes the field.type to be rendered and looks up the
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
@@ -128,7 +142,13 @@ class FormBuilder extends React.Component<IProps, IState> {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, {field});
+        const component = React.createElement(fieldDef.render, {
+            field,
+            index,
+            registry: this.props.registry,
+            onFieldEditing: this.props.onFieldEditing,
+            onChange: this.onFieldChanged
+        });
 
         return (
             <div className='form-builder-field'>
@@ -137,19 +157,19 @@ class FormBuilder extends React.Component<IProps, IState> {
                     onDrop={this.onDrop}
                     field={field}
                 >
-                <Editable
-                    onEdit={this.onEditField}
-                    onDelete={this.onDeleteField}
-                    index={index}
-                    field={field}
-                >
-                    <Draggable
+                    <Editable
+                        onEdit={this.onEditField}
+                        onDelete={this.onDeleteField}
                         index={index}
                         field={field}
                     >
-                            {component}
-                    </Draggable>
-                </Editable>
+                        <Draggable
+                            index={index}
+                            field={field}
+                        >
+                                {component}
+                        </Draggable>
+                    </Editable>
                 </Droppable>
             </div>
         )

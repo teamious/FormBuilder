@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormControl, Button } from 'react-bootstrap';
 import * as assign from 'object-assign';
 
 import { IFieldOptionEditorProps } from '../../data';
@@ -14,18 +15,19 @@ export default class SingleSelectorOptionEditor extends React.PureComponent<IFie
     }
 
     render() {
-        const { label, options } = this.props.field;
+        const { label, selectOpts } = this.props.field.options;
         return (
             <div>
-                <div><span>Label</span><input type='string' value={label} onChange={this.onLabelChange} /></div>
-                <div><OrderedListInput options={options.selectOpts} optionsChanged={this.onOptionsChanged} /></div>
+                <span>Label</span>
+                <FormControl type='text' value={label} onChange={this.onLabelChange} />
+                <OrderedListInput options={selectOpts} optionsChanged={this.onOptionsChanged} />
             </div>
         );
     }
 
     private onLabelChange(event: any) {
         let field = assign({}, this.props.field);
-        field.label = event.target.value;
+        field.options.label = event.target.value;
         this.props.onChange(field);
     }
 

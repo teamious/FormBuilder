@@ -5,7 +5,7 @@ import { DropTarget, DropTargetSpec, DropTargetCollector, ConnectDropTarget } fr
 interface IProps {
     index: number;
     field: data.IField;
-    onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem) => void;
+    onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) => void;
 }
 
 interface IState {
@@ -23,7 +23,7 @@ interface IDNDProps {
 // at the top of the droppable space (or above the field).
 class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
     render() {
-        const {connectDropTarget} = this.props;
+        const { connectDropTarget } = this.props;
         return connectDropTarget(
             <div className='form-builder-droppable'>
                  {/*<div className='form-builder-droppable-indicator'/>*/}
@@ -36,14 +36,15 @@ class FormBuilderDroppable extends React.Component<IProps & IDNDProps, IState> {
 
 const spec: DropTargetSpec<IProps> = {
     drop(props, monitor) {
-        const {index, field} = props;
+        const { index, field } = props;
         const source: data.IDragSourceItem = monitor.getItem() as any;
-        const target: data.IDropTargetItem = {field, index}
-        props.onDrop(target, source);
+        const target: data.IDropTargetItem = { field, index };
+        const didDrop = monitor.didDrop();
+        props.onDrop(target, source, didDrop);
     },
 }
 
-const collect: DropTargetCollector = (connect, monitor): IDNDProps  => {
+const collect: DropTargetCollector = (connect, monitor): IDNDProps => {
     return {
         isOver: monitor.isOver(),
         connectDropTarget: connect.dropTarget(),

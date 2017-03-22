@@ -1,14 +1,12 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector, DragSourceSpec } from 'react-dnd';
-import ShortText from './ShortText';
-import LongText from './LongText';
 
 interface IProps {
     field: data.IField;
 }
 
-interface IState {}
+interface IState { }
 
 interface IDNDProps {
     connectDragSource: ConnectDragSource;
@@ -19,7 +17,7 @@ interface IDNDProps {
 // to the drag an drop context.
 class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
-        const {connectDragSource, field} = this.props;
+        const { connectDragSource, field } = this.props;
         return connectDragSource(
             <div className='field-selector-option'>
                 <span className='field-selector-option-label'>

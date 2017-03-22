@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { FormControl, Checkbox } from 'react-bootstrap';
 import * as assign from 'object-assign';
 
 import { IFieldOptionEditorProps } from '../../data';
@@ -9,7 +10,6 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
     constructor() {
         super();
 
-        this.onFieldLabelChange = this.onFieldLabelChange.bind(this);
         this.onLabelChange = this.onLabelChange.bind(this);
         this.onHintChange = this.onHintChange.bind(this);
         this.onRequiredChange = this.onRequiredChange.bind(this);
@@ -17,34 +17,24 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
     }
 
     render() {
-        const { label, options } = this.props.field
+        const { label, hint, required, unique } = this.props.field.options;
         return (
             <div>
                 <div>
-                    <span>Field Label</span><br />
-                    <input type='string' value={label} onChange={this.onFieldLabelChange} />
+                    <span>Label</span>
+                    <FormControl type='text' value={label} onChange={this.onLabelChange} />
                 </div>
                 <div>
-                    <span>Label</span><br />
-                    <input type='text' value={options.label} onChange={this.onLabelChange} /><br />
+                    <span>Hint</span>
+                    <FormControl type='text' value={hint} onChange={this.onHintChange} />
                 </div>
                 <div>
-                    <span>Hint</span><br />
-                    <input type='text' value={options.hint} onChange={this.onHintChange} /><br />
-                </div>
-                <div>
-                    <span>Setting</span><br />
-                    <span><input type='checkbox' checked={options.required} onChange={this.onRequiredChange} />Required</span><br />
-                    <span><input type='checkbox' checked={options.unique} onChange={this.onUniqueChange} />Unique</span><br />
+                    <span>Setting</span>
+                    <Checkbox checked={required} onChange={this.onRequiredChange}>Required</Checkbox>
+                    <Checkbox checked={unique} onChange={this.onUniqueChange}>Unique</Checkbox>
                 </div>
             </div>
         )
-    }
-
-    private onFieldLabelChange(event: any) {
-        let field = assign({}, this.props.field);
-        field.label = event.target.value;
-        this.props.onChange(field);
     }
 
     private onLabelChange(event: any) {

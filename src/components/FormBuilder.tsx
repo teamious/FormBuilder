@@ -19,6 +19,10 @@ interface IProps {
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField, done: (field: data.IField) => void) => void;
 
+    // onBeforeAddField is called before add the new field into the array.
+    // If this method returns false, onChange will not be called.
+    onBeforeAddField?: (field: data.IField) => boolean;
+
     // onBeforeDeleteField is called before calling the onDeleteField method.
     // If this method returns false, onDeleteField will not be called.
     onBeforeDeleteField?: (field: data.IField) => boolean;
@@ -109,13 +113,22 @@ class FormBuilder extends React.Component<IProps, IState> {
         }
 
         let sourceField = source.field;
-        if (!source.index) {
+        if (source.index === null) {
             // NOTE: If source is from the FieldSelector, we should create a clone field.
             sourceField = JSON.parse(JSON.stringify(sourceField));
+            let hook = this.props.onBeforeAddField;
+            if (hook && !hook(sourceField)) {
+                return;
+            }
+        }
+        else if (this.props.fields.indexOf(target.field) !== target.index &&
+            this.props.fields.indexOf(source.field) !== source.index) {
+            // NOTE: For re-ordering, make sure the target & source are in the same level.
+            return;
         }
 
         let fields = this.props.fields.concat([]);
-        if (source.index == null) {
+        if (source.index === null) {
             fields.splice(target.index, 0, sourceField)
         } else if (source.index < target.index) {
             fields.splice(target.index, 0, sourceField)

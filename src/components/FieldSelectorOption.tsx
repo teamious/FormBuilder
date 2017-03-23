@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel } from 'react-bootstrap';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector, DragSourceSpec } from 'react-dnd';
 
@@ -20,10 +19,10 @@ class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
         const { connectDragSource, field } = this.props;
         return connectDragSource(
-            <div>
-                <Panel>
+            <div className='field-selector-option'>
+                <span className='field-selector-option-label'>
                     {field.label}
-                </Panel>
+                </span>
             </div>
         );
     }

@@ -28,12 +28,7 @@ export default class FieldOptionEditor extends React.PureComponent<IProps, IStat
         }
 
         const component = React.createElement(fieldDef.editor, {field, onChange: this.onOptionChanged});
-
-        return (
-            <div>
-                {component}
-            </div>
-        );
+        return component;
     }
 
     private onOptionChanged(field: data.IField) {

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Panel, Row } from 'react-bootstrap';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
 import { default as Draggable } from './FormBuilderDraggable';
@@ -30,11 +29,11 @@ interface IProps {
 
     // editButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "edit".
-    editButtonText?: string;
+    editButtonText?: React.ReactNode;
 
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
-    deleteButtonText?: string;
+    deleteButtonText?: React.ReactNode;
 }
 
 interface IState {
@@ -152,27 +151,27 @@ class FormBuilder extends React.Component<IProps, IState> {
         });
 
         return (
-            <Editable
-                onEdit={this.onEditField}
-                onDelete={this.onDeleteField}
-                index={index}
-                field={field}
-            >
-                <Draggable
+            <div className='form-builder-field'>
+                <Droppable
                     index={index}
+                    onDrop={this.onDrop}
                     field={field}
                 >
-                    <Droppable
+                    <Editable
+                        onEdit={this.onEditField}
+                        onDelete={this.onDeleteField}
                         index={index}
-                        onDrop={this.onDrop}
                         field={field}
                     >
-                        <div style={{ padding: '5px 0px' }}>
-                            {component}
-                        </div>
-                    </Droppable>
-                </Draggable>
-            </Editable>
+                        <Draggable
+                            index={index}
+                            field={field}
+                        >
+                                {component}
+                        </Draggable>
+                    </Editable>
+                </Droppable>
+            </div>
         )
     }
 
@@ -181,17 +180,11 @@ class FormBuilder extends React.Component<IProps, IState> {
     // is a <Droppable> field.
     render() {
         return (
-            <div>
-                <Panel>
-                    <div className='form-horizontal'>
-                        <Row>
-                            {this.props.fields.map(this.renderField)}
-                        </Row>
-                        <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                            <div style={{ padding: 25 }} />
-                        </Droppable>
-                    </div>
-                </Panel>
+            <div className='form-builder'>
+                {this.props.fields.map(this.renderField)}
+                <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                    <div style={{padding: 25}}/>
+                </Droppable>
             </div>
         );
     }

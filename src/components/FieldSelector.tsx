@@ -19,7 +19,7 @@ export default class FieldSelector extends React.PureComponent<IProps, IState> {
         );
 
         return (
-            <div>
+            <div className='field-selector'>
                 {options}
             </div>
         );

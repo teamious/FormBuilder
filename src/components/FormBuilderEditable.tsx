@@ -34,18 +34,14 @@ export default class FormBuilderEditable extends React.Component<IProps, IState>
         const editButtonText = this.props.editButtonText || 'Edit';
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
-            <div>
-                <div className='col-md-8'>
-                    {this.props.children}
-                </div>
-                <div className='col-md-4' style={{ padding: '5px 0px' }}>
-                    <button className='btn btn-default' type='button' onClick={this.onEdit}>
-                        {editButtonText}
-                    </button>
-                    <button className='btn btn-default' type='button' onClick={this.onDelete}>
-                        {deleteButtonText}
-                    </button>
-                </div>
+            <div className='form-builder-editable-controls'>
+                <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
+                    {editButtonText}
+                </button>
+                <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onDelete}>
+                    {deleteButtonText}
+                </button>
+                {this.props.children}
             </div>
         );
     }

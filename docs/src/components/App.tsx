@@ -5,30 +5,22 @@ import { Navbar, Nav, NavItem } from 'react-bootstrap';
 import Docs from './Docs';
 import DemoPage from './DemoPage';
 
-interface IProps {
-}
-
-interface IState {
-}
-
-export default class App extends React.Component<IProps, IState> {
-    render() {
-        return (
-            <Router>
-                <div>
-                    <Navbar>
-                        <Navbar.Brand>
-                            <span>form-builder</span>
-                        </Navbar.Brand>
-                        <Nav>
-                            <NavItem><Link to='/demopage'>Demo page</Link></NavItem>
-                            <NavItem><Link to='/docs'>Docs</Link></NavItem>
-                        </Nav>
-                    </Navbar>
-                    <Route path='/demopage' component={DemoPage} />
-                    <Route path='/docs' component={Docs} />
-                </div>
-            </Router>
-        )
-    }
+export default function() {
+    return (
+        <Router>
+            <div>
+                <Navbar>
+                    <Navbar.Brand>
+                        <span>form-builder</span>
+                    </Navbar.Brand>
+                    <Nav>
+                        <NavItem><Link to='/demopage'>Demo page</Link></NavItem>
+                        <NavItem><Link to='/docs'>Docs</Link></NavItem>
+                    </Nav>
+                </Navbar>
+                <Route path='/demopage' component={DemoPage} />
+                <Route path='/docs' component={Docs} />
+            </div>
+        </Router>
+    )
 }

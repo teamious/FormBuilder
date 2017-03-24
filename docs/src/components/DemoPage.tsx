@@ -8,8 +8,8 @@ import * as data from '../../../src/data';
 import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
 import FieldSelector from '../../../src/components/FieldSelector';
 import FormBuilder from '../../../src/components/FormBuilder';
+import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
-import NestedFormBuilder from '../../../src/components/Fields/NestedField';
 import FormSubmissionView from '../../../src/components/FormSubmissionView';
 import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
 

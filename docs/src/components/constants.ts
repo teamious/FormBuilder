@@ -1,33 +1,57 @@
 import * as data from '../../../src/data';
 import StandardEditor from './StandardEditor';
-import ShortText from './ShortText';
-import LongText from './LongText';
+
+import SingleSelector from './fields/SingleSelector';
+import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
+import SingleLineTextField from './fields/SingleLineTextField';
+import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
 
 export const registry: data.FieldRegistry = {
-    ShortText: { render: ShortText, editor: StandardEditor },
-    LongText: { render: LongText, editor: StandardEditor },
+    'SingleSelector': {
+        field: {
+            label: 'Single selector',
+            type: 'SingleSelector',
+            options: {
+                selectOpts: ['a', 'b', 'c'],
+            }
+        },
+        render: SingleSelector,
+        builder: SingleSelector,
+        editor: SingleSelectorOptionEditor
+    },
+    'SingleLineTextField': {
+        field: {
+            label: 'Name',
+            type: 'SingleLineTextField',
+            options: {
+                hint: 'Please enter your name',
+                required: true,
+                unique: false,
+            }
+        },
+        render: SingleLineTextField,
+        builder: SingleLineTextField,
+        editor: SingleLineTextFieldOptionEditor
+    },
 };
 
-export const noop = () => {};
-
+export const noop = () => { };
 
 export const fields: data.IField[] = [
     {
-        label: 'Short text',
-        type: 'ShortText',
+        label: 'Single selector',
+        type: 'SingleSelector',
         options: {
-            label: 'Label',
-            required: false,
-            placeholder: 'Placeholder',
+            selectOpts: ['a', 'b', 'c'],
         }
     },
     {
-        label: 'Long text',
-        type: 'LongText',
+        label: 'Name',
+        type: 'SingleLineTextField',
         options: {
-            label: 'Label',
-            required: false,
-            placeholder: 'Placeholder',
+            hint: 'Please enter your name',
+            required: true,
+            unique: false,
         }
-    }
+    },
 ];

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField, IFieldBuilderProps, IFieldRenderProps } from ''../../../../src/data'';
+import { IField, IFieldBuilderProps, IFieldRenderProps } from '../../../../src/data';
 
 interface IState {
 }
@@ -9,14 +9,15 @@ export default class SingleLineTextField extends React.PureComponent<IFieldRende
     public static defaultProps = {
         value: ''
     } as IFieldRenderProps & IFieldBuilderProps
-    
+
     constructor(props: IFieldRenderProps & IFieldBuilderProps) {
         super(props);
         this.onTextFieldChange = this.onTextFieldChange.bind(this);
     }
 
     public render() {
-        const { label, hint, required } = this.props.field.options ? this.props.field.options : null;
+        const { label } = this.props.field;
+        const { hint, required } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
                 <FormGroup>

@@ -1,0 +1,13 @@
+.demo-page-grid-fluid {
+    margin: 0 50px;
+}
+
+.form-builder-droppable-indicator {
+    width: 100%;
+    height: 1px;
+    background: #CCC;
+}
+
+.form-builder-editable-controls {
+    width: 100%;
+}

@@ -37,11 +37,14 @@ export default class NestedField extends React.PureComponent<IProps, IState> {
     }
 
     render() {
-        return <FormBuilder
-            registry={this.props.registry}
-            onFieldEditing={this.props.onFieldEditing}
-            onBeforeAddField={this.onBeforeAddField}
-            fields={this.props.field.fields}
-            onChange={this.onChangeFields} />
+        return (
+            <FormBuilder
+                registry={this.props.registry}
+                onFieldEditing={this.props.onFieldEditing}
+                onBeforeAddField={this.onBeforeAddField}
+                fields={this.props.field.fields}
+                onChange={this.onChangeFields}
+            />
+        )
     }
 }

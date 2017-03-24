@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField } from '../../data'
+import { IField } from '../../../../src/data'
 
 interface IState { }
 

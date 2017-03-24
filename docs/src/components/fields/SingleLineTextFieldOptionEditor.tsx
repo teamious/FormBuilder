@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormControl, Checkbox } from 'react-bootstrap';
 import * as assign from 'object-assign';
 
-import { IFieldOptionEditorProps } from '../../data';
+import { IFieldOptionEditorProps } from '../../../../src/data';
 
 interface IState { }
 

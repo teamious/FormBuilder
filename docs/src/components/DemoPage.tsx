@@ -1,19 +1,24 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
-import * as data from '../data';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-import FieldOptionEditor from './FieldOptionEditor'
-import FieldSelector from './FieldSelector';
-import FormBuilder from './FormBuilder';
-import FormSubmissionView from './FormSubmissionView';
 
-import SingleSelector from './Fields/SingleSelector';
-import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
-import SingleLineTextField from './Fields/SingleLineTextField';
-import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
-import NestedField from './Fields/NestedField';
-import NestedFormSubmissionView from './NestedFormSubmissionView';
+import * as data from '../../../src/data';
+import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
+import FieldSelector from '../../../src/components/FieldSelector';
+import FormBuilder from '../../../src/components/FormBuilder';
+import FormBuilderContext from '../../../src/components/FormBuilderContext';
+import NestedField from '../../../src/components/Fields/NestedField';
+import FormSubmissionView from '../../../src/components/FormSubmissionView';
+import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
+
+import SingleSelector from './fields/SingleSelector';
+import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
+import SingleLineTextField from './fields/SingleLineTextField';
+import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
+
+import './DemoPage.css';
 
 const options: data.IField[] = [
     {
@@ -57,7 +62,7 @@ const registry: data.FieldRegistry = {
 
 registry[NestedField.type] = { render: NestedFormSubmissionView, builder: NestedField };
 
-class App extends React.Component<IProps, IState> {
+class DemoPage extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;
 
     constructor() {
@@ -101,25 +106,33 @@ class App extends React.Component<IProps, IState> {
         const value = JSON.stringify(this.state.value);
 
         return (
-            <div style={{ minWidth: '640px' }}>
-                <Grid fluid={true}>
+            <div>
+                <Grid bsClass='demo-page-grid-fluid'>
                     <Row>
                         <Col md={3}>
                             <span>Field Selector</span>
                             <Panel>
-                                <FieldSelector
-                                    fields={options}
-                                />
+                                <FormBuilderContext>
+                                    <FieldSelector
+                                        fields={options}
+                                    />
+                                </FormBuilderContext>
                             </Panel>
                         </Col>
                         <Col md={5}>
                             <span>Form Builder</span>
-                            <FormBuilder
-                                onFieldEditing={this.onFieldEditing}
-                                onChange={this.onChangeFields}
-                                registry={registry}
-                                fields={this.state.fields}
-                            />
+                            <Panel>
+                                <div className='form-horizontal'>
+                                    <FormBuilderContext>
+                                        <FormBuilder
+                                            onFieldEditing={this.onFieldEditing}
+                                            onChange={this.onChangeFields}
+                                            registry={registry}
+                                            fields={this.state.fields}
+                                        />
+                                    </FormBuilderContext>
+                                </div>
+                            </Panel>
                         </Col>
                         <Col md={4}>
                             <span>Option Editor</span>
@@ -149,16 +162,20 @@ class App extends React.Component<IProps, IState> {
                             <Panel>
                                 <div>Debug: Form definitions</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
-
                                 <div>Debug: Form values</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
                             </Panel>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col md={8}>
+                            <Link to='/'>Go back to doc page</Link>
+                        </Col>
+                    </Row>
                 </Grid>
-            </div>
+            </div >
         );
     }
 }
 
-export default DragDropContext(HTML5Backend)(App) as React.ComponentClass<IProps>
+export default DemoPage

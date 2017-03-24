@@ -95,8 +95,8 @@ class DemoPage extends React.Component<IProps, IState> {
         const form = JSON.stringify(this.state.fields);
 
         return (
-            <div className='container'>
-                <Grid>
+            <div>
+                <Grid bsClass='demo-page-grid-fluid'>
                     <Row>
                         <Col md={3}>
                             <span>Field Selector</span>
@@ -111,14 +111,16 @@ class DemoPage extends React.Component<IProps, IState> {
                         <Col md={5}>
                             <span>Form Builder</span>
                             <Panel>
-                                <FormBuilderContext>
-                                    <FormBuilder
-                                        onFieldEditing={this.onFieldEditing}
-                                        onChange={this.onChangeFields}
-                                        registry={registry}
-                                        fields={this.state.fields}
-                                    />
-                                </FormBuilderContext>
+                                <div className='form-horizontal'>
+                                    <FormBuilderContext>
+                                        <FormBuilder
+                                            onFieldEditing={this.onFieldEditing}
+                                            onChange={this.onChangeFields}
+                                            registry={registry}
+                                            fields={this.state.fields}
+                                        />
+                                    </FormBuilderContext>
+                                </div>
                             </Panel>
                         </Col>
                         <Col md={4}>

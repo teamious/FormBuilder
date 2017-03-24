@@ -9,7 +9,7 @@ export default function() {
     return (
         <Router>
             <div>
-                <Navbar>
+                <Navbar fluid fixedTop>
                     <Navbar.Brand>
                         <span>form-builder</span>
                     </Navbar.Brand>

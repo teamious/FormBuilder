@@ -15,6 +15,8 @@ import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
 import NestedField from './fields/NestedField';
 
+import './DemoPage.css';
+
 const options: data.IField[] = [
     {
         label: 'Single selector',
@@ -93,27 +95,30 @@ class DemoPage extends React.Component<IProps, IState> {
         const form = JSON.stringify(this.state.fields);
 
         return (
-            <div>
-                <FormBuilderContext>
+            <div className='container'>
                 <Grid>
                     <Row>
                         <Col md={3}>
                             <span>Field Selector</span>
                             <Panel>
-                                <FieldSelector
-                                    fields={options}
-                                />
+                                <FormBuilderContext>
+                                    <FieldSelector
+                                        fields={options}
+                                    />
+                                </FormBuilderContext>
                             </Panel>
                         </Col>
                         <Col md={5}>
                             <span>Form Builder</span>
                             <Panel>
-                            <FormBuilder
-                                onFieldEditing={this.onFieldEditing}
-                                onChange={this.onChangeFields}
-                                registry={registry}
-                                fields={this.state.fields}
-                            />
+                                <FormBuilderContext>
+                                    <FormBuilder
+                                        onFieldEditing={this.onFieldEditing}
+                                        onChange={this.onChangeFields}
+                                        registry={registry}
+                                        fields={this.state.fields}
+                                    />
+                                </FormBuilderContext>
                             </Panel>
                         </Col>
                         <Col md={4}>
@@ -136,7 +141,6 @@ class DemoPage extends React.Component<IProps, IState> {
                         </Col>
                     </Row>
                 </Grid>
-                </FormBuilderContext>
             </div>
         );
     }

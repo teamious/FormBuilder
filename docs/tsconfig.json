@@ -8,7 +8,8 @@
         "jsx": "react"
     },
     "include": [
-        "./src/**/*"
+        "./src/**/*",
+        "./custom.d.ts"
     ],
     "exclude": [
         "./src/components/snippets"

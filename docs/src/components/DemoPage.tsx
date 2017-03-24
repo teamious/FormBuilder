@@ -8,12 +8,13 @@ import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
 import FieldSelector from '../../../src/components/FieldSelector';
 import FormBuilder from '../../../src/components/FormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
+import NestedField from '../../../src/components/Fields/NestedField';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
-import NestedField from './fields/NestedField';
+
 
 import './DemoPage.css';
 

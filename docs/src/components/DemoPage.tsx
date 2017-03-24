@@ -10,6 +10,7 @@ import FormBuilder from '../../../src/components/FormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
 import NestedField from '../../../src/components/Fields/NestedField';
 import FormSubmissionView from '../../../src/components/FormSubmissionView';
+import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
@@ -69,9 +70,11 @@ class DemoPage extends React.Component<IProps, IState> {
         this.onFieldEditing = this.onFieldEditing.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
+        this.onValueChanged = this.onValueChanged.bind(this);
         this.state = {
             fields: [],
             selectedField: null,
+            value: {},
         };
     }
 
@@ -144,13 +147,27 @@ class DemoPage extends React.Component<IProps, IState> {
                     <Row>
                         <Col md={8}>
                             <Panel>
+                                <div>Form Preview</div>
+                                <FormSubmissionView
+                                    fields={this.state.fields}
+                                    registry={registry}
+                                    value={this.state.value}
+                                    onChange={this.onValueChanged} />
+                            </Panel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={8}>
+                            <Panel>
                                 <div>Debug: Form definitions</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
+                                <div>Debug: Form values</div>
+                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
                             </Panel>
                         </Col>
                     </Row>
                 </Grid>
-            </div>
+            </div >
         );
     }
 }

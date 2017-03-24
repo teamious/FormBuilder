@@ -47,8 +47,6 @@ interface IState {
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
 class FormBuilder extends React.Component<IProps, IState> {
-    private editingIndex: number;
-
     constructor(props: IProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
@@ -56,7 +54,6 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
-        this.onFieldEdited = this.onFieldEdited.bind(this);
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -68,14 +65,13 @@ class FormBuilder extends React.Component<IProps, IState> {
             return;
         }
 
-        this.editingIndex = this.props.fields.indexOf(field);
-        this.props.onFieldEditing(field, this.onFieldEdited);
-    }
-
-    private onFieldEdited(field: data.IField) {
-        let fields = this.props.fields.slice();
-        fields[this.editingIndex] = field;
-        this.props.onChange(fields);
+        const editingIndex = this.props.fields.indexOf(field);
+        this.props.onFieldEditing(field, function (field: data.IField) {
+            // TODO: editingIndex may change due to re-order.
+            let fields = this.props.fields.slice();
+            fields[editingIndex] = field;
+            this.props.onChange(fields);
+        }.bind(this));
     }
 
     // onDeleteField is called when the user wants to delete a field.
@@ -151,11 +147,11 @@ class FormBuilder extends React.Component<IProps, IState> {
     // The rendered component is passed the field as a prop.
     private renderField(field: data.IField, index: number) {
         const fieldDef = this.props.registry[field.type];
-        if (!fieldDef || !fieldDef.render) {
+        if (!fieldDef || !fieldDef.builder) {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, {
+        const component = React.createElement(fieldDef.builder, {
             field,
             index,
             registry: this.props.registry,
@@ -180,7 +176,7 @@ class FormBuilder extends React.Component<IProps, IState> {
                             index={index}
                             field={field}
                         >
-                                {component}
+                            {component}
                         </Draggable>
                     </Editable>
                 </Droppable>
@@ -196,7 +192,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             <div className='form-builder'>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{padding: 25}}/>
+                    <div style={{ padding: 25 }} />
                 </Droppable>
             </div>
         );

@@ -7,11 +7,15 @@ interface IState {
 
 interface IProps {
     field: IField;
-    textFieldValue: string;
-    onTextFieldChange: (newValue: string) => void;
+    value: string;
+    onValueChange: (field: IField, newValue: string) => void;
 }
 
 export default class SingleLineTextField extends React.PureComponent<IProps, IState> {
+    public static defaultProps: Partial<IProps> = {
+        value: ''
+    }
+    
     constructor(props: IProps) {
         super(props);
         this.onTextFieldChange = this.onTextFieldChange.bind(this);
@@ -24,7 +28,7 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
                 <FormGroup>
                     <Col componentClass={ControlLabel} md={5}>{label}</Col>
                     <Col md={7}>
-                        <FormControl type='text' placeholder={hint} required={required} value={this.props.textFieldValue} onChange={this.onTextFieldChange} />
+                        <FormControl type='text' placeholder={hint} required={required} value={this.props.value} onChange={this.onTextFieldChange} />
                     </Col>
                 </FormGroup>
             </div>
@@ -32,6 +36,6 @@ export default class SingleLineTextField extends React.PureComponent<IProps, ISt
     }
 
     private onTextFieldChange(event: any) {
-        this.props.onTextFieldChange(event.target.value);
+        this.props.onValueChange(this.props.field, event.target.value);
     }
 }

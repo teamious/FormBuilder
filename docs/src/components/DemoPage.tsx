@@ -9,12 +9,12 @@ import FieldSelector from '../../../src/components/FieldSelector';
 import FormBuilder from '../../../src/components/FormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
 import NestedField from '../../../src/components/Fields/NestedField';
+import FormSubmissionView from '../../../src/components/FormSubmissionView';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
-
 
 import './DemoPage.css';
 
@@ -50,14 +50,15 @@ interface IProps {
 interface IState {
     fields: data.IField[],
     selectedField: data.IField,
+    value: any,
 }
 
 const registry: data.FieldRegistry = {
-    'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
-    'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
+    'SingleSelector': { render: SingleSelector, builder: SingleSelector, editor: SingleSelectorOptionEditor },
+    'SingleLineTextField': { render: SingleLineTextField, builder: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
 };
 
-registry[NestedField.type] = { render: NestedField };
+registry[NestedField.type] = { render: NestedFormSubmissionView, builder: NestedField };
 
 class DemoPage extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;
@@ -92,8 +93,13 @@ class DemoPage extends React.Component<IProps, IState> {
         this.fieldEdited(field);
     }
 
+    private onValueChanged(value: any) {
+        this.setState({ value } as IState);
+    }
+
     render() {
         const form = JSON.stringify(this.state.fields);
+        const value = JSON.stringify(this.state.value);
 
         return (
             <div>

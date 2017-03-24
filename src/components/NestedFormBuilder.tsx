@@ -1,19 +1,11 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
-import * as data from '../../data';
-import FormBuilder from '../FormBuilder';
+import * as data from '../data';
+import FormBuilder from './FormBuilder';
 
 interface IState { }
 
-interface IProps {
-    index: number;
-    field: data.IField;
-    registry: data.FieldRegistry;
-    onFieldEditing: (field: data.IField, done: (field: data.IField) => void) => void;
-    onChange: (field: data.IField, index: number) => void;
-}
-
-export default class NestedField extends React.PureComponent<IProps, IState> {
+export default class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, IState> {
     static type = 'NestedForm';
     constructor() {
         super();
@@ -28,7 +20,7 @@ export default class NestedField extends React.PureComponent<IProps, IState> {
     }
 
     private onBeforeAddField(field: data.IField): boolean {
-        if (field.type === NestedField.type) {
+        if (field.type === NestedFormBuilder.type) {
             console.warn('Nested Field cannot be added into another Nested Field.');
             return false;
         }

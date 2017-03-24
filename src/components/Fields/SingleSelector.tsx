@@ -1,22 +1,27 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField } from '../../data'
+import { IField, IFieldBuilderProps, IFieldRenderProps } from '../../data';
 
 interface IState { }
 
-interface IProps {
-    field: IField;
-}
+export default class SingleSelector extends React.PureComponent<IFieldBuilderProps & IFieldRenderProps, IState> {
+    public static defaultProps = {
+        value: ''
+    } as IFieldRenderProps & IFieldBuilderProps
 
-export default class SingleSelector extends React.PureComponent<IProps, IState> {
+    constructor() {
+        super();
+        this.onSelectorChanged = this.onSelectorChanged.bind(this);        
+    }
+
     render() {
-        const { label, selectOpts } = this.props.field.options ? this.props.field.options : null;
+        const { selectOpts } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
                 <FormGroup>
-                    <Col componentClass={ControlLabel} md={5}>{label}</Col>
+                    <Col componentClass={ControlLabel} md={5}>{this.props.field.label}</Col>
                     <Col md={7}>
-                        <FormControl componentClass="select">
+                        <FormControl componentClass="select" value={this.props.value} onChange={this.onSelectorChanged}>
                             {selectOpts && this.renderOpts(selectOpts)}
                         </FormControl>
                     </Col>
@@ -25,7 +30,11 @@ export default class SingleSelector extends React.PureComponent<IProps, IState> 
         );
     }
 
-    renderOpts(opts: Array<any>) {
+    private onSelectorChanged(event: any) {
+        this.props.onValueChange(this.props.field, event.target.value);
+    }
+
+    private renderOpts(opts: Array<any>) {
         return opts.map(
             (opt, index) => <option key={index}>{opt}</option>
         );

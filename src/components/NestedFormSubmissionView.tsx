@@ -3,23 +3,15 @@ import * as data from '../data';
 
 import FormSubmissionView from './FormSubmissionView';
 
-interface IProps {
-    index: number;
-    field: data.IField;
-    value: Array<any>;
-    registry: data.FieldRegistry;
-    onValueChange: (field: data.IField, value: Array<any>) => void;
-}
-
 interface IState {
 }
 
-export default class NestedFormSubmissionView extends React.PureComponent<IProps, IState> {
-    public static defaultProps: Partial<IProps> = {
+export default class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, IState> {
+    public static defaultProps: data.IFieldRenderProps = {
         value: [{}]
-    }
+    } as data.IFieldRenderProps;
 
-    constructor(props: IProps) {
+    constructor(props: data.IFieldRenderProps) {
         super(props);
         this.renderEntry = this.renderEntry.bind(this);
         this.onCreateEntry = this.onCreateEntry.bind(this);

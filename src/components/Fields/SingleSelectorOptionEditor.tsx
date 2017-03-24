@@ -15,7 +15,8 @@ export default class SingleSelectorOptionEditor extends React.PureComponent<IFie
     }
 
     render() {
-        const { label, selectOpts } = this.props.field.options;
+        const { label } = this.props.field;
+        const { selectOpts } = this.props.field.options;
         return (
             <div>
                 <span>Label</span>
@@ -27,7 +28,7 @@ export default class SingleSelectorOptionEditor extends React.PureComponent<IFie
 
     private onLabelChange(event: any) {
         let field = assign({}, this.props.field);
-        field.options.label = event.target.value;
+        field.label = event.target.value;
         this.props.onChange(field);
     }
 

@@ -1,4 +1,7 @@
-This is the prototype for Form FE UI. This will include:
-# Form builder
-# Form data rendering (Table/Grid)
-# Form reporting date rending (Graph)
+# README
+
+**FormBuilder** is a library of React components that you can use to provide a custom form builder experience. FormBuilder abstracts
+the communication layer of a form builder so that you can focus on writing custom form fields.
+
+See the [demo](https://teamious.github.io/FormBuilder/demo) or read the [documentation](https://teamious.github.io/FormBuilder).
+

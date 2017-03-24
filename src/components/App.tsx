@@ -6,12 +6,14 @@ import { DragDropContext } from 'react-dnd';
 import FieldOptionEditor from './FieldOptionEditor'
 import FieldSelector from './FieldSelector';
 import FormBuilder from './FormBuilder';
+import FormSubmissionView from './FormSubmissionView';
 
 import SingleSelector from './Fields/SingleSelector';
 import SingleSelectorOptionEditor from './Fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './Fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './Fields/SingleLineTextFieldOptionEditor'
 import NestedField from './Fields/NestedField';
+import NestedFormSubmissionView from './NestedFormSubmissionView';
 
 const options: data.IField[] = [
     {
@@ -45,14 +47,15 @@ interface IProps {
 interface IState {
     fields: data.IField[],
     selectedField: data.IField,
+    value: any,
 }
 
 const registry: data.FieldRegistry = {
-    'SingleSelector': { render: SingleSelector, editor: SingleSelectorOptionEditor },
-    'SingleLineTextField': { render: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
+    'SingleSelector': { render: SingleSelector, builder: SingleSelector, editor: SingleSelectorOptionEditor },
+    'SingleLineTextField': { render: SingleLineTextField, builder: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
 };
 
-registry[NestedField.type] = { render: NestedField };
+registry[NestedField.type] = { render: NestedFormSubmissionView, builder: NestedField };
 
 class App extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;
@@ -63,9 +66,11 @@ class App extends React.Component<IProps, IState> {
         this.onFieldEditing = this.onFieldEditing.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
+        this.onValueChanged = this.onValueChanged.bind(this);
         this.state = {
             fields: [],
             selectedField: null,
+            value: {},
         };
     }
 
@@ -87,8 +92,13 @@ class App extends React.Component<IProps, IState> {
         this.fieldEdited(field);
     }
 
+    private onValueChanged(value: any) {
+        this.setState({ value } as IState);
+    }
+
     render() {
         const form = JSON.stringify(this.state.fields);
+        const value = JSON.stringify(this.state.value);
 
         return (
             <div style={{ minWidth: '640px' }}>
@@ -125,8 +135,23 @@ class App extends React.Component<IProps, IState> {
                     <Row>
                         <Col md={8}>
                             <Panel>
+                                <div>Form Preview</div>
+                                <FormSubmissionView
+                                    fields={this.state.fields}
+                                    registry={registry}
+                                    value={this.state.value}
+                                    onChange={this.onValueChanged} />
+                            </Panel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={8}>
+                            <Panel>
                                 <div>Debug: Form definitions</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
+
+                                <div>Debug: Form values</div>
+                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
                             </Panel>
                         </Col>
                     </Row>

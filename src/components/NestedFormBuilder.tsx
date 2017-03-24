@@ -29,11 +29,14 @@ export default class NestedFormBuilder extends React.PureComponent<data.IFieldBu
     }
 
     render() {
-        return <FormBuilder
-            registry={this.props.registry}
-            onFieldEditing={this.props.onFieldEditing}
-            onBeforeAddField={this.onBeforeAddField}
-            fields={this.props.field.fields}
-            onChange={this.onChangeFields} />
+        return (
+            <FormBuilder
+                registry={this.props.registry}
+                onFieldEditing={this.props.onFieldEditing}
+                onBeforeAddField={this.onBeforeAddField}
+                fields={this.props.field.fields}
+                onChange={this.onChangeFields}
+            />
+        )
     }
 }

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import FieldSelector from '../../../../src/components/FieldSelector';
 import FormBuilder from '../../../../src/components/FormBuilder';
 import FormBuilderContext from '../../../../src/components/FormBuilderContext';
@@ -107,6 +108,10 @@ export default class extends React.Component<IProps, IState> {
                 <p>
                     Both <strong>ShortText</strong> and <strong>LongText</strong> represent custom field
                     types that you build and supply to the form editor.
+                </p>
+
+                <p>
+                    For example of the form-builder in action, go to <Link to='/demopage'>demo page</Link>.
                 </p>
 
                 <Example body={body} footer={snippet}/>

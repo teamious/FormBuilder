@@ -22,7 +22,7 @@ export default function() {
     const body = (
         <div>
             <FormBuilderContext>
-                <FieldSelector fields={constants.fields}/>
+                <FieldSelector registry={constants.registry}/>
             </FormBuilderContext>
         </div>
     );

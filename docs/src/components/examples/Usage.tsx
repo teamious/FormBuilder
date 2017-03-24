@@ -1,13 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { Modal, Button } from 'react-bootstrap';
+
 import FieldSelector from '../../../../src/components/FieldSelector';
 import FormBuilder from '../../../../src/components/FormBuilder';
 import FormBuilderContext from '../../../../src/components/FormBuilderContext';
 import FieldOptionEditor from '../../../../src/components/FieldOptionEditor';
-import StandardEditor from '../StandardEditor';
-import LongText from '../LongText';
-import ShortText from '../ShortText';
-import { Modal, Button } from 'react-bootstrap';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import  Example from '../Example';
@@ -76,7 +74,7 @@ export default class extends React.Component<IProps, IState> {
 
 
                     <FieldSelector
-                        fields={constants.fields}
+                        registry={constants.registry}
                     />
 
                     <FormBuilder

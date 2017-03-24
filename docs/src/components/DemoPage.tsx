@@ -8,8 +8,8 @@ import * as data from '../../../src/data';
 import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
 import FieldSelector from '../../../src/components/FieldSelector';
 import FormBuilder from '../../../src/components/FormBuilder';
+import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
-import NestedField from '../../../src/components/Fields/NestedField';
 import FormSubmissionView from '../../../src/components/FormSubmissionView';
 import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
 
@@ -19,32 +19,6 @@ import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
 
 import './DemoPage.css';
-
-const options: data.IField[] = [
-    {
-        label: 'Single selector',
-        type: 'SingleSelector',
-        options: {
-            label: 'Select something',
-            selectOpts: ['a', 'b', 'c'],
-        }
-    },
-    {
-        label: 'Single line text field',
-        type: 'SingleLineTextField',
-        options: {
-            label: 'Name',
-            hint: 'Please enter your name',
-            required: true,
-            unique: false,
-        }
-    },
-    {
-        label: 'Detail',
-        type: NestedField.type,
-        fields: [],
-    }
-];
 
 interface IProps {
 }
@@ -56,11 +30,43 @@ interface IState {
 }
 
 const registry: data.FieldRegistry = {
-    'SingleSelector': { render: SingleSelector, builder: SingleSelector, editor: SingleSelectorOptionEditor },
-    'SingleLineTextField': { render: SingleLineTextField, builder: SingleLineTextField, editor: SingleLineTextFieldOptionEditor },
+    'SingleSelector': {
+        field: {
+            label: 'Single selector',
+            type: 'SingleSelector',
+            options: {
+                selectOpts: ['a', 'b', 'c'],
+            }
+        },
+        render: SingleSelector,
+        builder: SingleSelector,
+        editor: SingleSelectorOptionEditor
+    },
+    'SingleLineTextField': {
+        field: {
+            label: 'Name',
+            type: 'SingleLineTextField',
+            options: {
+                hint: 'Please enter your name',
+                required: true,
+                unique: false,
+            }
+        },
+        render: SingleLineTextField,
+        builder: SingleLineTextField,
+        editor: SingleLineTextFieldOptionEditor
+    },
 };
 
-registry[NestedField.type] = { render: NestedFormSubmissionView, builder: NestedField };
+registry[NestedFormBuilder.type] = {
+    field: {
+        label: 'Detail',
+        type: NestedFormBuilder.type,
+        fields: [],
+    },
+    render: NestedFormSubmissionView,
+    builder: NestedFormBuilder
+};
 
 class DemoPage extends React.Component<IProps, IState> {
     private fieldEdited: (field: data.IField) => void;
@@ -114,7 +120,7 @@ class DemoPage extends React.Component<IProps, IState> {
                             <Panel>
                                 <FormBuilderContext>
                                     <FieldSelector
-                                        fields={options}
+                                    registry={registry}
                                     />
                                 </FormBuilderContext>
                             </Panel>

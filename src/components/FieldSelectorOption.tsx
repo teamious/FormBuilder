@@ -4,6 +4,7 @@ import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector
 
 interface IProps {
     field: data.IField;
+    label: string;
 }
 
 interface IState { }
@@ -17,11 +18,11 @@ interface IDNDProps {
 // to the drag an drop context.
 class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     render() {
-        const { connectDragSource, field } = this.props;
+        const { connectDragSource, field, label } = this.props;
         return connectDragSource(
             <div className='field-selector-option'>
                 <span className='field-selector-option-label'>
-                    {field.label}
+                    {label}
                 </span>
             </div>
         );

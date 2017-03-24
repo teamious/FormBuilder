@@ -6,8 +6,6 @@ import FormBuilderContext from '../../../../src/components/FormBuilderContext';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';
-import ShortText from '../ShortText';
-import LongText from '../LongText';
 const code = require('!!raw!../snippets/FormBuilder.tsx');
 
 interface IProps {

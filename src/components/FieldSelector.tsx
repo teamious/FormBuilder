@@ -3,7 +3,7 @@ import * as data from '../data';
 import FieldSelectorOption from './FieldSelectorOption';
 
 interface IProps {
-    fields: data.IField[];
+    registry: data.FieldRegistry;
 }
 
 interface IState { }
@@ -14,9 +14,11 @@ export default class FieldSelector extends React.PureComponent<IProps, IState> {
     }
 
     render() {
-        const options = this.props.fields.map(
-            (field: data.IField, index: number) => <FieldSelectorOption field={field} key={index} />
-        );
+        let options = [];
+        for (let label in this.props.registry) {
+            const field = this.props.registry[label].field;
+            options.push(<FieldSelectorOption field={field} key={label} label={label} />)
+        }
 
         return (
             <div className='field-selector'>

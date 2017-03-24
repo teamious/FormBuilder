@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as data from '../data';
+import * as data from '../data/';
 
 interface IProps {
     field: data.IField;

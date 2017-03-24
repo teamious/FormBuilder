@@ -17,7 +17,8 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
     }
 
     render() {
-        const { label, hint, required, unique } = this.props.field.options;
+        const { label } = this.props.field;
+        const { hint, required, unique } = this.props.field.options;
         return (
             <div>
                 <div>
@@ -39,7 +40,7 @@ export default class SingleLineTextFieldOptionEditor extends React.PureComponent
 
     private onLabelChange(event: any) {
         let field = assign({}, this.props.field);
-        field.options.label = event.target.value;
+        field.label = event.target.value;
         this.props.onChange(field);
     }
 

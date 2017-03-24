@@ -1,28 +1,23 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField } from '../../../../src/data'
+import { IField, IFieldBuilderProps, IFieldRenderProps } from '../../../../src/data';
 
 interface IState {
 }
 
-interface IProps {
-    field: IField;
-    value: string;
-    onValueChange: (field: IField, newValue: string) => void;
-}
-
-export default class SingleLineTextField extends React.PureComponent<IProps, IState> {
-    public static defaultProps: Partial<IProps> = {
+export default class SingleLineTextField extends React.PureComponent<IFieldRenderProps & IFieldBuilderProps, IState> {
+    public static defaultProps = {
         value: ''
-    }
-    
-    constructor(props: IProps) {
+    } as IFieldRenderProps & IFieldBuilderProps
+
+    constructor(props: IFieldRenderProps & IFieldBuilderProps) {
         super(props);
         this.onTextFieldChange = this.onTextFieldChange.bind(this);
     }
 
     public render() {
-        const { label, hint, required } = this.props.field.options ? this.props.field.options : null;
+        const { label } = this.props.field;
+        const { hint, required } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
                 <FormGroup>

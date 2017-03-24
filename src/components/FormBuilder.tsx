@@ -19,6 +19,10 @@ interface IProps {
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField, done: (field: data.IField) => void) => void;
 
+    // onBeforeAddField is called before add the new field into the array.
+    // If this method returns false, onChange will not be called.
+    onBeforeAddField?: (field: data.IField) => boolean;
+
     // onBeforeDeleteField is called before calling the onDeleteField method.
     // If this method returns false, onDeleteField will not be called.
     onBeforeDeleteField?: (field: data.IField) => boolean;
@@ -43,8 +47,6 @@ interface IState {
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
 class FormBuilder extends React.Component<IProps, IState> {
-    private editingIndex: number;
-
     constructor(props: IProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
@@ -52,7 +54,6 @@ class FormBuilder extends React.Component<IProps, IState> {
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
-        this.onFieldEdited = this.onFieldEdited.bind(this);
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -64,14 +65,13 @@ class FormBuilder extends React.Component<IProps, IState> {
             return;
         }
 
-        this.editingIndex = this.props.fields.indexOf(field);
-        this.props.onFieldEditing(field, this.onFieldEdited);
-    }
-
-    private onFieldEdited(field: data.IField) {
-        let fields = this.props.fields.slice();
-        fields[this.editingIndex] = field;
-        this.props.onChange(fields);
+        const editingIndex = this.props.fields.indexOf(field);
+        this.props.onFieldEditing(field, function (field: data.IField) {
+            // TODO: editingIndex may change due to re-order.
+            let fields = this.props.fields.slice();
+            fields[editingIndex] = field;
+            this.props.onChange(fields);
+        }.bind(this));
     }
 
     // onDeleteField is called when the user wants to delete a field.
@@ -109,13 +109,22 @@ class FormBuilder extends React.Component<IProps, IState> {
         }
 
         let sourceField = source.field;
-        if (!source.index) {
+        if (source.index === null) {
             // NOTE: If source is from the FieldSelector, we should create a clone field.
             sourceField = JSON.parse(JSON.stringify(sourceField));
+            let hook = this.props.onBeforeAddField;
+            if (hook && !hook(sourceField)) {
+                return;
+            }
+        }
+        else if (this.props.fields.indexOf(target.field) !== target.index &&
+            this.props.fields.indexOf(source.field) !== source.index) {
+            // NOTE: For re-ordering, make sure the target & source are in the same level.
+            return;
         }
 
         let fields = this.props.fields.concat([]);
-        if (source.index == null) {
+        if (source.index === null) {
             fields.splice(target.index, 0, sourceField)
         } else if (source.index < target.index) {
             fields.splice(target.index, 0, sourceField)
@@ -138,11 +147,11 @@ class FormBuilder extends React.Component<IProps, IState> {
     // The rendered component is passed the field as a prop.
     private renderField(field: data.IField, index: number) {
         const fieldDef = this.props.registry[field.type];
-        if (!fieldDef || !fieldDef.render) {
+        if (!fieldDef || !fieldDef.builder) {
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.render, {
+        const component = React.createElement(fieldDef.builder, {
             field,
             index,
             registry: this.props.registry,
@@ -167,7 +176,7 @@ class FormBuilder extends React.Component<IProps, IState> {
                             index={index}
                             field={field}
                         >
-                                {component}
+                            {component}
                         </Draggable>
                     </Editable>
                 </Droppable>

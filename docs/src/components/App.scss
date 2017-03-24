@@ -1,11 +1,12 @@
 .container {
     position: relative;
-    margin-top: 50px;
+    padding-left: 215px;
 }
 .app-nav {
     width: 250px;
     position: fixed;
     float: left;
+    top: 0;
     margin-top: 15px;
     li {
         &.nested {

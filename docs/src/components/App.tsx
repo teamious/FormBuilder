@@ -1,26 +1,78 @@
 import * as React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
-
-import Docs from './Docs';
-import DemoPage from './DemoPage';
+import Snippet from './Snippet';
+import UsageExample from './examples/Usage';
+import FieldSelectorExample from './examples/FieldSelector';
+import FormBuilderExample from './examples/FormBuilder';
+import FieldOptionEditorExample from './examples/FieldOptionEditor';
+import FieldRegistryExample from './examples/FieldRegistry';
+import IFieldOptionEditorComponentExample from './examples/IFieldOptionEditorComponent';
+import IFieldOptionEditorPropsExample from './examples/IFieldOptionEditorProps';
+import IntroductionExample from './examples/Introduction';
+import IFieldExample from './examples/IField';
+import { Nav, NavItem } from 'react-bootstrap';
+import './App.scss';
 
 export default function() {
     return (
-        <Router>
-            <div>
-                <Navbar fluid fixedTop>
-                    <Navbar.Brand>
-                        <span>form-builder</span>
-                    </Navbar.Brand>
-                    <Nav>
-                        <NavItem><Link to='/demopage'>Demo page</Link></NavItem>
-                        <NavItem><Link to='/docs'>Docs</Link></NavItem>
-                    </Nav>
-                </Navbar>
-                <Route path='/demopage' component={DemoPage} />
-                <Route path='/docs' component={Docs} />
+        <div className='container'>
+            <div className='app-nav'>
+                <Nav stacked>
+                    <NavItem href='#introduction'>Introduction</NavItem>
+                    <NavItem href='#installation'>Installation</NavItem>
+                    <NavItem href='#demo'>Demo</NavItem>
+                    <NavItem href='#components'>Components</NavItem>
+                    <NavItem className='nested' href='#field-selector'>FieldSelector</NavItem>
+                    <NavItem className='nested' href='#form-builder'>FormBuilder</NavItem>
+                    <NavItem className='nested' href='#field-option-editor'>FieldOptionEditor</NavItem>
+                    <NavItem href='#interfaces'>Interfaces</NavItem>
+                    <NavItem className='nested' href='#ifield'>IField</NavItem>
+                    <NavItem className='nested' href='#ifield-option-editor-component'>IFieldOptionEditorComponent</NavItem>
+                    <NavItem className='nested' href='#ifield-option-editor-props'>IFieldOptionEditorProps</NavItem>
+                    <NavItem href='#types'>Types</NavItem>
+                    <NavItem className='nested' href='#field-registry'>FieldRegistry</NavItem>
+                </Nav>
             </div>
-        </Router>
-    )
+
+            <div className='app'>
+                <IntroductionExample/>
+
+                <h3>
+                    <a href='#installation' name='installation'>
+                        Installation
+                    </a>
+                </h3>
+                <pre>
+                    npm install form-builder --save
+                </pre>
+
+                <UsageExample/>
+
+                <h3>
+                    <a href='#components' name='components'>
+                        Components
+                    </a>
+                </h3>
+                <FieldSelectorExample/>
+                <FormBuilderExample/>
+                <FieldOptionEditorExample/>
+                <IFieldOptionEditorComponentExample/>
+                <IFieldOptionEditorPropsExample/>
+
+                <h3>
+                    <a href='#interfaces' name='interfaces'>
+                        Interfaces
+                    </a>
+                </h3>
+                <IFieldExample/>
+
+                <h3>
+                    <a href='#types' name='types'>
+                        Types
+                    </a>
+                </h3>
+
+                <FieldRegistryExample/>
+            </div>
+        </div>
+    );
 }

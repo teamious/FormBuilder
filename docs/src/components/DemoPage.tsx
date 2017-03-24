@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
@@ -164,6 +165,11 @@ class DemoPage extends React.Component<IProps, IState> {
                                 <div>Debug: Form values</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
                             </Panel>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md={8}>
+                            <Link to='/'>Go back to doc page</Link>
                         </Col>
                     </Row>
                 </Grid>

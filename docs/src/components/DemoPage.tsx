@@ -20,9 +20,6 @@ import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionE
 
 import './DemoPage.css';
 
-interface IProps {
-}
-
 interface IState {
     fields: data.IField[],
     selectedField: data.IField,
@@ -68,7 +65,7 @@ registry[NestedFormBuilder.type] = {
     builder: NestedFormBuilder
 };
 
-class DemoPage extends React.Component<IProps, IState> {
+class DemoPage extends React.Component<void, IState> {
     private fieldEdited: (field: data.IField) => void;
 
     constructor() {

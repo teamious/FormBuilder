@@ -192,7 +192,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             <div className='form-builder'>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{ padding: 25 }} />
+                    <div style={{padding: 25}}/>
                 </Droppable>
             </div>
         );

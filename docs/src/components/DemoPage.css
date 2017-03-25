@@ -11,3 +11,7 @@
 .form-builder-editable-controls {
     width: 100%;
 }
+
+.form-builder-nested {
+    border: 1px solid #ccc;
+}

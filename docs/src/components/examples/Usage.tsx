@@ -109,7 +109,7 @@ export default class extends React.Component<IProps, IState> {
                 </p>
 
                 <p>
-                    For example of the form-builder in action, go to <Link to='/demopage'>demo page</Link>.
+                    For example of the form-builder in action, go to <Link to='/demo'>demo page</Link>.
                 </p>
 
                 <Example body={body} footer={snippet}/>

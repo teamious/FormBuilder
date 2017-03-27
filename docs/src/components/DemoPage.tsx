@@ -29,6 +29,7 @@ interface IState {
 const registry: data.FieldRegistry = {
     'SingleSelector': {
         field: {
+            key: '',
             label: 'Please select:',
             type: 'SingleSelector',
             options: {
@@ -42,6 +43,7 @@ const registry: data.FieldRegistry = {
     },
     'SingleLineTextField': {
         field: {
+            key: '',
             label: 'Name',
             type: 'SingleLineTextField',
             options: {
@@ -59,6 +61,7 @@ const registry: data.FieldRegistry = {
 
 registry[NestedFormBuilder.type] = {
     field: {
+        key: '',
         label: 'Detail',
         type: NestedFormBuilder.type,
         fields: [],
@@ -78,6 +81,7 @@ class DemoPage extends React.Component<void, IState> {
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
+        this.onBeforeAddField = this.onBeforeAddField.bind(this);
         this.state = {
             fields: [],
             selectedField: null,
@@ -107,6 +111,11 @@ class DemoPage extends React.Component<void, IState> {
         this.setState({ value } as IState);
     }
 
+    private onBeforeAddField(field: data.IField) {
+        field.key = Math.floor((Math.random() * 10000000) + 1).toString();
+        return true;
+    }
+
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
@@ -120,7 +129,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <FormBuilderContext>
                                     <FieldSelector
-                                    registry={registry}
+                                        registry={registry}
                                     />
                                 </FormBuilderContext>
                             </Panel>
@@ -135,6 +144,7 @@ class DemoPage extends React.Component<void, IState> {
                                             onChange={this.onChangeFields}
                                             registry={registry}
                                             fields={this.state.fields}
+                                            onBeforeAddField={this.onBeforeAddField}
                                         />
                                     </FormBuilderContext>
                                 </div>

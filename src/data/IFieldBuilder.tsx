@@ -7,6 +7,7 @@ export interface IFieldBuilderProps {
     registry: FieldRegistry;
     onChange: (field: IField, index: number) => void;
     onFieldEditing: (field: IField, done: (field: IField) => void) => void;
+    onBeforeAddField: (field: IField) => boolean;
 }
 
 export interface IFieldBuilderComponent extends React.ComponentClass<IFieldBuilderProps> {

@@ -15,9 +15,10 @@ export default class FieldSelector extends React.PureComponent<IProps, IState> {
 
     render() {
         let options = [];
-        for (let label in this.props.registry) {
-            const field = this.props.registry[label].field;
-            options.push(<FieldSelectorOption field={field} key={label} label={label} />)
+        for (let key in this.props.registry) {
+            const field = this.props.registry[key].field;
+            const displayName = this.props.registry[key].displayName;
+            options.push(<FieldSelectorOption field={field} key={key} label={displayName} />)
         }
 
         return (

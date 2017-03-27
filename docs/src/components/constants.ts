@@ -9,12 +9,13 @@ import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionE
 export const registry: data.FieldRegistry = {
     'SingleSelector': {
         field: {
-            label: 'Single selector',
+            label: 'Please select:',
             type: 'SingleSelector',
             options: {
                 selectOpts: ['a', 'b', 'c'],
             }
         },
+        displayName: '单选(selector)',
         render: SingleSelector,
         builder: SingleSelector,
         editor: SingleSelectorOptionEditor
@@ -29,6 +30,7 @@ export const registry: data.FieldRegistry = {
                 unique: false,
             }
         },
+        displayName: '单行输入(input)',
         render: SingleLineTextField,
         builder: SingleLineTextField,
         editor: SingleLineTextFieldOptionEditor

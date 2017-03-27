@@ -29,7 +29,7 @@ interface IState {
 const registry: data.FieldRegistry = {
     'SingleSelector': {
         field: {
-            label: 'Single selector',
+            label: 'Please select:',
             type: 'SingleSelector',
             options: {
                 selectOpts: ['a', 'b', 'c'],

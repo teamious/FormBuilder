@@ -5,7 +5,7 @@ import App from './components/App';
 import DemoPage from './components/DemoPage';
 
 ReactDOM.render(
-    <Router>
+    <Router basename='/FormBuilder'>
         <div>
             <Route exact path='/' component={App} />
             <Route path='/demo' component={DemoPage} />

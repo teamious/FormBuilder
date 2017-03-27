@@ -29,6 +29,7 @@ interface IState {
 const registry: data.FieldRegistry = {
     'SingleSelector': {
         field: {
+            key: '',
             label: 'Single selector',
             type: 'SingleSelector',
             options: {
@@ -41,6 +42,7 @@ const registry: data.FieldRegistry = {
     },
     'SingleLineTextField': {
         field: {
+            key: '',
             label: 'Name',
             type: 'SingleLineTextField',
             options: {
@@ -57,6 +59,7 @@ const registry: data.FieldRegistry = {
 
 registry[NestedFormBuilder.type] = {
     field: {
+        key: '',
         label: 'Detail',
         type: NestedFormBuilder.type,
         fields: [],
@@ -123,7 +126,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <FormBuilderContext>
                                     <FieldSelector
-                                    registry={registry}
+                                        registry={registry}
                                     />
                                 </FormBuilderContext>
                             </Panel>

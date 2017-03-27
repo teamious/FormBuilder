@@ -3,9 +3,10 @@ import { FieldRegistry } from './FieldRegistry';
 
 export interface IFieldRenderProps {
     registry: FieldRegistry;
-    field: IField;
     index: number;
+    field: IField;
     value: any;
+    attempt: boolean;
     onValueChange: (field: IField, value: any) => void;
 }
 

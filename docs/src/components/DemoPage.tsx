@@ -12,6 +12,7 @@ import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
 import FormSubmissionView from '../../../src/components/FormSubmissionView';
 import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
+import FormView from '../../../src/components/FormView';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
@@ -117,7 +118,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <FormBuilderContext>
                                     <FieldSelector
-                                    registry={registry}
+                                        registry={registry}
                                     />
                                 </FormBuilderContext>
                             </Panel>
@@ -149,7 +150,7 @@ class DemoPage extends React.Component<void, IState> {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={8}>
+                        <Col md={6}>
                             <Panel>
                                 <div>Form Preview</div>
                                 <FormSubmissionView
@@ -157,6 +158,15 @@ class DemoPage extends React.Component<void, IState> {
                                     registry={registry}
                                     value={this.state.value}
                                     onChange={this.onValueChanged} />
+                            </Panel>
+                        </Col>
+                        <Col md={6}>
+                            <Panel>
+                                <div>Form View</div>
+                                <FormView
+                                    fields={this.state.fields}
+                                    value={this.state.value}
+                                />
                             </Panel>
                         </Col>
                     </Row>

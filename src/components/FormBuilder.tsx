@@ -156,7 +156,8 @@ class FormBuilder extends React.Component<IProps, IState> {
             index,
             registry: this.props.registry,
             onFieldEditing: this.props.onFieldEditing,
-            onChange: this.onFieldChanged
+            onChange: this.onFieldChanged,
+            onBeforeAddField: this.props.onBeforeAddField,
         });
 
         return (
@@ -192,7 +193,7 @@ class FormBuilder extends React.Component<IProps, IState> {
             <div className='form-builder'>
                 {this.props.fields.map(this.renderField)}
                 <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{padding: 25}}/>
+                    <div style={{ padding: 25 }} />
                 </Droppable>
             </div>
         );

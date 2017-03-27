@@ -9,6 +9,7 @@ import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionE
 export const registry: data.FieldRegistry = {
     'SingleSelector': {
         field: {
+            key: '',
             label: 'Single selector',
             type: 'SingleSelector',
             options: {
@@ -21,6 +22,7 @@ export const registry: data.FieldRegistry = {
     },
     'SingleLineTextField': {
         field: {
+            key: '',
             label: 'Name',
             type: 'SingleLineTextField',
             options: {
@@ -39,6 +41,7 @@ export const noop = () => { };
 
 export const fields: data.IField[] = [
     {
+        key: '',
         label: 'Single selector',
         type: 'SingleSelector',
         options: {
@@ -46,6 +49,7 @@ export const fields: data.IField[] = [
         }
     },
     {
+        key: '',
         label: 'Name',
         type: 'SingleLineTextField',
         options: {

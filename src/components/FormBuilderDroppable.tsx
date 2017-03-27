@@ -46,7 +46,7 @@ const spec: DropTargetSpec<IProps> = {
 
 const collect: DropTargetCollector = (connect, monitor): IDNDProps => {
     return {
-        isOver: monitor.isOver(),
+        isOver: monitor.isOver({ shallow: true }),
         connectDropTarget: connect.dropTarget(),
     }
 }

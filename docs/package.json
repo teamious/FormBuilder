@@ -30,7 +30,7 @@
     "webpack-dev-server": "1.16.2"
   },
   "scripts": {
-    "build": "webpack -p",
-    "start": "webpack-dev-server"
+    "build": "NODE_ENV=prod webpack -p",
+    "start": "webpack-dev-server --history-api-fallback"
   }
 }

@@ -78,7 +78,7 @@ class DemoPage extends React.Component<void, IState> {
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
-        this.onBeforeFieldAdd = this.onBeforeFieldAdd.bind(this);
+        this.onBeforeAddField = this.onBeforeAddField.bind(this);
         this.state = {
             fields: [],
             selectedField: null,
@@ -108,7 +108,7 @@ class DemoPage extends React.Component<void, IState> {
         this.setState({ value } as IState);
     }
 
-    private onBeforeFieldAdd(field: data.IField) {
+    private onBeforeAddField(field: data.IField) {
         field.key = Math.floor((Math.random() * 10000000) + 1).toString();
         return true;
     }
@@ -141,7 +141,7 @@ class DemoPage extends React.Component<void, IState> {
                                             onChange={this.onChangeFields}
                                             registry={registry}
                                             fields={this.state.fields}
-                                            onBeforeAddField={this.onBeforeFieldAdd}
+                                            onBeforeAddField={this.onBeforeAddField}
                                         />
                                     </FormBuilderContext>
                                 </div>

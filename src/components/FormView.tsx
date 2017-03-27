@@ -3,7 +3,10 @@ import * as assign from 'object-assign';
 
 import * as data from '../data';
 
-interface IProps { }
+interface IProps {
+    fields: data.IField[];
+    value: any;
+}
 
 interface IState { }
 

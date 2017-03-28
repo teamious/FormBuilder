@@ -1,16 +1,16 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import FormBuilder from '../../../../src/components/FormBuilder';
-import FieldOptionEditor from '../../../../src/components/FieldOptionEditor';
-import FormBuilderContext from '../../../../src/components/FormBuilderContext';
+import { FormBuilder } from '../../../../src/components/FormBuilder';
+import { FieldOptionEditor } from '../../../../src/components/FieldOptionEditor';
+import { FormBuilderContext } from '../../../../src/components/FormBuilderContext';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';
 import { Modal, Button } from 'react-bootstrap';
 const code = require('!!raw!../snippets/FieldOptionEditor.tsx');
 
-interface IProps {}
+interface IProps { }
 
 interface IState {
     fields: data.IField[];
@@ -33,25 +33,25 @@ export default class extends React.Component<IProps, IState> {
     }
 
     onEditField(field: data.IField) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
     }
 
     onChangeFields(fields: data.IField[]) {
-        this.setState({fields} as IState);
+        this.setState({ fields } as IState);
     }
 
     private closeModal() {
-        this.setState({field: null} as IState);
+        this.setState({ field: null } as IState);
     }
 
 
     private onChangeField(field: data.IField) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback(field);
     }
 
     private onFieldEditing(field: data.IField, callback: (field: data.IField) => void) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback = callback;
     }
 
@@ -60,7 +60,7 @@ export default class extends React.Component<IProps, IState> {
             <div>
                 <FormBuilderContext>
 
-                     <Modal onHide={this.closeModal} show={!!this.state.field}>
+                    <Modal onHide={this.closeModal} show={!!this.state.field}>
                         <Modal.Body>
                             <FieldOptionEditor
                                 onChange={this.onChangeField}
@@ -79,13 +79,13 @@ export default class extends React.Component<IProps, IState> {
                         onFieldEditing={this.onFieldEditing}
                         registry={constants.registry}
                         onChange={this.onChangeFields}
-                        fields={this.state.fields}/>
+                        fields={this.state.fields} />
                 </FormBuilderContext>
             </div>
         );
 
         const footer = (
-            <Snippet code={code} lang='typescript'/>
+            <Snippet code={code} lang='typescript' />
         );
 
         return (
@@ -107,9 +107,9 @@ export default class extends React.Component<IProps, IState> {
                     by replace the old field with the new field.
                 </p>
 
-                <Example body={body} footer={footer}/>
+                <Example body={body} footer={footer} />
 
-                <PropsTable data={propsData}/>
+                <PropsTable data={propsData} />
             </div>
         );
     }

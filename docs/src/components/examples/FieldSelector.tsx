@@ -1,8 +1,8 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import FieldSelector from '../../../../src/components/FieldSelector';
-import FormBuilderContext from '../../../../src/components/FormBuilderContext';
+import { FieldSelector } from '../../../../src/components/FieldSelector';
+import { FormBuilderContext } from '../../../../src/components/FormBuilderContext';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';
@@ -18,16 +18,16 @@ const propsData: Array<IPropRow> = [
     }
 ];
 
-export default function() {
+export default function () {
     const body = (
         <div>
             <FormBuilderContext>
-                <FieldSelector registry={constants.registry}/>
+                <FieldSelector registry={constants.registry} />
             </FormBuilderContext>
         </div>
     );
 
-    const snippet = <Snippet code={code} lang='typescript'/>
+    const snippet = <Snippet code={code} lang='typescript' />
 
     return (
         <div>
@@ -43,9 +43,9 @@ export default function() {
                 to the form defintion, you can drag a field from the <strong>FieldSelector</strong> and drop it into the <strong>FormBuilder</strong>
             </p>
 
-            <Example body={body} footer={snippet}/>
+            <Example body={body} footer={snippet} />
 
-            <PropsTable data={propsData}/>
+            <PropsTable data={propsData} />
         </div>
     )
 }

@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as data from '../data';
 
-import FormDisplayView from './FormDisplayView';
+import { FormDisplayView } from './FormDisplayView';
 
-interface IState { };
+export interface INestedFormDisplayViewState { };
 
-export default class NestedFormDisplayView extends React.PureComponent<data.IFieldDisplayProps, IState> {
+export default class NestedFormDisplayView extends React.PureComponent<data.IFieldDisplayProps, INestedFormDisplayViewState> {
     public static defaultProps: data.IFieldDisplayProps = {
         value: [{}]
     } as data.IFieldDisplayProps;

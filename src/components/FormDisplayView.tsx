@@ -3,16 +3,16 @@ import * as assign from 'object-assign';
 
 import * as data from '../data';
 
-interface IProps {
+export interface IFormDisplayViewProps {
     fields: data.IField[];
     registry: data.FieldRegistry;
     value: any;
 }
 
-interface IState { }
+export interface IFormDisplayViewState { }
 
-export default class FormDisplayView extends React.PureComponent<IProps, IState> {
-    constructor(props: IProps) {
+export class FormDisplayView extends React.PureComponent<IFormDisplayViewProps, IFormDisplayViewState> {
+    constructor(props: IFormDisplayViewProps) {
         super(props);
 
         this.renderField = this.renderField.bind(this);

@@ -13,7 +13,7 @@ import { FormBuilderContext } from '../../../src/components/FormBuilderContext';
 import { FormSubmissionView } from '../../../src/components/FormSubmissionView';
 import { NestedFormSubmissionView } from '../../../src/components/NestedFormSubmissionView';
 import { FormDisplayView } from '../../../src/components/FormDisplayView';
-import NestedFormDisplayView from '../../../src/components/NestedFormDisplayView';
+import { NestedFormDisplayView } from '../../../src/components/NestedFormDisplayView';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';

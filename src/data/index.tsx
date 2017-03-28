@@ -1,5 +1,6 @@
 export * from './IDragDrop';
 export * from './IField';
+export * from './IFieldError';
 export * from './IFieldOptionEditor';
 export * from './IFieldBuilder';
 export * from './IFieldRender';

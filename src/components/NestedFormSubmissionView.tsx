@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as assign from 'object-assign';
 import * as data from '../data';
 
 import FormSubmissionView from './FormSubmissionView';
@@ -7,6 +8,10 @@ interface IState {
 }
 
 export default class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, IState> {
+    private nestedEntryErrors: {
+        [key: number]: data.IFormError
+    }
+
     public static defaultProps: data.IFieldRenderProps = {
         value: [{}]
     } as data.IFieldRenderProps;
@@ -17,6 +22,7 @@ export default class NestedFormSubmissionView extends React.PureComponent<data.I
         this.onCreateEntry = this.onCreateEntry.bind(this);
         this.onDeleteEntry = this.onDeleteEntry.bind(this);
         this.onEntryValueChanged = this.onEntryValueChanged.bind(this);
+        this.nestedEntryErrors = {};
     }
 
     render() {
@@ -45,19 +51,46 @@ export default class NestedFormSubmissionView extends React.PureComponent<data.I
     private onCreateEntry() {
         let entries = this.props.value.slice();
         entries.push({});
-        this.props.onValueChange(this.props.field, entries);
+        this.props.onValueChange(this.props.field, entries, this.buildFieldError());
     }
 
     private onDeleteEntry(index: number) {
         const entries = this.props.value.slice();
         entries.splice(index, 1);
-        this.props.onValueChange(this.props.field, entries);
+        delete this.nestedEntryErrors[index];
+        this.props.onValueChange(this.props.field, entries, this.buildFieldError());
     }
 
-    private onEntryValueChanged(value: any, index: number) {
+    private onEntryValueChanged(value: any, error: data.IFormError, index: number) {
         let newValue = this.props.value.slice();
         newValue[index] = value;
-        this.props.onValueChange(this.props.field, newValue);
+
+        let newError = assign({}, this.nestedEntryErrors);
+        if (error) {
+            this.nestedEntryErrors[index] = error;
+        }
+        else {
+            delete this.nestedEntryErrors[index];
+        }
+
+        this.props.onValueChange(this.props.field, newValue, this.buildFieldError());
+    }
+
+    private buildFieldError(): data.IFieldError {
+        let errors = [];
+        for (let prop in this.nestedEntryErrors) {
+            errors.push(this.nestedEntryErrors[prop]);
+        }
+
+        if (errors.length === 0) {
+            return null;
+        }
+
+        return {
+            error: true,
+            errorMsg: "nestedError",
+            details: errors,
+        };
     }
 }
 
@@ -66,7 +99,7 @@ interface IEntryProps {
     value: any;
     fields: data.IField[];
     registry: data.FieldRegistry;
-    onChange: (value: any, index: number) => void;
+    onChange: (value: any, errors: data.IFormError, index: number) => void;
     onDelete: (index: number) => void;
 }
 
@@ -94,7 +127,7 @@ class NestedFromEntry extends React.PureComponent<IEntryProps, any> {
         this.props.onDelete(this.props.index);
     }
 
-    private onValueChanged(value: any) {
-        this.props.onChange(value, this.props.index);
+    private onValueChanged(value: any, errors: data.IFormError) {
+        this.props.onChange(value, errors, this.props.index);
     }
 }

@@ -161,7 +161,7 @@ class FormBuilder extends React.Component<IProps, IState> {
         });
 
         return (
-            <div className='form-builder-field'>
+            <div className='form-builder-field' key={index}>
                 <Droppable
                     index={index}
                     onDrop={this.onDrop}

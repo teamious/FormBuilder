@@ -13,15 +13,17 @@ interface IProps {
     value: any;
 
     // form submission attempt.
-    attempt: boolean;
+    attempt?: boolean;
 
-    onChange: (value: any) => void;
+    onChange: (value: any, errors: data.IFormError) => void;
 }
 
 interface IState {
 }
 
 export default class FormSubmissionView extends React.PureComponent<IProps, IState> {
+    private errors: data.IFormError;
+
     public static defaultProps: Partial<IProps> = {
         value: {}
     }
@@ -56,10 +58,24 @@ export default class FormSubmissionView extends React.PureComponent<IProps, ISta
         )
     }
 
-    private onValueChanged(field: data.IField, value: any) {
+    private onValueChanged(field: data.IField, value: any, error: data.IFieldError) {
         const newValue = assign({}, this.props.value);
         newValue[field.key] = value;
-        this.props.onChange(newValue);
+        this.errors = this.errors || {} as data.IFormError;
+        if (error) {
+            this.errors[field.key] = error;
+        }
+        else {
+            delete this.errors[field.key];
+        }
+
+        // NOTE: If there are no errors from the fields, set errors to be null.
+        if (Object.getOwnPropertyNames(this.errors).length === 0) {
+            this.errors = null;
+        }
+
+        this.setState({ errors: this.errors });
+        this.props.onChange(newValue, this.errors);
     }
 
     // render displays a list of fields based on the field registry.

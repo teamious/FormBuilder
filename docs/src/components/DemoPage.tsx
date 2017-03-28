@@ -24,6 +24,7 @@ interface IState {
     fields: data.IField[],
     selectedField: data.IField,
     value: any,
+    errors: data.IFormError,
 }
 
 const registry: data.FieldRegistry = {
@@ -86,6 +87,7 @@ class DemoPage extends React.Component<void, IState> {
             fields: [],
             selectedField: null,
             value: {},
+            errors: null,
         };
     }
 
@@ -107,8 +109,8 @@ class DemoPage extends React.Component<void, IState> {
         this.fieldEdited(field);
     }
 
-    private onValueChanged(value: any) {
-        this.setState({ value } as IState);
+    private onValueChanged(value: any, errors: data.IFormError) {
+        this.setState({ value, errors } as IState);
     }
 
     private onBeforeAddField(field: data.IField) {
@@ -119,6 +121,7 @@ class DemoPage extends React.Component<void, IState> {
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
+        const error = JSON.stringify(this.state.errors);
 
         return (
             <div>
@@ -180,6 +183,8 @@ class DemoPage extends React.Component<void, IState> {
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
                                 <div>Debug: Form values</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
+                                <div>Debug: Form validation error</div>
+                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={error} />
                             </Panel>
                         </Col>
                     </Row>

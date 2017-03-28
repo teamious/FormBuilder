@@ -17,6 +17,7 @@ const registry: FieldRegistry = {
         render: null,
         builder: null,
         editor: null,
+        display: null,
     },
     SingleLineTextField: {
         field: {
@@ -27,7 +28,8 @@ const registry: FieldRegistry = {
         displayName: '单行输入(input)',
         render: null,
         builder: null,
-        editor: null
+        editor: null,
+        display: null,
     },
 };
 

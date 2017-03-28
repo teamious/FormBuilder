@@ -31,7 +31,8 @@ const registry: FieldRegistry = {
         displayName: '单选(selector)',
         render: SingleSelector,
         builder: SingleSelector,
-        editor: SingleSelectorOptionEditor
+        editor: SingleSelectorOptionEditor,
+        display: null,
     },
     SingleLineTextField: {
         field: {
@@ -47,7 +48,8 @@ const registry: FieldRegistry = {
         displayName: '单行输入(input)',
         render: SingleLineTextField,
         builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor
+        editor: SingleLineTextFieldOptionEditor,
+        display: null,
     },
 };
 

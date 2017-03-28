@@ -3,7 +3,7 @@ import * as assign from 'object-assign';
 
 import * as data from '../data';
 
-interface IProps {
+export interface IFormSubmissionViewProps {
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
     registry: data.FieldRegistry;
@@ -18,18 +18,18 @@ interface IProps {
     onChange: (value: any, errors: data.IFormError) => void;
 }
 
-interface IState {
+export interface IFormSubmissionViewState {
 }
 
-export default class FormSubmissionView extends React.PureComponent<IProps, IState> {
+export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewProps, IFormSubmissionViewState> {
     // This maintains all field errors during onValueChanged.
     private errors: data.IFormError;
 
-    public static defaultProps: Partial<IProps> = {
+    public static defaultProps: Partial<IFormSubmissionViewProps> = {
         value: {}
     }
 
-    constructor(props: IProps) {
+    constructor(props: IFormSubmissionViewProps) {
         super(props);
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);

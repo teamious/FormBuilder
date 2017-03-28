@@ -5,18 +5,13 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
 import * as data from '../../../src/data';
-import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
-import FieldSelector from '../../../src/components/FieldSelector';
-import FormBuilder from '../../../src/components/FormBuilder';
-import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
-import FormBuilderContext from '../../../src/components/FormBuilderContext';
-import FormSubmissionView from '../../../src/components/FormSubmissionView';
-import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
+import { FieldOptionEditor, FieldSelector, FormBuilder, NestedFormBuilder, FormBuilderContext, FormSubmissionView, NestedFormSubmissionView, FormDisplayView, NestedFormDisplayView } from '../../../src/components';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
+import KeyValueDisplay from './fields/KeyValueDisplay';
 
 import './DemoPage.css';
 
@@ -40,7 +35,8 @@ const registry: data.FieldRegistry = {
         displayName: '单选(selector)',
         render: SingleSelector,
         builder: SingleSelector,
-        editor: SingleSelectorOptionEditor
+        editor: SingleSelectorOptionEditor,
+        display: KeyValueDisplay,
     },
     'SingleLineTextField': {
         field: {
@@ -56,7 +52,8 @@ const registry: data.FieldRegistry = {
         displayName: '单行输入(input)',
         render: SingleLineTextField,
         builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor
+        editor: SingleLineTextFieldOptionEditor,
+        display: KeyValueDisplay,
     },
 };
 
@@ -69,7 +66,8 @@ registry[NestedFormBuilder.type] = {
     },
     displayName: '明细(NestForm)',
     render: NestedFormSubmissionView,
-    builder: NestedFormBuilder
+    builder: NestedFormBuilder,
+    display: NestedFormDisplayView,
 };
 
 class DemoPage extends React.Component<void, IState> {
@@ -173,6 +171,18 @@ class DemoPage extends React.Component<void, IState> {
                                     registry={registry}
                                     value={this.state.value}
                                     onChange={this.onValueChanged} />
+                            </Panel>
+                        </Col>
+                        <Col md={4}>
+                            <Panel>
+                                <div>Form View</div>
+                                <div className='form-horizontal'>
+                                    <FormDisplayView
+                                        fields={this.state.fields}
+                                        registry={registry}
+                                        value={this.state.value}
+                                    />
+                                </div>
                             </Panel>
                         </Col>
                     </Row>

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import * as data from '../data';
-import FieldSelectorOption from './FieldSelectorOption';
+import { FieldSelectorOption } from './FieldSelectorOption';
 
-interface IProps {
+export interface IFieldSelectorProps {
     registry: data.FieldRegistry;
 }
 
-interface IState { }
+export interface IFieldSelectorState { }
 
-export default class FieldSelector extends React.PureComponent<IProps, IState> {
+export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFieldSelectorState> {
     constructor() {
         super()
     }

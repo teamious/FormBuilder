@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceSpec } from 'react-dnd';
 
-interface IProps {
+export interface IFormBuilderDraggableProps {
     index: number;
     field: data.IField;
 }
@@ -13,10 +13,10 @@ interface IDNDProps {
     connectDragSource: ConnectDragSource;
 }
 
-// FormBuilderField wraps a field in a draggable DOM node. When the user starts
+// FormBuilderDraggable wraps a field in a draggable DOM node. When the user starts
 // dragging this field, it will send the index and field to the drag and drop context
 // that can be consumed by a drop target.
-class FormBuilderField extends React.Component<IProps & IDNDProps, IState> {
+class FormBuilderDraggableComponent extends React.Component<IFormBuilderDraggableProps & IDNDProps, IState> {
     render() {
         const {connectDragSource} = this.props;
         return connectDragSource(
@@ -27,7 +27,7 @@ class FormBuilderField extends React.Component<IProps & IDNDProps, IState> {
     }
 }
 
-const spec: DragSourceSpec<IProps> = {
+const spec: DragSourceSpec<IFormBuilderDraggableProps> = {
     beginDrag(props): data.IDragSourceItem {
         return {
             index: props.index,
@@ -42,4 +42,4 @@ const collect: DragSourceCollector = (connect, monitor): IDNDProps => {
     }
 }
 
-export default DragSource(data.FORM_BUILDER_FIELD, spec, collect)(FormBuilderField) as React.ComponentClass<IProps>;
+export const FormBuilderDraggable = DragSource(data.FORM_BUILDER_FIELD, spec, collect)(FormBuilderDraggableComponent) as React.ComponentClass<IFormBuilderDraggableProps>;

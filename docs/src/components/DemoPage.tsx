@@ -5,15 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
 import * as data from '../../../src/data';
-import { FieldOptionEditor } from '../../../src/components/FieldOptionEditor'
-import { FieldSelector } from '../../../src/components/FieldSelector';
-import { FormBuilder } from '../../../src/components/FormBuilder';
-import { NestedFormBuilder } from '../../../src/components/NestedFormBuilder';
-import { FormBuilderContext } from '../../../src/components/FormBuilderContext';
-import { FormSubmissionView } from '../../../src/components/FormSubmissionView';
-import { NestedFormSubmissionView } from '../../../src/components/NestedFormSubmissionView';
-import { FormDisplayView } from '../../../src/components/FormDisplayView';
-import { NestedFormDisplayView } from '../../../src/components/NestedFormDisplayView';
+import { FieldOptionEditor, FieldSelector, FormBuilder, NestedFormBuilder, FormBuilderContext, FormSubmissionView, NestedFormSubmissionView, FormDisplayView, NestedFormDisplayView } from '../../../src/components';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';

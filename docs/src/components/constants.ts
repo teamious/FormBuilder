@@ -4,7 +4,8 @@ import StandardEditor from './StandardEditor';
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
-import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
+import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor';
+import KeyValueDisplay from './fields/KeyValueDisplay';
 
 export const registry: data.FieldRegistry = {
     'SingleSelector': {
@@ -19,7 +20,8 @@ export const registry: data.FieldRegistry = {
         displayName: '单选(selector)',
         render: SingleSelector,
         builder: SingleSelector,
-        editor: SingleSelectorOptionEditor
+        editor: SingleSelectorOptionEditor,
+        display: KeyValueDisplay,
     },
     'SingleLineTextField': {
         field: {
@@ -35,7 +37,8 @@ export const registry: data.FieldRegistry = {
         displayName: '单行输入(input)',
         render: SingleLineTextField,
         builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor
+        editor: SingleLineTextFieldOptionEditor,
+        display: KeyValueDisplay,
     },
 };
 

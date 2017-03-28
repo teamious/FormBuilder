@@ -1,9 +1,7 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import { FormBuilder } from '../../../../src/components/FormBuilder';
-import { FieldOptionEditor } from '../../../../src/components/FieldOptionEditor';
-import { FormBuilderContext } from '../../../../src/components/FormBuilderContext';
+import { FormBuilder, FieldOptionEditor, FormBuilderContext } from '../../../../src/components';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';

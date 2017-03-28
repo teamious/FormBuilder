@@ -1,8 +1,7 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import { FieldSelector } from '../../../../src/components/FieldSelector';
-import { FormBuilderContext } from '../../../../src/components/FormBuilderContext';
+import { FieldSelector, FormBuilderContext } from '../../../../src/components';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';

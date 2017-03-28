@@ -12,6 +12,6 @@ export interface FieldRegistry {
         builder: IFieldBuilderComponent,
         render: IFieldRenderComponent,
         editor?: IFieldOptionEditorComponent,
-	display?: IFieldDisplayComponent
+	    display: IFieldDisplayComponent
     };
 }

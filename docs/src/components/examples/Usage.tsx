@@ -2,10 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 
-import { FieldSelector } from '../../../../src/components/FieldSelector';
-import { FormBuilder } from '../../../../src/components/FormBuilder';
-import { FormBuilderContext } from '../../../../src/components/FormBuilderContext';
-import { FieldOptionEditor } from '../../../../src/components/FieldOptionEditor';
+import { FieldSelector, FormBuilder, FormBuilderContext, FieldOptionEditor } from '../../../../src/components';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import  Example from '../Example';

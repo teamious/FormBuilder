@@ -3,16 +3,17 @@ import { Link } from 'react-router-dom';
 import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
-
-import * as data from '../../../src/data';
-import FieldOptionEditor from '../../../src/components/FieldOptionEditor'
-import FieldSelector from '../../../src/components/FieldSelector';
-import FormBuilder from '../../../src/components/FormBuilder';
-import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
-import FormBuilderContext from '../../../src/components/FormBuilderContext';
-import FormSubmissionView from '../../../src/components/FormSubmissionView';
-import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
-
+import {
+    IField,
+    FieldRegistry,
+    FieldOptionEditor,
+    FieldSelector,
+    FormBuilder,
+    NestedFormBuilder,
+    FormBuilderContext,
+    FormSubmissionView,
+    NestedFormSubmissionView
+} from 'react-dynamic-formbuilder';
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
@@ -21,12 +22,12 @@ import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionE
 import './DemoPage.css';
 
 interface IState {
-    fields: data.IField[],
-    selectedField: data.IField,
+    fields: IField[],
+    selectedField: IField,
     value: any,
 }
 
-const registry: data.FieldRegistry = {
+const registry: FieldRegistry = {
     'SingleSelector': {
         field: {
             key: '',
@@ -72,7 +73,7 @@ registry[NestedFormBuilder.type] = {
 };
 
 class DemoPage extends React.Component<void, IState> {
-    private fieldEdited: (field: data.IField) => void;
+    private fieldEdited: (field: IField) => void;
 
     constructor() {
         super()
@@ -89,20 +90,20 @@ class DemoPage extends React.Component<void, IState> {
         };
     }
 
-    private onFieldEditing(field: data.IField, done: (field: data.IField) => void) {
+    private onFieldEditing(field: IField, done: (field: IField) => void) {
         this.setState({ selectedField: field } as IState);
         this.fieldEdited = done;
     }
 
-    private onDeleteField(fields: data.IField[]) {
+    private onDeleteField(fields: IField[]) {
         this.setState({ fields } as IState);
     }
 
-    private onChangeFields(fields: data.IField[]) {
+    private onChangeFields(fields: IField[]) {
         this.setState({ fields } as IState);
     }
 
-    private onFieldOptionChanged(field: data.IField) {
+    private onFieldOptionChanged(field: IField) {
         this.setState({ selectedField: field } as IState);
         this.fieldEdited(field);
     }
@@ -111,7 +112,7 @@ class DemoPage extends React.Component<void, IState> {
         this.setState({ value } as IState);
     }
 
-    private onBeforeAddField(field: data.IField) {
+    private onBeforeAddField(field: IField) {
         field.key = Math.floor((Math.random() * 10000000) + 1).toString();
         return true;
     }

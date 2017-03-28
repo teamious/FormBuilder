@@ -33,6 +33,7 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=prod webpack -p",
-    "start": "webpack-dev-server --history-api-fallback"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --history-api-fallback",
+    "start:prod": "cross-env NODE_ENV=prod webpack-dev-server --history-api-fallback"
   }
 }

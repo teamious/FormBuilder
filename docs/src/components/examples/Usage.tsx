@@ -2,10 +2,6 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 
-import FieldSelector from '../../../../src/components/FieldSelector';
-import FormBuilder from '../../../../src/components/FormBuilder';
-import FormBuilderContext from '../../../../src/components/FormBuilderContext';
-import FieldOptionEditor from '../../../../src/components/FieldOptionEditor';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import  Example from '../Example';
@@ -52,39 +48,6 @@ export default class extends React.Component<IProps, IState> {
     }
 
     render() {
-        const body = (
-            <div>
-                <FormBuilderContext>
-                    <Modal onHide={this.closeModal} show={!!this.state.field}>
-                        <Modal.Body>
-                            <FieldOptionEditor
-                                onChange={this.onChangeField}
-                                registry={constants.registry}
-                                field={this.state.field}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.closeModal}>
-                                Done
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-
-
-                    <FieldSelector
-                        registry={constants.registry}
-                    />
-
-                    <FormBuilder
-                        registry={constants.registry}
-                        onFieldEditing={this.onFieldEditing}
-                        onChange={this.onChangeFields}
-                        fields={this.state.fields}
-                    />
-                </FormBuilderContext>
-            </div>
-        )
-
         return (
             <div>
                 <h3>

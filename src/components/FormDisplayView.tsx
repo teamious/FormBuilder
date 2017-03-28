@@ -19,7 +19,7 @@ export class FormDisplayView extends React.PureComponent<IFormDisplayViewProps, 
     }
     render() {
         return (
-            <div className='form-view'>
+            <div className='form-display'>
                 {this.props.fields.map(this.renderField)}
             </div>
         )
@@ -40,7 +40,7 @@ export class FormDisplayView extends React.PureComponent<IFormDisplayViewProps, 
         });
 
         return (
-            <div className='form-view-field' key={index}>
+            <div className='form-display-field' key={index}>
                 {component}
             </div>
         )

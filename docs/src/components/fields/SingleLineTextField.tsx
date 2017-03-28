@@ -16,6 +16,13 @@ export default class SingleLineTextField extends React.PureComponent<IFieldRende
         this.validate = this.validate.bind(this);
     }
 
+    public componentDidMount() {
+        const error = this.validate(this.props.value);
+        if (this.props.onValueChange) {
+            this.props.onValueChange(this.props.field, this.props.value, error);
+        }
+    }
+
     public render() {
         const { label } = this.props.field;
         const { hint, required } = this.props.field.options ? this.props.field.options : null;
@@ -33,11 +40,11 @@ export default class SingleLineTextField extends React.PureComponent<IFieldRende
 
     private onTextFieldChange(event: any) {
         const value = event.target.value;
-        let error = this.validate(value);
+        const error = this.validate(value);
         this.props.onValueChange(this.props.field, value, error);
     }
 
-    private validate(value: string) : IFieldError {
+    private validate(value: string): IFieldError {
         if (this.props.field.options && this.props.field.options.required) {
             if (value.trim() === '') {
                 return {

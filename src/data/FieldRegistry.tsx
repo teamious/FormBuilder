@@ -11,7 +11,7 @@ export interface FieldRegistry {
         displayName: string,
         builder: IFieldBuilderComponent,
         render: IFieldRenderComponent,
+        display: IFieldDisplayComponent,
         editor?: IFieldOptionEditorComponent,
-        display: IFieldDisplayComponent
     };
 }

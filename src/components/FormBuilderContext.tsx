@@ -2,16 +2,15 @@ import * as React from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 
-interface IProps {
+export interface IFormBuilderContextProps {
     children?: React.ReactNode;
 }
 
-function FormBuilderContext(props: IProps) {
+function FormBuilderContextComponent(props: IFormBuilderContextProps) {
     return (
         <div className='form-builder-context'>
             {props.children}
         </div>
     )
 }
-
-export default DragDropContext(HTML5Backend)(FormBuilderContext) as React.ComponentClass<IProps>
+export const FormBuilderContext = DragDropContext(HTML5Backend)(FormBuilderContextComponent) as React.ComponentClass<IFormBuilderContextProps>

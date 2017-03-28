@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as data from '../data';
 import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector, DragSourceSpec } from 'react-dnd';
 
-interface IProps {
+export interface IFieldSelectorOptionProps {
     field: data.IField;
     label: string;
 }
@@ -16,7 +16,7 @@ interface IDNDProps {
 // FieldSelectorOption displays an option that can be drag and dropped into the FormBuilder.
 // When an option is dragged, it will send the field and index (always null) of the option
 // to the drag an drop context.
-class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
+class FieldSelectorOptionComponent extends React.Component<IFieldSelectorOptionProps & IDNDProps, IState> {
     render() {
         const { connectDragSource, field, label } = this.props;
         return connectDragSource(
@@ -29,7 +29,7 @@ class FieldSelectorOption extends React.Component<IProps & IDNDProps, IState> {
     }
 }
 
-const spec: DragSourceSpec<IProps> = {
+const spec: DragSourceSpec<IFieldSelectorOptionProps> = {
     beginDrag(props, monitor, component): data.IDragSourceItem {
         return {
             field: props.field,
@@ -44,4 +44,4 @@ const collect: DragSourceCollector = (connect, monitor): IDNDProps => {
     }
 }
 
-export default DragSource(data.FIELD_SELECTOR_FIELD, spec, collect)(FieldSelectorOption) as React.ComponentClass<IProps>;
+export const FieldSelectorOption = DragSource(data.FIELD_SELECTOR_FIELD, spec, collect)(FieldSelectorOptionComponent) as React.ComponentClass<IFieldSelectorOptionProps>;

@@ -1,15 +1,15 @@
 import * as React from 'react';
 import * as data from '../data/';
 
-interface IProps {
+export interface IFieldOptionEditorComponentProps {
     field: data.IField;
     registry: data.FieldRegistry;
     onChange: (field: data.IField) => void;
 }
 
-interface IState { }
+export interface IFieldOptionEditorState { }
 
-export default class FieldOptionEditor extends React.PureComponent<IProps, IState> {
+export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorComponentProps, IFieldOptionEditorState> {
     constructor() {
         super();
         this.onOptionChanged = this.onOptionChanged.bind(this);

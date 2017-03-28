@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as data from '../data';
 
-interface IProps {
+export interface IFormBuilderEditableProps {
     field: data.IField;
     index: number;
     editButtonText?: string;
@@ -10,12 +10,12 @@ interface IProps {
     onDelete: (index: number) => void;
 }
 
-interface IState {
+export interface IFormBuilderEditableState {
 }
 
 // FormBuilderEditable is a wrapper component that will wrap a field and display controls
 // for editing and deleting a field.
-export default class FormBuilderEditable extends React.Component<IProps, IState> {
+export class FormBuilderEditable extends React.Component<IFormBuilderEditableProps, IFormBuilderEditableState> {
     constructor() {
         super();
         this.onEdit = this.onEdit.bind(this);

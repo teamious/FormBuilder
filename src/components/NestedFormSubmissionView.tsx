@@ -1,12 +1,12 @@
 import * as React from 'react';
 import * as data from '../data';
 
-import FormSubmissionView from './FormSubmissionView';
+import { FormSubmissionView } from './FormSubmissionView';
 
-interface IState {
+export interface INestedFormSubmissionViewState {
 }
 
-export default class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, IState> {
+export class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, INestedFormSubmissionViewState> {
     public static defaultProps: data.IFieldRenderProps = {
         value: [{}]
     } as data.IFieldRenderProps;

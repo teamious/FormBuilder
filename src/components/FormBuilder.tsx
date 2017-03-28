@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
-import { default as Draggable } from './FormBuilderDraggable';
-import { default as Editable } from './FormBuilderEditable';
-import { default as Droppable } from './FormBuilderDroppable';
+import { FormBuilderDraggable as Draggable } from './FormBuilderDraggable';
+import { FormBuilderEditable as Editable } from './FormBuilderEditable';
+import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 
-interface IProps {
+export interface IFormBuilderProps {
     fields: data.IField[];
 
     // registry contains a map of field types to classes. FormBuilder
@@ -40,14 +40,14 @@ interface IProps {
     deleteButtonText?: React.ReactNode;
 }
 
-interface IState {
+export interface IFormBuilderState {
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
-class FormBuilder extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
+export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilderState> {
+    constructor(props: IFormBuilderProps) {
         super(props)
         this.renderField = this.renderField.bind(this);
         this.onDrop = this.onDrop.bind(this);
@@ -198,5 +198,3 @@ class FormBuilder extends React.Component<IProps, IState> {
         );
     }
 }
-
-export default FormBuilder;

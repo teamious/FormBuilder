@@ -3,7 +3,7 @@ import * as assign from 'object-assign';
 
 import * as data from '../data';
 
-interface IProps {
+export interface IFormSubmissionViewProps {
     fields: data.IField[];
 
     // registry contains a map of field types to classes. FormBuilder
@@ -15,15 +15,15 @@ interface IProps {
     onChange: (value: any) => void;
 }
 
-interface IState {
+export interface IFormSubmissionViewState {
 }
 
-export default class FormSubmissionView extends React.PureComponent<IProps, IState> {
-    public static defaultProps: Partial<IProps> = {
+export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewProps, IFormSubmissionViewState> {
+    public static defaultProps: Partial<IFormSubmissionViewProps> = {
         value: {}
     }
 
-    constructor(props: IProps) {
+    constructor(props: IFormSubmissionViewProps) {
         super(props);
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);

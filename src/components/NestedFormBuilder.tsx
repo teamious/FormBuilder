@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 import * as data from '../data';
-import FormBuilder from './FormBuilder';
+import { FormBuilder } from './FormBuilder';
 
-interface IState { }
+export interface IFieldBuilderState { }
 
-export default class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, IState> {
+export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, IFieldBuilderState> {
     static type = 'NestedForm';
     constructor() {
         super();

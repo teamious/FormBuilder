@@ -34,9 +34,9 @@ export default function() {
                 definition you can drag it from the FieldSelector and drop it onto the <a href='#form-builder'>FormBuilder</a>
             </p>
 
-            <Example body={body} footer={snippet}/>
+            <Example body={body} footer={snippet} />
 
-            <PropsTable data={propsData}/>
+            <PropsTable data={propsData} />
         </div>
     )
 }

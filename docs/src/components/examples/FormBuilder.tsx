@@ -15,7 +15,7 @@ interface IState {
     fields: data.IField[];
 }
 
-const noop = () => {};
+const noop = () => { };
 
 export default class extends React.Component<IProps, IState> {
     constructor() {
@@ -27,14 +27,14 @@ export default class extends React.Component<IProps, IState> {
     }
 
     private onChangeFields(fields: data.IField[]) {
-        this.setState({fields} as IState);
+        this.setState({ fields } as IState);
     }
 
     render() {
         const body = <FormBuilderSnippet/>
 
         const footer = (
-            <Snippet code={code} lang='typescript'/>
+            <Snippet code={code} lang='typescript' />
         );
 
         return (
@@ -50,9 +50,9 @@ export default class extends React.Component<IProps, IState> {
                     click and drag field up or down until you see the indicator.
                 </p>
 
-                <Example body={body} footer={footer}/>
+                <Example body={body} footer={footer} />
 
-                <PropsTable data={propsData}/>
+                <PropsTable data={propsData} />
             </div>
         );
     }

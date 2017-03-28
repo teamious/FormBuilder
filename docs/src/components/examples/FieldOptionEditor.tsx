@@ -9,7 +9,7 @@ import { Modal, Button } from 'react-bootstrap';
 const code = require('!!raw!../snippets/FieldOptionEditor.tsx');
 import FieldOptionEditorSnippet from '../snippets/FieldOptionEditor';
 
-interface IProps {}
+interface IProps { }
 
 interface IState {
     fields: data.IField[];
@@ -32,31 +32,31 @@ export default class extends React.Component<IProps, IState> {
     }
 
     onEditField(field: data.IField) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
     }
 
     onChangeFields(fields: data.IField[]) {
-        this.setState({fields} as IState);
+        this.setState({ fields } as IState);
     }
 
     private closeModal() {
-        this.setState({field: null} as IState);
+        this.setState({ field: null } as IState);
     }
 
 
     private onChangeField(field: data.IField) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback(field);
     }
 
     private onFieldEditing(field: data.IField, callback: (field: data.IField) => void) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback = callback;
     }
 
     render() {
         const footer = (
-            <Snippet code={code} lang='typescript'/>
+            <Snippet code={code} lang='typescript' />
         );
 
         const body = <FieldOptionEditorSnippet/>
@@ -80,9 +80,9 @@ export default class extends React.Component<IProps, IState> {
                     and change the fields. Additionally, you should set the field in your state.
                 </p>
 
-                <Example body={body} footer={footer}/>
+                <Example body={body} footer={footer} />
 
-                <PropsTable data={propsData}/>
+                <PropsTable data={propsData} />
             </div>
         );
     }

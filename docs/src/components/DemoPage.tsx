@@ -12,12 +12,15 @@ import {
     NestedFormBuilder,
     FormBuilderContext,
     FormSubmissionView,
-    NestedFormSubmissionView
+    NestedFormSubmissionView,
+    FormDisplayView,
+    NestedFormDisplayView
 } from 'react-dynamic-formbuilder';
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
+import KeyValueDisplay from './fields/KeyValueDisplay';
 
 import './DemoPage.css';
 
@@ -40,7 +43,8 @@ const registry: FieldRegistry = {
         displayName: '单选(selector)',
         render: SingleSelector,
         builder: SingleSelector,
-        editor: SingleSelectorOptionEditor
+        editor: SingleSelectorOptionEditor,
+        display: KeyValueDisplay,
     },
     'SingleLineTextField': {
         field: {
@@ -56,7 +60,8 @@ const registry: FieldRegistry = {
         displayName: '单行输入(input)',
         render: SingleLineTextField,
         builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor
+        editor: SingleLineTextFieldOptionEditor,
+        display: KeyValueDisplay,
     },
 };
 
@@ -69,7 +74,8 @@ registry[NestedFormBuilder.type] = {
     },
     displayName: '明细(NestForm)',
     render: NestedFormSubmissionView,
-    builder: NestedFormBuilder
+    builder: NestedFormBuilder,
+    display: NestedFormDisplayView,
 };
 
 class DemoPage extends React.Component<void, IState> {
@@ -171,6 +177,18 @@ class DemoPage extends React.Component<void, IState> {
                                     registry={registry}
                                     value={this.state.value}
                                     onChange={this.onValueChanged} />
+                            </Panel>
+                        </Col>
+                        <Col md={4}>
+                            <Panel>
+                                <div>Form View</div>
+                                <div className='form-horizontal'>
+                                    <FormDisplayView
+                                        fields={this.state.fields}
+                                        registry={registry}
+                                        value={this.state.value}
+                                    />
+                                </div>
                             </Panel>
                         </Col>
                     </Row>

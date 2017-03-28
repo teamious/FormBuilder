@@ -25,6 +25,11 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
             return false;
         }
 
+        const hook = this.props.onBeforeAddField;
+        if (hook) {
+            return hook(field);
+        }
+
         return true;
     }
 

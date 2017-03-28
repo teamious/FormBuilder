@@ -36,7 +36,7 @@ export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewP
             return;
         }
 
-        const value = this.props.value[field.label];
+        const value = this.props.value[field.key];
         const component = React.createElement(fieldDef.render, {
             field,
             index,
@@ -54,7 +54,7 @@ export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewP
 
     private onValueChanged(field: data.IField, value: any) {
         const newValue = assign({}, this.props.value);
-        newValue[field.label] = value;
+        newValue[field.key] = value;
         this.props.onChange(newValue);
     }
 

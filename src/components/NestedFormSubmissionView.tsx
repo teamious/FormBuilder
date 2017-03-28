@@ -8,6 +8,7 @@ interface IState {
 }
 
 export default class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, IState> {
+    // This maintains all errors from nested entries's error.
     private nestedEntryErrors: {
         [key: number]: data.IFormError
     }

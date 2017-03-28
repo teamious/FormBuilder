@@ -22,6 +22,7 @@ interface IState {
 }
 
 export default class FormSubmissionView extends React.PureComponent<IProps, IState> {
+    // This maintains all field errors during onValueChanged.
     private errors: data.IFormError;
 
     public static defaultProps: Partial<IProps> = {

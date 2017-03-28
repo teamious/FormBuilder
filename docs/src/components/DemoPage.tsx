@@ -12,12 +12,14 @@ import NestedFormBuilder from '../../../src/components/NestedFormBuilder';
 import FormBuilderContext from '../../../src/components/FormBuilderContext';
 import FormSubmissionView from '../../../src/components/FormSubmissionView';
 import NestedFormSubmissionView from '../../../src/components/NestedFormSubmissionView';
-import FormView from '../../../src/components/FormView';
+import FormDisplayView from '../../../src/components/FormDisplayView';
+import NestedFormDisplayView from '../../../src/components/NestedFormDisplayView';
 
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
 import SingleLineTextField from './fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
+import KeyValueDisplay from './fields/KeyValueDisplay';
 
 import './DemoPage.css';
 
@@ -39,7 +41,8 @@ const registry: data.FieldRegistry = {
         },
         render: SingleSelector,
         builder: SingleSelector,
-        editor: SingleSelectorOptionEditor
+        editor: SingleSelectorOptionEditor,
+        display: KeyValueDisplay,
     },
     'SingleLineTextField': {
         field: {
@@ -54,7 +57,8 @@ const registry: data.FieldRegistry = {
         },
         render: SingleLineTextField,
         builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor
+        editor: SingleLineTextFieldOptionEditor,
+        display: KeyValueDisplay,
     },
 };
 
@@ -66,7 +70,8 @@ registry[NestedFormBuilder.type] = {
         fields: [],
     },
     render: NestedFormSubmissionView,
-    builder: NestedFormBuilder
+    builder: NestedFormBuilder,
+    display: NestedFormDisplayView,
 };
 
 class DemoPage extends React.Component<void, IState> {
@@ -160,7 +165,7 @@ class DemoPage extends React.Component<void, IState> {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={6}>
+                        <Col md={8}>
                             <Panel>
                                 <div>Form Preview</div>
                                 <FormSubmissionView
@@ -170,13 +175,16 @@ class DemoPage extends React.Component<void, IState> {
                                     onChange={this.onValueChanged} />
                             </Panel>
                         </Col>
-                        <Col md={6}>
+                        <Col md={4}>
                             <Panel>
                                 <div>Form View</div>
-                                <FormView
-                                    fields={this.state.fields}
-                                    value={this.state.value}
-                                />
+                                <div className='form-horizontal'>
+                                    <FormDisplayView
+                                        fields={this.state.fields}
+                                        registry={registry}
+                                        value={this.state.value}
+                                    />
+                                </div>
                             </Panel>
                         </Col>
                     </Row>

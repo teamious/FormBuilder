@@ -5,4 +5,4 @@ the communication layer of a form builder so that you can focus on writing custo
 
 See the [demo](https://teamious.github.io/FormBuilder/demo) or read the [documentation](https://teamious.github.io/FormBuilder).
 
-[react-dynamic-formbuilder](https://www.npmjs.com/package/react-dynamic-formbuilder) is availabe on NPM.
+[react-dynamic-formbuilder](https://www.npmjs.com/package/react-dynamic-formbuilder) is available on NPM.

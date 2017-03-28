@@ -9,8 +9,6 @@ import FieldOptionEditor from '../../../../src/components/FieldOptionEditor';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import  Example from '../Example';
-import Snippet from '../Snippet';
-const code = require('!!raw!../snippets/Usage.tsx');
 
 interface IProps { }
 
@@ -87,8 +85,6 @@ export default class extends React.Component<IProps, IState> {
             </div>
         )
 
-        const snippet = <Snippet code={code} lang='typescript' />;
-
         return (
             <div>
                 <h3>
@@ -98,21 +94,8 @@ export default class extends React.Component<IProps, IState> {
                 </h3>
 
                 <p>
-                    To start building a form, drag a field from the panel on the left to the panel on right.
-                    You can edit a field by clicking "Edit". If you want to remove a field
-                    click "Remove".
+                    To see an example form builder built with <strong>react-dynamic-formbuilder</strong> go to the <Link to='/demo'>demo page</Link>.
                 </p>
-
-                <p>
-                    Both <strong>ShortText</strong> and <strong>LongText</strong> represent custom field
-                    types that you build and supply to the form editor.
-                </p>
-
-                <p>
-                    For example of the form-builder in action, go to <Link to='/demo'>demo page</Link>.
-                </p>
-
-                <Example body={body} footer={snippet}/>
             </div>
         );
     }

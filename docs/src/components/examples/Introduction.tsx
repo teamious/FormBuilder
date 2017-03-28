@@ -10,12 +10,9 @@ export default function() {
             </h3>
 
             <p>
-                <strong>form-builder</strong> is a set of components that give you the power to create your
+                <strong>react-dynamic-formbuilder</strong> is a set of components that give you the power to create your
                 own form builder experience. It's goal is to provide you components for managing the communication of a form builder
                 so that you can focus on writing custom field controls.
-            </p>
-            <p>
-                See the <a href='#demo'>demo</a> below to see how it works.
             </p>
         </div>
     )

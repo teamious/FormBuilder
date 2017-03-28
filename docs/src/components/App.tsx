@@ -6,7 +6,6 @@ import FormBuilderExample from './examples/FormBuilder';
 import FieldOptionEditorExample from './examples/FieldOptionEditor';
 import FieldRegistryExample from './examples/FieldRegistry';
 import IFieldOptionEditorComponentExample from './examples/IFieldOptionEditorComponent';
-import IFieldOptionEditorPropsExample from './examples/IFieldOptionEditorProps';
 import IntroductionExample from './examples/Introduction';
 import IFieldExample from './examples/IField';
 import { Nav, NavItem } from 'react-bootstrap';
@@ -27,7 +26,6 @@ export default function() {
                     <NavItem href='#interfaces'>Interfaces</NavItem>
                     <NavItem className='nested' href='#ifield'>IField</NavItem>
                     <NavItem className='nested' href='#ifield-option-editor-component'>IFieldOptionEditorComponent</NavItem>
-                    <NavItem className='nested' href='#ifield-option-editor-props'>IFieldOptionEditorProps</NavItem>
                     <NavItem href='#types'>Types</NavItem>
                     <NavItem className='nested' href='#field-registry'>FieldRegistry</NavItem>
                 </Nav>
@@ -42,7 +40,7 @@ export default function() {
                     </a>
                 </h3>
                 <pre>
-                    npm install form-builder --save
+                    npm install react-dynamic-formbuilder --save
                 </pre>
 
                 <UsageExample/>
@@ -56,8 +54,6 @@ export default function() {
                 <FormBuilderExample/>
                 <FieldOptionEditorExample/>
                 <IFieldOptionEditorComponentExample/>
-                <IFieldOptionEditorPropsExample/>
-
                 <h3>
                     <a href='#interfaces' name='interfaces'>
                         Interfaces

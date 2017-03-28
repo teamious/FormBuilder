@@ -11,14 +11,14 @@ export default class SingleSelector extends React.PureComponent<IFieldBuilderPro
 
     constructor() {
         super();
-        this.onSelectorChanged = this.onSelectorChanged.bind(this);        
+        this.onSelectorChanged = this.onSelectorChanged.bind(this);
     }
 
     render() {
         const { selectOpts } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
-                <FormGroup>
+                <FormGroup className='clearfix'>
                     <Col componentClass={ControlLabel} md={5}>{this.props.field.label}</Col>
                     <Col md={7}>
                         <FormControl componentClass="select" value={this.props.value} onChange={this.onSelectorChanged}>

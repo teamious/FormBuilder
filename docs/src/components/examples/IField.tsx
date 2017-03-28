@@ -2,7 +2,7 @@ import * as React from 'react';
 import Snippet from '../Snippet';
 import PropsTable, { IPropRow } from '../PropsTable';
 
-const code = require('!!raw!../snippets/IField');
+const code = require('!!raw!../../../../src/data/IField.tsx');
 
 export default function() {
 
@@ -57,6 +57,14 @@ const propsData: IPropRow[] = [
     },
 
     {
+        name: 'key',
+        type: 'string',
+        default: null,
+        required: true,
+        description: 'TBD.'
+    },
+
+    {
         name: 'hint',
         type: 'string',
         default: null,
@@ -70,5 +78,13 @@ const propsData: IPropRow[] = [
         default: null,
         required: false,
         description: 'This property should contain a list of options and their default values for your field type. The values can be changed via the FieldOptionEditor and can be used by your custom field class to determine rendering or behavior. Each field type carries their own copy of the options provided.'
+    },
+
+    {
+        name: 'fields',
+        type: 'Array<IField>',
+        default: null,
+        required: false,
+        description: 'TBD'
     },
 ];

@@ -1,13 +1,13 @@
 # README
 
-To build the docs site:
+To run the docs site using your local version:
 
 ```sh
 npm start
 ```
 
-If you want to test your local version of **react-dynamic-formbuilder**:
+To run the docs site on the  **react-dynamic-formbuilder** package:
 
 ```sh
-npm run start:development
+npm run start:package
 ```

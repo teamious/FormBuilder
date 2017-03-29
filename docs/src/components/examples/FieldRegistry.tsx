@@ -2,8 +2,7 @@ import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
 
-const fieldRegistry = require('!!raw!../snippets/FieldRegistry');
-const fieldRegistryUsage = require('!!raw!../snippets/FieldRegistryUsage');
+const fieldRegistry = require('!!raw!../../../../src/data/FieldRegistry.tsx');
 
 export default function() {
     return (
@@ -15,16 +14,11 @@ export default function() {
             </h3>
 
             <p>
-                The <strong>FieldRegistry</strong> type is used by <strong>FormBuilder</strong> and <strong>OptionEditor</strong> to
+                The <strong>FieldRegistry</strong> type is used by <strong>FormBuilder</strong> and <strong>FieldOptionEditor</strong> to
                 determine how your custom field type should be rendered.
             </p>
 
             <Snippet code={fieldRegistry} lang='typescript'/>
-
-            <p>
-                <strong>Example</strong>
-            </p>
-            <Snippet code={fieldRegistryUsage} lang='typescript'/>
         </div>
     );
 }

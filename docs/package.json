@@ -9,6 +9,7 @@
     "react": "15.4.1",
     "react-bootstrap": "^0.30.8",
     "react-dom": "15.4.1",
+    "react-dynamic-formbuilder": "^1.0.10",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "sass-loader": "^6.0.3",
@@ -32,6 +33,7 @@
   },
   "scripts": {
     "build": "cross-env NODE_ENV=prod webpack -p",
-    "start": "webpack-dev-server --history-api-fallback"
+    "start": "cross-env NODE_ENV=development webpack-dev-server --history-api-fallback",
+    "start:package": "cross-env NODE_ENV=prod webpack-dev-server --history-api-fallback"
   }
 }

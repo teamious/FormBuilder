@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
-const code = require('!!raw!../snippets/IFieldOptionEditorComponent');
+const code = require('!!raw!../../../../src/data/IFieldOptionEditor.tsx');
 
 export default function() {
     return (
@@ -12,7 +12,9 @@ export default function() {
             </h3>
 
             <p>
-                Any field you provide as an editor via the <strong>FieldRegistry</strong> must satsify this interface.
+                Any field you provide as an editor via the <strong>FieldRegistry</strong> must satsify this interface. Your editor will
+                receive the field as a prop. When you have modified the field or it's options in your editor, you
+                must propagate the change using the onChange prop.
             </p>
 
             <Snippet code={code} lang='typescript'/>

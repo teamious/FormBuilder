@@ -1,11 +1,12 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import { FormBuilder, FormBuilderContext } from '../../../../src/components';
+import { FormBuilder, FormBuilderContext } from 'react-dynamic-formbuilder';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';
 const code = require('!!raw!../snippets/FormBuilder.tsx');
+import FormBuilderSnippet from '../snippets/FormBuilder';
 
 interface IProps {
 }
@@ -30,15 +31,7 @@ export default class extends React.Component<IProps, IState> {
     }
 
     render() {
-        const body = (
-            <FormBuilderContext>
-                <FormBuilder
-                    onFieldEditing={constants.noop}
-                    registry={constants.registry}
-                    onChange={this.onChangeFields}
-                    fields={this.state.fields} />
-            </FormBuilderContext>
-        );
+        const body = <FormBuilderSnippet/>
 
         const footer = (
             <Snippet code={code} lang='typescript' />

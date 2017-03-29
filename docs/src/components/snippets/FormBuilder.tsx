@@ -1,12 +1,14 @@
 import * as React from 'react';
+import SingleSelector from '../fields/SingleSelector';
+import SingleSelectorOptionEditor from '../fields/SingleSelectorOptionEditor';
+import SingleLineTextField from '../fields/SingleLineTextField';
+import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOptionEditor'
 import {
     FormBuilder,
     FormBuilderContext,
     FieldRegistry,
     IField
-} from 'form-builder';
-import { MyLongText } from './MyLongText';
-import { MyShortText } from './MyShortText';
+} from 'react-dynamic-formbuilder';
 
 
 interface IProps {}
@@ -15,38 +17,73 @@ interface IState {
     fields: IField[],
 }
 
-const registry: FieldRegistry = {
-    MyShortText: {
-        render: MyShortText,
+
+export const registry: FieldRegistry = {
+    SingleSelector: {
+        field: {
+            key: '',
+            label: 'Please select:',
+            type: 'SingleSelector',
+            options: {
+                selectOpts: ['a', 'b', 'c'],
+            }
+        },
+        displayName: '单选(selector)',
+        render: SingleSelector,
+        builder: SingleSelector,
+        editor: SingleSelectorOptionEditor,
+        display: null
     },
-    MyLongText: {
-        render: MyLongText,
+    SingleLineTextField: {
+        field: {
+            key: '',
+            label: 'Name',
+            type: 'SingleLineTextField',
+            options: {
+                hint: 'Please enter your name',
+                required: true,
+                unique: false,
+            }
+        },
+        displayName: '单行输入(input)',
+        render: SingleLineTextField,
+        builder: SingleLineTextField,
+        editor: SingleLineTextFieldOptionEditor,
+        display: null
     },
-}
+};
+
 
 export default class extends React.Component<IProps, IState> {
     constructor() {
         super();
+        this.onChangeFields = this.onChangeFields.bind(this);
         this.state = {
-            fields: [{
-                label: 'Short text',
-                type: 'MyrShortText',
-                options: {
-                    label: 'Label',
-                    required: false,
-                    placeholder: 'Placeholder',
+            fields: [
+                {
+                    key: '',
+                    label: 'Please select:',
+                    type: 'SingleSelector',
+                    options: {
+                        selectOpts: ['a', 'b', 'c'],
+                    }
+                },
+                {
+                    key: '',
+                    label: 'Name',
+                    type: 'SingleLineTextField',
+                    options: {
+                        hint: 'Please enter your name',
+                        required: true,
+                        unique: false,
+                    }
                 }
-            },
-            {
-                label: 'Long text',
-                type: 'MyLongText',
-                options: {
-                    label: 'Label',
-                    required: false,
-                    placeholder: 'Placeholder',
-                }
-            }]
+            ]
         }
+    }
+
+    private onFieldEditing(field: IField, callback: (field: IField) => void) {
+        // Do nothing for this example
     }
 
     private onChangeFields(fields: IField[]) {
@@ -58,7 +95,7 @@ export default class extends React.Component<IProps, IState> {
             <FormBuilderContext>
                 <FormBuilder
                     registry={registry}
-                    onFieldEditing={null}
+                    onFieldEditing={this.onFieldEditing}
                     onChange={this.onChangeFields}
                     fields={this.state.fields}/>
             </FormBuilderContext>

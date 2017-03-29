@@ -1,12 +1,13 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import { FormBuilder, FieldOptionEditor, FormBuilderContext } from '../../../../src/components';
+import { FormBuilder, FieldOptionEditor, FormBuilderContext } from 'react-dynamic-formbuilder';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';
 import { Modal, Button } from 'react-bootstrap';
 const code = require('!!raw!../snippets/FieldOptionEditor.tsx');
+import FieldOptionEditorSnippet from '../snippets/FieldOptionEditor';
 
 interface IProps { }
 
@@ -54,37 +55,11 @@ export default class extends React.Component<IProps, IState> {
     }
 
     render() {
-        const body = (
-            <div>
-                <FormBuilderContext>
-
-                    <Modal onHide={this.closeModal} show={!!this.state.field}>
-                        <Modal.Body>
-                            <FieldOptionEditor
-                                onChange={this.onChangeField}
-                                registry={constants.registry}
-                                field={this.state.field}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.closeModal}>
-                                Done
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
-
-                    <FormBuilder
-                        onFieldEditing={this.onFieldEditing}
-                        registry={constants.registry}
-                        onChange={this.onChangeFields}
-                        fields={this.state.fields} />
-                </FormBuilderContext>
-            </div>
-        );
-
         const footer = (
             <Snippet code={code} lang='typescript' />
         );
+
+        const body = <FieldOptionEditorSnippet/>
 
         return (
             <div>
@@ -95,14 +70,14 @@ export default class extends React.Component<IProps, IState> {
                 </h3>
 
                 <p>
-                    <strong>FieldOptionEditor</strong> can be used to edit the options of a field. The <strong>FieldOptionEditor</strong>
-                    uses the registry to inject your custom editor component(s). You must use the <code>onEditField</code> prop
+                    <strong>FieldOptionEditor</strong> can be used to edit the options of a field. The <strong>FieldOptionEditor</strong> uses
+                    the registry to inject your custom editor component(s). You must use the <code>onFieldEditing</code> prop
                     of the <strong>FormBuilder</strong> to get notified when the user clicks a field to edit.
                 </p>
                 <p>
                     Whenever a change is made to the options, the <strong>FieldOptionEditor</strong> will call the
-                    <code>onChange</code> prop with the newly updated field. You should then update your fields
-                    by replace the old field with the new field.
+                    <code>onChange</code> prop with the newly updated field. You should call the callback received from <code>onFieldEditing</code>
+                    and change the fields. Additionally, you should set the field in your state.
                 </p>
 
                 <Example body={body} footer={footer} />
@@ -119,7 +94,7 @@ const propsData: Array<IPropRow> = [
         type: <a href='#ifield'>IField</a>,
         default: 'undefined',
         required: true,
-        description: 'The field to be edited. You must pass a callback to the FormBuilder\'s onEditField() props to get the field to be edited.'
+        description: 'The field to be edited. You must pass a callback to the FormBuilder\'s onFieldEditing() props to get the field to be edited.'
     },
 
     {

@@ -1,25 +1,42 @@
 import * as React from 'react';
-import { FieldSelector, FormBuilderContext, IField } from 'form-builder';
+import {
+    FieldSelector,
+    FormBuilderContext,
+    IField,
+    FieldRegistry
+} from 'react-dynamic-formbuilder';
 
-const fields: IField[] = [
-    {
-        label: 'Short text',
-        type: 'ShortText',
+const registry: FieldRegistry = {
+    SingleSelector: {
+        field: {
+            key: '',
+            label: 'Please select:',
+            type: 'SingleSelector',
+        },
+        displayName: '单选(selector)',
+        render: null,
+        builder: null,
+        editor: null,
+        display: null,
     },
-    {
-        label: 'Long text',
-        type: 'LongText'
+    SingleLineTextField: {
+        field: {
+            key: '',
+            label: 'Name',
+            type: 'SingleLineTextField',
+        },
+        displayName: '单行输入(input)',
+        render: null,
+        builder: null,
+        editor: null,
+        display: null,
     },
-    {
-        label: 'Date',
-        type: 'DatePicker'
-    },
-];
+};
 
-export default function MyApp() {
+export default function() {
     return (
         <FormBuilderContext>
-            <FieldSelector fields={fields}/>
+            <FieldSelector registry={registry}/>
         </FormBuilderContext>
     )
 }

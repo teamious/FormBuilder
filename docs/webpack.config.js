@@ -1,6 +1,13 @@
 var path = require('path');
 var webpack = require('webpack');
 
+var alias = {}
+if (process.env.NODE_ENV === 'development') {
+    alias = {
+        'react-dynamic-formbuilder': path.resolve(__dirname, '../src/index.ts')
+    }
+}
+
 module.exports = {
     entry: "./src/index.tsx",
     output: {
@@ -12,7 +19,8 @@ module.exports = {
 
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
+        alias: alias
     },
 
     module: {

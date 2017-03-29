@@ -20,7 +20,7 @@ export default class SingleLineTextField extends React.PureComponent<IFieldRende
         const { hint, required } = this.props.field.options ? this.props.field.options : null;
         return (
             <div>
-                <FormGroup>
+                <FormGroup className='clearfix'>
                     <Col componentClass={ControlLabel} md={5}>{label}</Col>
                     <Col md={7}>
                         <FormControl type='text' placeholder={hint} required={required} value={this.props.value} onChange={this.onTextFieldChange} />

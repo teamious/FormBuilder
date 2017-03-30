@@ -37,7 +37,7 @@ export class NestedFormSubmissionView extends React.PureComponent<data.IFieldRen
 
     private renderEntry(entry: any, index: number) {
         return (
-            <NestedFromEntry
+            <NestedFormEntry
                 key={index}
                 index={index}
                 value={entry}
@@ -104,7 +104,7 @@ interface IEntryProps {
     onDelete: (index: number) => void;
 }
 
-class NestedFromEntry extends React.PureComponent<IEntryProps, any> {
+class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
     constructor() {
         super();
         this.onValueChanged = this.onValueChanged.bind(this);

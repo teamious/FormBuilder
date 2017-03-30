@@ -6,5 +6,4 @@ export interface IFieldError {
 
 export interface IFormError {
     [key: string]: IFieldError;
-    length: any;
 }

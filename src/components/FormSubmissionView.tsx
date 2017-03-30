@@ -75,7 +75,6 @@ export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewP
             this.errors = null;
         }
 
-        this.setState({ errors: this.errors });
         this.props.onChange(newValue, this.errors);
     }
 

@@ -2,12 +2,12 @@ import * as React from 'react';
 import * as assign from 'object-assign';
 import * as data from '../../data';
 
-import { FormSubmissionView } from '../FormSubmissionView';
+import { FormInput } from '../FormInput';
 
-export interface INestedFormSubmissionViewState {
+export interface INestedFormInputState {
 }
 
-export class NestedFormSubmissionView extends React.PureComponent<data.IFieldRenderProps, INestedFormSubmissionViewState> {
+export class NestedFormInput extends React.PureComponent<data.IFieldRenderProps, INestedFormInputState> {
     // This maintains all errors from nested entries's error.
     private nestedEntryErrors: {
         [key: number]: data.IFormError
@@ -115,7 +115,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
         return (
             <div className='form-submission-nested-entry'>
                 <button type='button' onClick={this.onDeleted}>Delete</button>
-                <FormSubmissionView
+                <FormInput
                     fields={this.props.fields}
                     registry={this.props.registry}
                     value={this.props.value}

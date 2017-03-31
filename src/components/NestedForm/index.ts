@@ -1,8 +1,8 @@
 import { IField } from '../../data';
 
 export * from './NestedFormBuilder';
-export * from './NestedFormDisplayView';
-export * from './NestedFormSubmissionView';
+export * from './NestedFormDisplay';
+export * from './NestedFormInput';
 export const Type = 'NestedForm';
 export const FieldTemplate = {
     key: '',

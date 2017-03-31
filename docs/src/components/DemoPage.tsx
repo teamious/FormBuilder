@@ -137,26 +137,22 @@ class DemoPage extends React.Component<void, IState> {
                         <Col md={3}>
                             <span>Field Selector</span>
                             <Panel>
-                                <FormBuilderContext>
-                                    <FieldSelector
-                                        registry={registry}
-                                    />
-                                </FormBuilderContext>
+                                <FieldSelector
+                                    registry={registry}
+                                />
                             </Panel>
                         </Col>
                         <Col md={5}>
                             <span>Form Builder</span>
                             <Panel>
                                 <div className='form-horizontal'>
-                                    <FormBuilderContext>
-                                        <FormBuilder
-                                            onFieldEditing={this.onFieldEditing}
-                                            onChange={this.onChangeFields}
-                                            registry={registry}
-                                            fields={this.state.fields}
-                                            onBeforeAddField={this.onBeforeAddField}
-                                        />
-                                    </FormBuilderContext>
+                                    <FormBuilder
+                                        onFieldEditing={this.onFieldEditing}
+                                        onChange={this.onChangeFields}
+                                        registry={registry}
+                                        fields={this.state.fields}
+                                        onBeforeAddField={this.onBeforeAddField}
+                                    />
                                 </div>
                             </Panel>
                         </Col>

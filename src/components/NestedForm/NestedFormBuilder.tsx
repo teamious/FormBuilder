@@ -1,7 +1,9 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
-import * as data from '../data';
-import { FormBuilder } from './FormBuilder';
+
+import * as data from '../../data';
+import * as NestedFrom from '.'
+import { FormBuilder } from '../FormBuilder';
 
 export interface IFieldBuilderState { }
 
@@ -20,7 +22,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     }
 
     private onBeforeAddField(field: data.IField): boolean {
-        if (field.type === NestedFormBuilder.type) {
+        if (field.type === NestedFrom.Type) {
             console.warn('Nested Field cannot be added into another Nested Field.');
             return false;
         }

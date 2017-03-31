@@ -1,7 +1,7 @@
 import * as React from 'react';
-import * as data from '../data';
+import * as data from '../../data';
 
-import { FormDisplayView } from './FormDisplayView';
+import { FormDisplayView } from '../FormDisplayView';
 
 export interface INestedFormDisplayViewState { };
 

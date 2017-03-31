@@ -3,7 +3,5 @@ export * from './FieldSelector';
 export * from './FormBuilder';
 export * from './FormBuilderContext';
 export * from './FormSubmissionView';
-export * from './NestedFormBuilder';
-export * from './NestedFormSubmissionView';
 export * from './FormDisplayView';
-export * from './NestedFormDisplayView';
+export * from './NestedForm';

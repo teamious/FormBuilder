@@ -31,7 +31,7 @@ export default function() {
                 </Nav>
             </div>
 
-            <div className='app'>
+            <div className='docs'>
                 <IntroductionExample/>
 
                 <h3>

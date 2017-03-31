@@ -20,26 +20,30 @@
     }
 }
 
-h3 {
-    font-weight: bold;
-    margin-top: 50px;
-    margin-bottom: 25px;
-    a {
+.docs {
+    width: 70%;
+    float: right;
+    h3 {
+        font-weight: bold;
+        margin-top: 50px;
+        margin-bottom: 25px;
+        a {
+            color: #333;
+        }
+    }
+
+    p {
+        color: #333;
+        font-size: 16px;
+        line-height: 24px;
+        margin-bottom: 25px;
+    }
+
+    table {
+        line-height: 24px;
+        font-size: 16px;
         color: #333;
     }
-}
-
-p {
-    color: #333;
-    font-size: 16px;
-    line-height: 24px;
-    margin-bottom: 25px;
-}
-
-table {
-    line-height: 24px;
-    font-size: 16px;
-    color: #333;
 }
 
 .example {
@@ -85,10 +89,6 @@ table {
     }
 }
 
-.app {
-    width: 70%;
-    float: right;
-}
  .modal-container {
    position: relative;
  }

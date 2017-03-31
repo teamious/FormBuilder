@@ -1,7 +1,6 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
-import { FormBuilder, FormBuilderContext } from 'react-dynamic-formbuilder';
 import * as data from '../../../../src/data';
 import * as constants from '../constants';
 import PropsTable, { IPropRow } from '../PropsTable';

@@ -7,7 +7,6 @@ import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOption
 import {
     FieldOptionEditor,
     FormBuilder,
-    FormBuilderContext,
     IField,
     FieldRegistry
 } from 'react-dynamic-formbuilder';
@@ -105,29 +104,27 @@ export default class MyApp extends React.Component<{}, IState> {
     render() {
         return (
             <div>
-                <FormBuilderContext>
-                    <Modal onHide={this.closeModal} show={!!this.state.field}>
-                        <Modal.Body>
-                            <FieldOptionEditor
-                                onChange={this.onChangeField}
-                                registry={registry}
-                                field={this.state.field}
-                            />
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button onClick={this.closeModal}>
-                                Done
-                            </Button>
-                        </Modal.Footer>
-                    </Modal>
+                <Modal onHide={this.closeModal} show={!!this.state.field}>
+                    <Modal.Body>
+                        <FieldOptionEditor
+                            onChange={this.onChangeField}
+                            registry={registry}
+                            field={this.state.field}
+                        />
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button onClick={this.closeModal}>
+                            Done
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
 
-                    <FormBuilder
-                        registry={registry}
-                        onFieldEditing={this.onFieldEditing}
-                        onChange={this.onChangeFields}
-                        fields={this.state.fields}
-                    />
-                </FormBuilderContext>
+                <FormBuilder
+                    registry={registry}
+                    onFieldEditing={this.onFieldEditing}
+                    onChange={this.onChangeFields}
+                    fields={this.state.fields}
+                />
             </div>
         );
     }

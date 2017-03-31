@@ -5,7 +5,6 @@ import SingleLineTextField from '../fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOptionEditor'
 import {
     FormBuilder,
-    FormBuilderContext,
     FieldRegistry,
     IField
 } from 'react-dynamic-formbuilder';
@@ -92,13 +91,11 @@ export default class extends React.Component<IProps, IState> {
 
     render() {
         return (
-            <FormBuilderContext>
-                <FormBuilder
-                    registry={registry}
-                    onFieldEditing={this.onFieldEditing}
-                    onChange={this.onChangeFields}
-                    fields={this.state.fields}/>
-            </FormBuilderContext>
+            <FormBuilder
+                registry={registry}
+                onFieldEditing={this.onFieldEditing}
+                onChange={this.onChangeFields}
+                fields={this.state.fields}/>
         );
     }
 }

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as data from '../data';
 import { FieldSelectorOption } from './FieldSelectorOption';
+import { FormBuilderContext } from './FormBuilderContext';
 
 export interface IFieldSelectorProps {
     registry: data.FieldRegistry;
@@ -22,9 +23,11 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
         }
 
         return (
-            <div className='field-selector'>
-                {options}
-            </div>
+            <FormBuilderContext>
+                <div className='field-selector'>
+                    {options}
+                </div>
+            </FormBuilderContext>
         );
     }
 }

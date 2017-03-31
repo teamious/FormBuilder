@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {
     FieldSelector,
-    FormBuilderContext,
     IField,
     FieldRegistry
 } from 'react-dynamic-formbuilder';
@@ -35,8 +34,6 @@ const registry: FieldRegistry = {
 
 export default function() {
     return (
-        <FormBuilderContext>
-            <FieldSelector registry={registry}/>
-        </FormBuilderContext>
+        <FieldSelector registry={registry}/>
     )
 }

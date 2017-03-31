@@ -4,6 +4,7 @@ import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } fr
 import { FormBuilderDraggable as Draggable } from './FormBuilderDraggable';
 import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
+import { FormBuilderContext } from './FormBuilderContext';
 
 export interface IFormBuilderProps {
     fields: data.IField[];
@@ -190,12 +191,14 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
     // is a <Droppable> field.
     render() {
         return (
-            <div className='form-builder'>
-                {this.props.fields.map(this.renderField)}
-                <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                    <div style={{ padding: 25 }} />
-                </Droppable>
-            </div>
+            <FormBuilderContext>
+                <div className='form-builder'>
+                    {this.props.fields.map(this.renderField)}
+                    <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                        <div style={{ padding: 25 }} />
+                    </Droppable>
+                </div>
+            </FormBuilderContext>
         );
     }
 }

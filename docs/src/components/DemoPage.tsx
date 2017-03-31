@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import {
     IField,
+    IFormError,
     FieldRegistry,
     FieldOptionEditor,
     FieldSelector,
@@ -28,7 +29,7 @@ interface IState {
     fields: IField[],
     selectedField: IField,
     value: any,
-    errors: data.IFormError,
+    error: IFormError,
 }
 
 const registry: FieldRegistry = {
@@ -94,7 +95,7 @@ class DemoPage extends React.Component<void, IState> {
             fields: [],
             selectedField: null,
             value: {},
-            errors: null,
+            error: null,
         };
     }
 
@@ -116,8 +117,8 @@ class DemoPage extends React.Component<void, IState> {
         this.fieldEdited(field);
     }
 
-    private onValueChanged(value: any, errors: data.IFormError) {
-        this.setState({ value, errors } as IState);
+    private onValueChanged(value: any, error: IFormError) {
+        this.setState({ value, error } as IState);
     }
 
     private onBeforeAddField(field: IField) {
@@ -128,7 +129,7 @@ class DemoPage extends React.Component<void, IState> {
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
-        const error = JSON.stringify(this.state.errors);
+        const error = JSON.stringify(this.state.error);
 
         return (
             <div>

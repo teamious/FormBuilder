@@ -1,8 +1,8 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
-import * as data from '../data';
+import * as data from '../../data';
 
-import { FormSubmissionView } from './FormSubmissionView';
+import { FormSubmissionView } from '../FormSubmissionView';
 
 export interface INestedFormSubmissionViewState {
 }

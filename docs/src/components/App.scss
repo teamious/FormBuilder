@@ -20,7 +20,9 @@
     }
 }
 
-.app {
+.docs {
+    width: 70%;
+    float: right;
     h3 {
         font-weight: bold;
         margin-top: 50px;
@@ -87,10 +89,6 @@
     }
 }
 
-.app {
-    width: 70%;
-    float: right;
-}
  .modal-container {
    position: relative;
  }

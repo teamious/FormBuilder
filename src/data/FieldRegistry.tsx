@@ -10,7 +10,7 @@ export interface FieldRegistry {
         field: IField,
         displayName: string,
         builder: IFieldBuilderComponent,
-        render: IFieldRenderComponent,
+        input: IFieldRenderComponent,
         display: IFieldDisplayComponent,
         editor?: IFieldOptionEditorComponent,
     };

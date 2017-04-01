@@ -3,7 +3,7 @@ import * as assign from 'object-assign';
 
 import * as data from '../data';
 
-export interface IFormSubmissionViewProps {
+export interface IFormInputProps {
     // registry contains a map of field types to classes. FormBuilder
     // uses this map to render the control.
     registry: data.FieldRegistry;
@@ -18,18 +18,18 @@ export interface IFormSubmissionViewProps {
     onChange: (value: any, errors: data.IFormError) => void;
 }
 
-export interface IFormSubmissionViewState {
+export interface IFormInputState {
 }
 
-export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewProps, IFormSubmissionViewState> {
+export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
     // This maintains all field errors during onValueChanged.
     private errors: data.IFormError;
 
-    public static defaultProps: Partial<IFormSubmissionViewProps> = {
+    public static defaultProps: Partial<IFormInputProps> = {
         value: {}
     }
 
-    constructor(props: IFormSubmissionViewProps) {
+    constructor(props: IFormInputProps) {
         super(props);
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
@@ -37,13 +37,13 @@ export class FormSubmissionView extends React.PureComponent<IFormSubmissionViewP
 
     private renderField(field: data.IField, index: number) {
         const fieldDef = this.props.registry[field.type];
-        if (!fieldDef || !fieldDef.render) {
+        if (!fieldDef || !fieldDef.input) {
             console.warn('Field definition is not registered: ' + field.type);
             return;
         }
 
         const value = this.props.value[field.key];
-        const component = React.createElement(fieldDef.render, {
+        const component = React.createElement(fieldDef.input, {
             registry: this.props.registry,
             index,
             field,

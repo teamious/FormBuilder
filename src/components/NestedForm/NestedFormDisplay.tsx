@@ -1,11 +1,11 @@
 import * as React from 'react';
 import * as data from '../../data';
 
-import { FormDisplayView } from '../FormDisplayView';
+import { FormDisplay } from '../FormDisplay';
 
-export interface INestedFormDisplayViewState { };
+export interface INestedFormDisplayState { };
 
-export class NestedFormDisplayView extends React.PureComponent<data.IFieldDisplayProps, INestedFormDisplayViewState> {
+export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayProps, INestedFormDisplayState> {
     public static defaultProps: data.IFieldDisplayProps = {
         value: [{}]
     } as data.IFieldDisplayProps;
@@ -26,7 +26,7 @@ export class NestedFormDisplayView extends React.PureComponent<data.IFieldDispla
     private renderEntry(entry: any, index: number) {
         return (
             <div className='form-display-nested-entry'>
-                <FormDisplayView
+                <FormDisplay
                     fields={this.props.field.fields}
                     registry={this.props.registry}
                     value={entry}

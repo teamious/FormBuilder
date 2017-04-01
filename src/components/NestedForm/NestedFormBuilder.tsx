@@ -8,7 +8,6 @@ import { FormBuilder } from '../FormBuilder';
 export interface IFieldBuilderState { }
 
 export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, IFieldBuilderState> {
-    static type = 'NestedForm';
     constructor() {
         super();
         this.onChangeFields = this.onChangeFields.bind(this);

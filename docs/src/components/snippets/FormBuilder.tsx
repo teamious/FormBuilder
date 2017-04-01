@@ -28,7 +28,7 @@ export const registry: FieldRegistry = {
             }
         },
         displayName: '单选(selector)',
-        render: SingleSelector,
+        input: SingleSelector,
         builder: SingleSelector,
         editor: SingleSelectorOptionEditor,
         display: null
@@ -45,7 +45,7 @@ export const registry: FieldRegistry = {
             }
         },
         displayName: '单行输入(input)',
-        render: SingleLineTextField,
+        input: SingleLineTextField,
         builder: SingleLineTextField,
         editor: SingleLineTextFieldOptionEditor,
         display: null

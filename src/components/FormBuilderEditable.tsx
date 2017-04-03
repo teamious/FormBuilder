@@ -1,9 +1,11 @@
 import * as React from 'react';
+import * as classNames from 'classnames'
 import * as data from '../data';
 
 export interface IFormBuilderEditableProps {
     field: data.IField;
     index: number;
+    isEditing: boolean;
     showEditButton?: boolean;
     editButtonText?: string;
     deleteButtonText?: string;
@@ -39,8 +41,14 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
     render() {
         const editButtonText = this.props.editButtonText || 'Edit';
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
+        const css = classNames(
+            'form-builder-editable-controls',
+            {
+                'form-builder-editing-controls': this.props.isEditing
+            }
+        );
         return (
-            <div className='form-builder-editable-controls' onClick={this.onClicked}>
+            <div className={css} onClick={this.onClicked}>
                 {
                     this.props.showEditButton && <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
                         {editButtonText}

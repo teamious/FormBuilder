@@ -42,7 +42,7 @@ export interface IFormBuilderProps {
 }
 
 export interface IFormBuilderState {
-    editingIndex: number;
+    editingField: data.IField;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -59,7 +59,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         this.onFieldChanged = this.onFieldChanged.bind(this);
 
         this.state = {
-            editingIndex: null
+            editingField: null
         };
     }
 
@@ -72,12 +72,12 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        const editingIndex = this.props.fields.indexOf(field);
-        this.setState({ editingIndex: editingIndex });
+        this.setState({ editingField: field });
         this.props.onFieldEditing(field, function (field: data.IField) {
-            // TODO: editingIndex may change due to re-order.
+            const editingIndex = this.props.fields.indexOf(this.state.editingField);
             let fields = this.props.fields.slice();
             fields[editingIndex] = field;
+            this.setState({ editingField: field });
             this.props.onChange(fields);
         }.bind(this));
     }
@@ -91,6 +91,10 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         const hook = this.props.onBeforeDeleteField;
         if (hook && !hook(field)) {
             return;
+        }
+
+        if (field === this.state.editingField) {
+            this.setState({ editingField: null });
         }
         fields.splice(index, 1);
         this.props.onChange(fields);
@@ -168,7 +172,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             onBeforeAddField: this.props.onBeforeAddField,
         });
 
-        const isEditing = (index === this.state.editingIndex);
+        const isEditing = (field === this.state.editingField);
 
         return (
             <div className='form-builder-field' key={index}>

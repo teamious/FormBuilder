@@ -26,15 +26,21 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         this.onClicked = this.onClicked.bind(this);
     }
 
-    private onEdit() {
+    private onEdit(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
         this.props.onEdit(this.props.field);
     }
 
-    private onDelete() {
+    private onDelete(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
         this.props.onDelete(this.props.index);
     }
 
-    private onClicked() {
+    private onClicked(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
         this.props.onEdit(this.props.field);
     }
 

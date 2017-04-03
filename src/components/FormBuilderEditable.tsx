@@ -4,6 +4,7 @@ import * as data from '../data';
 export interface IFormBuilderEditableProps {
     field: data.IField;
     index: number;
+    showEditButton?: boolean;
     editButtonText?: string;
     deleteButtonText?: string;
     onEdit: (field: data.IField) => void;
@@ -20,6 +21,7 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         super();
         this.onEdit = this.onEdit.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onClicked = this.onClicked.bind(this);
     }
 
     private onEdit() {
@@ -30,14 +32,20 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         this.props.onDelete(this.props.index);
     }
 
+    private onClicked() {
+        this.props.onEdit(this.props.field);
+    }
+
     render() {
         const editButtonText = this.props.editButtonText || 'Edit';
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
         return (
-            <div className='form-builder-editable-controls'>
-                <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
-                    {editButtonText}
-                </button>
+            <div className='form-builder-editable-controls' onClick={this.onClicked}>
+                {
+                    this.props.showEditButton && <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
+                        {editButtonText}
+                    </button>
+                }
                 <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onDelete}>
                     {deleteButtonText}
                 </button>

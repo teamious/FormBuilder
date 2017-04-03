@@ -15,7 +15,8 @@ import {
     FormInput,
     NestedFormInput,
     FormDisplay,
-    NestedFormDisplay
+    NestedFormDisplay,
+    NestedForm,
 } from 'react-dynamic-formbuilder';
 import SingleSelector from './fields/SingleSelector';
 import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
@@ -67,13 +68,8 @@ const registry: FieldRegistry = {
     },
 };
 
-registry[NestedFormBuilder.type] = {
-    field: {
-        key: '',
-        label: 'Detail',
-        type: NestedFormBuilder.type,
-        fields: [],
-    },
+registry[NestedForm.Type] = {
+    field: NestedForm.FieldTemplate,
     displayName: '明细(NestForm)',
     input: NestedFormInput,
     builder: NestedFormBuilder,

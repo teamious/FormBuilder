@@ -42,6 +42,7 @@ export interface IFormBuilderProps {
 }
 
 export interface IFormBuilderState {
+    editingField: data.IField;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -49,12 +50,17 @@ export interface IFormBuilderState {
 // a registry to determine which class is responsible for rendering the field type.
 export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilderState> {
     constructor(props: IFormBuilderProps) {
-        super(props)
+        super(props);
+
         this.renderField = this.renderField.bind(this);
         this.onDrop = this.onDrop.bind(this);
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
+
+        this.state = {
+            editingField: null
+        };
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -66,11 +72,12 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        const editingIndex = this.props.fields.indexOf(field);
+        this.setState({ editingField: field });
         this.props.onFieldEditing(field, function (field: data.IField) {
-            // TODO: editingIndex may change due to re-order.
+            const editingIndex = this.props.fields.indexOf(this.state.editingField);
             let fields = this.props.fields.slice();
             fields[editingIndex] = field;
+            this.setState({ editingField: field });
             this.props.onChange(fields);
         }.bind(this));
     }
@@ -84,6 +91,10 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         const hook = this.props.onBeforeDeleteField;
         if (hook && !hook(field)) {
             return;
+        }
+
+        if (field === this.state.editingField) {
+            this.setState({ editingField: null });
         }
         fields.splice(index, 1);
         this.props.onChange(fields);
@@ -161,6 +172,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             onBeforeAddField: this.props.onBeforeAddField,
         });
 
+        const isEditing = (field === this.state.editingField);
+
         return (
             <div className='form-builder-field' key={index}>
                 <Droppable
@@ -173,6 +186,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
                         onDelete={this.onDeleteField}
                         index={index}
                         field={field}
+                        isEditing={isEditing}
                     >
                         <Draggable
                             index={index}

@@ -12,6 +12,10 @@
     width: 100%;
 }
 
+.form-builder-editing-controls {
+    background-color: lightyellow;
+}
+
 .form-builder-nested {
     border: 1px solid #ccc;
 }

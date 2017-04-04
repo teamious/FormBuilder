@@ -31,7 +31,9 @@ export default class SingleSelector extends React.PureComponent<IFieldBuilderPro
     }
 
     private onSelectorChanged(event: any) {
-        this.props.onValueChange(this.props.field, event.target.value, null);
+        if (this.props.onValueChange) {
+            this.props.onValueChange(this.props.field, event.target.value, null);
+        }
     }
 
     private renderOpts(opts: Array<any>) {

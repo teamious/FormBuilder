@@ -1,9 +1,12 @@
 import * as React from 'react';
+import * as classNames from 'classnames'
 import * as data from '../data';
 
 export interface IFormBuilderEditableProps {
     field: data.IField;
     index: number;
+    isEditing: boolean;
+    showEditButton?: boolean;
     editButtonText?: string;
     deleteButtonText?: string;
     onEdit: (field: data.IField) => void;
@@ -20,24 +23,43 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         super();
         this.onEdit = this.onEdit.bind(this);
         this.onDelete = this.onDelete.bind(this);
+        this.onClicked = this.onClicked.bind(this);
     }
 
-    private onEdit() {
+    private onEdit(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
         this.props.onEdit(this.props.field);
     }
 
-    private onDelete() {
+    private onDelete(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
         this.props.onDelete(this.props.index);
+    }
+
+    private onClicked(event: any) {
+        event.stopPropagation();
+        event.preventDefault();
+        this.props.onEdit(this.props.field);
     }
 
     render() {
         const editButtonText = this.props.editButtonText || 'Edit';
         const deleteButtonText = this.props.deleteButtonText || 'Delete';
+        const css = classNames(
+            'form-builder-editable-controls',
+            {
+                'form-builder-editing-controls': this.props.isEditing
+            }
+        );
         return (
-            <div className='form-builder-editable-controls'>
-                <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
-                    {editButtonText}
-                </button>
+            <div className={css} onClick={this.onClicked}>
+                {
+                    this.props.showEditButton && <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
+                        {editButtonText}
+                    </button>
+                }
                 <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onDelete}>
                     {deleteButtonText}
                 </button>

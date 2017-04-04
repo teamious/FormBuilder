@@ -2,6 +2,7 @@
   "name": "react-dynamic-formbuilder",
   "version": "1.0.14",
   "dependencies": {
+    "classnames": "^2.2.5",
     "object-assign": "^4.0.0",
     "react-dnd": "^2.0.0",
     "react-dnd-html5-backend": "^2.0.0"
@@ -15,6 +16,7 @@
   ],
   "typings": "dist/index.d.ts",
   "devDependencies": {
+    "@types/classnames": "0.0.32",
     "@types/object-assign": "^4.0.30",
     "@types/react": "0.14.54",
     "@types/react-bootstrap": "0.0.46",

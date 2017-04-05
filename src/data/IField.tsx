@@ -6,3 +6,7 @@ export interface IField {
     options?: any;
     fields?: Array<IField>
 };
+
+export interface IGenericField<T> extends IField {
+    options: T;
+}

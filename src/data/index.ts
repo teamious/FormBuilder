@@ -3,7 +3,7 @@ export * from './IField';
 export * from './IFieldError';
 export * from './IFieldOptionEditor';
 export * from './IFieldBuilder';
-export * from './IFieldRender';
+export * from './IFieldInput';
 export * from './FieldRegistry';
 export * from './IFieldDisplay';
 

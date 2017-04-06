@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField, IFieldBuilderProps, IFieldRenderProps } from '../../../../src/data';
+import { IField, IFieldBuilderProps, IFieldInputProps } from '../../../../src/data';
 
 interface IState { }
 
-export default class SingleSelector extends React.PureComponent<IFieldBuilderProps & IFieldRenderProps, IState> {
+export default class SingleSelector extends React.PureComponent<IFieldBuilderProps & IFieldInputProps, IState> {
     public static defaultProps = {
         value: ''
-    } as IFieldRenderProps & IFieldBuilderProps
+    } as IFieldInputProps & IFieldBuilderProps
 
     constructor() {
         super();

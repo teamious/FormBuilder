@@ -7,17 +7,17 @@ import { FormInput } from '../FormInput';
 export interface INestedFormInputState {
 }
 
-export class NestedFormInput extends React.PureComponent<data.IFieldRenderProps, INestedFormInputState> {
+export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, INestedFormInputState> {
     // This maintains all errors from nested entries's error.
     private nestedEntryErrors: {
         [key: number]: data.IFormError
     }
 
-    public static defaultProps: data.IFieldRenderProps = {
+    public static defaultProps: data.IFieldInputProps = {
         value: [{}]
-    } as data.IFieldRenderProps;
+    } as data.IFieldInputProps;
 
-    constructor(props: data.IFieldRenderProps) {
+    constructor(props: data.IFieldInputProps) {
         super(props);
         this.renderEntry = this.renderEntry.bind(this);
         this.onCreateEntry = this.onCreateEntry.bind(this);

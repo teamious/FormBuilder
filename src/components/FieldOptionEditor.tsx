@@ -27,8 +27,12 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
             return <div />;
         }
 
-        const component = React.createElement(fieldDef.editor, {field, onChange: this.onOptionChanged});
-        return component;
+        const component = React.createElement(fieldDef.editor, { field, onChange: this.onOptionChanged });
+        return (
+            <div className='field-option-editor'>
+                {component}
+            </div>
+        )
     }
 
     private onOptionChanged(field: data.IField) {

@@ -6,25 +6,16 @@ import { DragDropContext } from 'react-dnd';
 import {
     IField,
     IFormError,
-    FieldRegistry,
     FieldOptionEditor,
     FieldSelector,
     FormBuilder,
-    NestedFormBuilder,
-    FormBuilderContext,
     FormInput,
-    NestedFormInput,
     FormDisplay,
-    NestedFormDisplay,
-    NestedForm,
 } from 'react-dynamic-formbuilder';
-import SingleSelector from './fields/SingleSelector';
-import SingleSelectorOptionEditor from './fields/SingleSelectorOptionEditor';
-import SingleLineTextField from './fields/SingleLineTextField';
-import SingleLineTextFieldOptionEditor from './fields/SingleLineTextFieldOptionEditor'
-import KeyValueDisplay from './fields/KeyValueDisplay';
 
 import './DemoPage.css';
+
+import { FieldRegistry } from './constants';
 
 interface IState {
     fields: IField[],
@@ -32,49 +23,6 @@ interface IState {
     value: any,
     error: IFormError,
 }
-
-const registry: FieldRegistry = {
-    'SingleSelector': {
-        field: {
-            key: '',
-            label: 'Please select:',
-            type: 'SingleSelector',
-            options: {
-                selectOpts: ['a', 'b', 'c'],
-            }
-        },
-        displayName: '单选(selector)',
-        input: SingleSelector,
-        builder: SingleSelector,
-        editor: SingleSelectorOptionEditor,
-        display: KeyValueDisplay,
-    },
-    'SingleLineTextField': {
-        field: {
-            key: '',
-            label: 'Name',
-            type: 'SingleLineTextField',
-            options: {
-                hint: 'Please enter your name',
-                required: true,
-                unique: false,
-            }
-        },
-        displayName: '单行输入(input)',
-        input: SingleLineTextField,
-        builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor,
-        display: KeyValueDisplay,
-    },
-};
-
-registry[NestedForm.Type] = {
-    field: NestedForm.FieldTemplate,
-    displayName: '明细(NestForm)',
-    input: NestedFormInput,
-    builder: NestedFormBuilder,
-    display: NestedFormDisplay,
-};
 
 class DemoPage extends React.Component<void, IState> {
     private fieldEdited: (field: IField) => void;
@@ -135,7 +83,7 @@ class DemoPage extends React.Component<void, IState> {
                             <span>Field Selector</span>
                             <Panel>
                                 <FieldSelector
-                                    registry={registry}
+                                    registry={FieldRegistry}
                                 />
                             </Panel>
                         </Col>
@@ -146,7 +94,7 @@ class DemoPage extends React.Component<void, IState> {
                                     <FormBuilder
                                         onFieldEditing={this.onFieldEditing}
                                         onChange={this.onChangeFields}
-                                        registry={registry}
+                                        registry={FieldRegistry}
                                         fields={this.state.fields}
                                         onBeforeAddField={this.onBeforeAddField}
                                     />
@@ -157,7 +105,7 @@ class DemoPage extends React.Component<void, IState> {
                             <span>Option Editor</span>
                             <Panel>
                                 <FieldOptionEditor
-                                    registry={registry}
+                                    registry={FieldRegistry}
                                     field={this.state.selectedField}
                                     onChange={this.onFieldOptionChanged}
                                 />
@@ -170,7 +118,7 @@ class DemoPage extends React.Component<void, IState> {
                                 <div>Form Preview</div>
                                 <FormInput
                                     fields={this.state.fields}
-                                    registry={registry}
+                                    registry={FieldRegistry}
                                     value={this.state.value}
                                     onChange={this.onValueChanged} />
                             </Panel>
@@ -181,7 +129,7 @@ class DemoPage extends React.Component<void, IState> {
                                 <div className='form-horizontal'>
                                     <FormDisplay
                                         fields={this.state.fields}
-                                        registry={registry}
+                                        registry={FieldRegistry}
                                         value={this.state.value}
                                     />
                                 </div>

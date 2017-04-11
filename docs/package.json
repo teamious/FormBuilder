@@ -9,7 +9,7 @@
     "react": "15.4.1",
     "react-bootstrap": "^0.30.8",
     "react-dom": "15.4.1",
-    "react-dynamic-formbuilder": "^1.0.15",
+    "react-dynamic-formbuilder": "^1.0.18",
     "react-router": "^4.0.0",
     "react-router-dom": "^4.0.0",
     "sass-loader": "^6.0.3",

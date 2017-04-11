@@ -17,40 +17,43 @@ interface IState {
     field: IField;
 }
 
-const registry: FieldRegistry = {
-    SingleSelector: {
-        field: {
-            key: '',
-            label: 'Please select:',
-            type: 'SingleSelector',
-            options: {
-                selectOpts: ['a', 'b', 'c'],
-            }
-        },
-        displayName: '单选(selector)',
-        input: SingleSelector,
-        builder: SingleSelector,
-        editor: SingleSelectorOptionEditor,
-        display: null,
+const registry: FieldRegistry = new FieldRegistry();
+registry.register({
+    field: {
+        key: '',
+        label: 'Please select:',
+        type: 'SingleSelector',
+        options: {
+            selectOpts: ['a', 'b', 'c'],
+        }
     },
-    SingleLineTextField: {
-        field: {
-            key: '',
-            label: 'Name',
-            type: 'SingleLineTextField',
-            options: {
-                hint: 'Please enter your name',
-                required: true,
-                unique: false,
-            }
-        },
-        displayName: '单行输入(input)',
-        input: SingleLineTextField,
-        builder: SingleLineTextField,
-        editor: SingleLineTextFieldOptionEditor,
-        display: null,
+    type: 'SingleSelector',
+    displayName: '单选(selector)',
+    input: SingleSelector,
+    builder: SingleSelector,
+    editor: SingleSelectorOptionEditor,
+    display: null,
+});
+
+registry.register({
+    field: {
+        key: '',
+        label: 'Name',
+        type: 'SingleLineTextField',
+        options: {
+            hint: 'Please enter your name',
+            required: true,
+            unique: false,
+        }
     },
-};
+    type: 'SingleLineTextField',
+    displayName: '单行输入(input)',
+    input: SingleLineTextField,
+    builder: SingleLineTextField,
+    editor: SingleLineTextFieldOptionEditor,
+    display: null,
+});
+
 
 export default class MyApp extends React.Component<{}, IState> {
     private callback: (field: IField) => void;
@@ -70,7 +73,7 @@ export default class MyApp extends React.Component<{}, IState> {
                     selectOpts: ['a', 'b', 'c'],
                 }
             }, {
-                 key: '',
+                key: '',
                 label: 'Name',
                 type: 'SingleLineTextField',
                 options: {
@@ -88,16 +91,16 @@ export default class MyApp extends React.Component<{}, IState> {
     }
 
     private onChangeField(field: IField) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback(field);
     }
 
     private closeModal() {
-        this.setState({field: null} as IState);
+        this.setState({ field: null } as IState);
     }
 
     private onFieldEditing(field: IField, callback: (field: IField) => void) {
-        this.setState({field} as IState);
+        this.setState({ field } as IState);
         this.callback = callback;
     }
 

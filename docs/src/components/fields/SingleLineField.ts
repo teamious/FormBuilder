@@ -5,7 +5,7 @@ import SingleLineTextFieldOptionEditor from './SingleLineTextFieldOptionEditor';
 
 const Type = "Teamious.SingleLineText";
 const Field: IField = {
-    key: '',
+    id: '',
     label: '单行输入(input)',
     type: Type,
     options: {

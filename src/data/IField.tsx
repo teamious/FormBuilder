@@ -1,7 +1,7 @@
 export interface IField {
     label: string;
     type: string;
-    key: string;
+    id: string;
     hint?: string;
     options?: any;
     fields?: Array<IField>

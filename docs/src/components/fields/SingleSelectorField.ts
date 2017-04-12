@@ -5,7 +5,7 @@ import SingleSelectorOptionEditor from './SingleSelectorOptionEditor';
 
 const Type = "Teamious.SingleSelector";
 const Field: IField = {
-    key: '',
+    id: '',
     label: '单选(selector)',
     type: Type,
     options: {

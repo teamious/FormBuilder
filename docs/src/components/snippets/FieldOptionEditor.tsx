@@ -20,7 +20,7 @@ interface IState {
 const registry: FieldRegistry = new FieldRegistry();
 registry.register({
     field: {
-        key: '',
+        id: '',
         label: 'Please select:',
         type: 'SingleSelector',
         options: {
@@ -37,7 +37,7 @@ registry.register({
 
 registry.register({
     field: {
-        key: '',
+        id: '',
         label: 'Name',
         type: 'SingleLineTextField',
         options: {
@@ -66,14 +66,14 @@ export default class MyApp extends React.Component<{}, IState> {
         this.onFieldEditing = this.onFieldEditing.bind(this);
         this.state = {
             fields: [{
-                key: '',
+                id: '',
                 label: 'Please select:',
                 type: 'SingleSelector',
                 options: {
                     selectOpts: ['a', 'b', 'c'],
                 }
             }, {
-                key: '',
+                id: '',
                 label: 'Name',
                 type: 'SingleLineTextField',
                 options: {

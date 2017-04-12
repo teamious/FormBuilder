@@ -66,7 +66,7 @@ class DemoPage extends React.Component<void, IState> {
     }
 
     private onBeforeAddField(field: IField) {
-        field.key = Math.floor((Math.random() * 10000000) + 1).toString();
+        field.id = Math.floor((Math.random() * 10000000) + 1).toString();
         return true;
     }
 

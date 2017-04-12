@@ -1,4 +1,4 @@
-import { IField, IGenericField } from './IField';
+import { IField } from './IField';
 import { IFieldError } from './IFieldError';
 import { FieldRegistry } from './FieldRegistry';
 
@@ -19,8 +19,9 @@ export interface IFieldInputProps {
     onValueChange: (field: IField, value: any, error: IFieldError) => void;
 }
 
-export interface IGenericFieldInputProps<T> extends IFieldInputProps {
-    field: IGenericField<T>;
+export interface IGenericFieldInputProps<T extends IField, V> extends IFieldInputProps {
+    field: IField;
+    value: V;
 }
 
 export interface IFieldInputComponent extends React.ComponentClass<IFieldInputProps> {

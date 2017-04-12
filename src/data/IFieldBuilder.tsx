@@ -1,4 +1,4 @@
-import { IField, IGenericField } from './IField';
+import { IField } from './IField';
 import { FieldRegistry } from './FieldRegistry';
 
 export interface IFieldBuilderProps {
@@ -10,8 +10,8 @@ export interface IFieldBuilderProps {
     onBeforeAddField: (field: IField) => boolean;
 }
 
-export interface IGenericFieldBuilderProps<T> extends IFieldBuilderProps {
-    field: IGenericField<T>
+export interface IGenericFieldBuilderProps<T extends IField> extends IFieldBuilderProps {
+    field: IField
 }
 
 export interface IFieldBuilderComponent extends React.ComponentClass<IFieldBuilderProps> {

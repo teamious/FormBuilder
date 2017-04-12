@@ -31,7 +31,7 @@ export class FormDisplay extends React.PureComponent<IFormDisplayProps, IFormDis
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const value = this.props.value[field.key];
+        const value = this.props.value[field.id];
         const component = React.createElement(fieldDef.display, {
             field,
             index,

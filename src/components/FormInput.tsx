@@ -42,7 +42,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
             return;
         }
 
-        const value = this.props.value[field.key];
+        const value = this.props.value[field.id];
         const component = React.createElement(fieldDef.input, {
             registry: this.props.registry,
             index,
@@ -62,13 +62,13 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
 
     private onValueChanged(field: data.IField, value: any, error: data.IFieldError) {
         const newValue = assign({}, this.props.value);
-        newValue[field.key] = value;
+        newValue[field.id] = value;
         this.errors = this.errors || {} as data.IFormError;
         if (error) {
-            this.errors[field.key] = error;
+            this.errors[field.id] = error;
         }
         else {
-            delete this.errors[field.key];
+            delete this.errors[field.id];
         }
 
         // NOTE: If there are no errors from the fields, set errors to be null.

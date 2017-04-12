@@ -1,4 +1,4 @@
-import { IField, IGenericField } from './IField';
+import { IField } from './IField';
 import { FieldRegistry } from './FieldRegistry';
 
 export interface IFieldDisplayProps {
@@ -8,8 +8,8 @@ export interface IFieldDisplayProps {
     value: any;
 }
 
-export interface IGenericFieldDisplayProps<T> extends IFieldDisplayProps {
-    field: IGenericField<T>;
+export interface IGenericFieldDisplayProps<T extends IField> extends IFieldDisplayProps {
+    field: IField;
 }
 
 export interface IFieldDisplayComponent extends React.ComponentClass<IFieldDisplayProps> {

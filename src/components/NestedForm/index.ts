@@ -5,8 +5,8 @@ export * from './NestedFormDisplay';
 export * from './NestedFormInput';
 
 const Type = 'NestedForm';
-const FieldTemplate = {
-    key: '',
+const FieldTemplate: IField = {
+    id: '',
     label: 'Detail',
     type: Type,
     fields: Array<IField>()

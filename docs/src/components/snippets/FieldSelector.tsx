@@ -8,7 +8,7 @@ import {
 const registry: FieldRegistry = new FieldRegistry();
 registry.register({
     field: {
-        key: '',
+        id: '',
         label: 'Please select:',
         type: 'SingleSelector',
         options: {
@@ -25,7 +25,7 @@ registry.register({
 
 registry.register({
     field: {
-        key: '',
+        id: '',
         label: 'Name',
         type: 'SingleLineTextField',
         options: {

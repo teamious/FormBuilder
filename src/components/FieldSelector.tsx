@@ -17,8 +17,8 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
     render() {
         let options = [];
         this.props.registry.getFields().forEach(def => {
-            const {field, displayName} = def;
-            options.push(<FieldSelectorOption field={field} key={def.type} label={displayName} />)
+            const {field, displayName, type} = def;
+            options.push(<FieldSelectorOption field={field} key={type} label={displayName} />)
         });
         return (
             <FormBuilderContext>

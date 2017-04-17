@@ -30,7 +30,7 @@ export class FieldRegistry {
 
     public getFields(): IFieldDef[] {
         const fields: IFieldDef[] = []
-        for (var key in this) {
+        for (let key in this) {
             if (typeof this[key] !== "function") {
                 fields.push(this[key]);
             }

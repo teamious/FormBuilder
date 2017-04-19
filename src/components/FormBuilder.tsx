@@ -166,7 +166,6 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
 
         const fieldBuilderProps: data.IFieldBuilderProps = {
             field,
-            fields: this.props.fields,
             index,
             registry: this.props.registry,
             onFieldEditing: this.props.onFieldEditing,

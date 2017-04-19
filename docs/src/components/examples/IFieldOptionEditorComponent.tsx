@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Snippet from '../Snippet';
-const code = require('!!raw!../../../../src/data/IFieldOptionEditor.tsx');
+const code = require('!!raw!../../../../src/data/IFieldOptionEditor.ts');
 
 export default function() {
     return (

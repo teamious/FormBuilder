@@ -7,8 +7,8 @@ export interface IFormBuilderEditableProps {
     index: number;
     isEditing: boolean;
     showEditButton?: boolean;
-    editButtonText?: string;
-    deleteButtonText?: string;
+    editButtonText?: React.ReactNode;
+    deleteButtonText?: React.ReactNode;
     onEdit: (field: data.IField) => void;
     onDelete: (index: number) => void;
 }

@@ -167,6 +167,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             field,
             index,
             registry: this.props.registry,
+            editButtonText: this.props.editButtonText,
+            deleteButtonText: this.props.deleteButtonText,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
@@ -182,6 +184,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
                     field={field}
                 >
                     <Editable
+                        deleteButtonText={this.props.deleteButtonText}
+                        editButtonText={this.props.editButtonText}
                         onEdit={this.onEditField}
                         onDelete={this.onDeleteField}
                         index={index}

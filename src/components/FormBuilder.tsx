@@ -164,8 +164,9 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        const props: data.IFieldBuilderProps = {
+        const fieldBuilderProps: data.IFieldBuilderProps = {
             field,
+            fields: this.props.fields,
             index,
             registry: this.props.registry,
             editButton: this.props.editButton,
@@ -175,7 +176,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             onBeforeAddField: this.props.onBeforeAddField,
         }
 
-        const component = React.createElement(fieldDef.builder, props);
+        const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
         const isEditing = (field === this.state.editingField);
 

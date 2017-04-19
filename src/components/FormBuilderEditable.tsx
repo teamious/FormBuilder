@@ -72,7 +72,7 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
 
         if (!source || typeof source === 'string') {
             return (
-                <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onEdit}>
+                <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onDelete}>
                     {source || 'Delete'}
                 </button>
             )

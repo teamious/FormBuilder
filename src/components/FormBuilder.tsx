@@ -163,14 +163,18 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.builder, {
+
+        const fieldBuilderProps: data.IFieldBuilderProps = {
             field,
+            fields: this.props.fields,
             index,
             registry: this.props.registry,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
-        });
+        }
+
+        const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
         const isEditing = (field === this.state.editingField);
 

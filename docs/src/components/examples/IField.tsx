@@ -2,7 +2,7 @@ import * as React from 'react';
 import Snippet from '../Snippet';
 import PropsTable, { IPropRow } from '../PropsTable';
 
-const code = require('!!raw!../../../../src/data/IField.tsx');
+const code = require('!!raw!../../../../src/data/IField.ts');
 
 export default function() {
 

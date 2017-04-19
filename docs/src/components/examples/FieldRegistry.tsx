@@ -2,7 +2,7 @@ import * as React from 'react';
 import Snippet from '../Snippet';
 import Example from '../Example';
 
-const fieldRegistry = require('!!raw!../../../../src/data/FieldRegistry.tsx');
+const fieldRegistry = require('!!raw!../../../../src/data/FieldRegistry.ts');
 
 export default function() {
     return (

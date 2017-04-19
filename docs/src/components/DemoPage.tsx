@@ -5,6 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import {
     IField,
+    IFieldContext,
     IFormError,
     FieldOptionEditor,
     FieldSelector,
@@ -19,7 +20,8 @@ import { FieldRegistry } from './constants';
 
 interface IState {
     fields: IField[],
-    selectedField: IField,
+    editingField: IField,
+    editingContext: IFieldContext;
     value: any,
     error: IFormError,
 }
@@ -37,14 +39,15 @@ class DemoPage extends React.Component<void, IState> {
         this.onBeforeAddField = this.onBeforeAddField.bind(this);
         this.state = {
             fields: [],
-            selectedField: null,
+            editingField: null,
+            editingContext: null,
             value: {},
             error: null,
         };
     }
 
-    private onFieldEditing(field: IField, done: (field: IField) => void) {
-        this.setState({ selectedField: field } as IState);
+    private onFieldEditing(field: IField, fieldContext: IFieldContext, done: (field: IField) => void) {
+        this.setState({ editingField: field, editingContext: fieldContext } as IState);
         this.fieldEdited = done;
     }
 
@@ -57,7 +60,7 @@ class DemoPage extends React.Component<void, IState> {
     }
 
     private onFieldOptionChanged(field: IField) {
-        this.setState({ selectedField: field } as IState);
+        this.setState({ editingField: field } as IState);
         this.fieldEdited(field);
     }
 
@@ -106,7 +109,8 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <FieldOptionEditor
                                     registry={FieldRegistry}
-                                    field={this.state.selectedField}
+                                    field={this.state.editingField}
+                                    fieldContext={this.state.editingContext}
                                     onChange={this.onFieldOptionChanged}
                                 />
                             </Panel>

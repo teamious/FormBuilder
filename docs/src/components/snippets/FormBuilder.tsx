@@ -6,7 +6,8 @@ import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOption
 import {
     FormBuilder,
     FieldRegistry,
-    IField
+    IField,
+    IFieldContext
 } from 'react-dynamic-formbuilder';
 
 
@@ -83,7 +84,7 @@ export default class extends React.Component<IProps, IState> {
         }
     }
 
-    private onFieldEditing(field: IField, callback: (field: IField) => void) {
+    private onFieldEditing(field: IField, editingContext: IFieldContext, callback: (field: IField) => void) {
         // Do nothing for this example
     }
 

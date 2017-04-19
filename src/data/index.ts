@@ -6,6 +6,7 @@ export * from './IFieldBuilder';
 export * from './IFieldInput';
 export * from './FieldRegistry';
 export * from './IFieldDisplay';
+export * from './IFieldContext';
 export * from './IEditableControlSource';
 
 export const FORM_BUILDER_FIELD = 'FORM_BUILDER_FIELD'

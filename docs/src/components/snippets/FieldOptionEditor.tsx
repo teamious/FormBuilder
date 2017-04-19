@@ -8,6 +8,7 @@ import {
     FieldOptionEditor,
     FormBuilder,
     IField,
+    IFieldContext,
     FieldRegistry
 } from 'react-dynamic-formbuilder';
 
@@ -15,6 +16,7 @@ import {
 interface IState {
     fields: Array<IField>;
     field: IField;
+    editingContext: IFieldContext;
 }
 
 const registry: FieldRegistry = new FieldRegistry();
@@ -83,6 +85,7 @@ export default class MyApp extends React.Component<{}, IState> {
                 }
             }],
             field: null,
+            editingContext: null,
         };
     }
 
@@ -99,8 +102,8 @@ export default class MyApp extends React.Component<{}, IState> {
         this.setState({ field: null } as IState);
     }
 
-    private onFieldEditing(field: IField, callback: (field: IField) => void) {
-        this.setState({ field } as IState);
+    private onFieldEditing(field: IField, editingContext: IFieldContext, callback: (field: IField) => void) {
+        this.setState({ field, editingContext } as IState);
         this.callback = callback;
     }
 
@@ -113,6 +116,7 @@ export default class MyApp extends React.Component<{}, IState> {
                             onChange={this.onChangeField}
                             registry={registry}
                             field={this.state.field}
+                            fieldContext={this.state.editingContext}
                         />
                     </Modal.Body>
                     <Modal.Footer>

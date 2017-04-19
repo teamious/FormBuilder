@@ -7,8 +7,8 @@ export interface IFormBuilderEditableProps {
     index: number;
     isEditing: boolean;
     showEditButton?: boolean;
-    editButton?: data.IClickSource;
-    deleteButton?: data.IClickSource;
+    editButton?: data.IEditableControlSource;
+    deleteButton?: data.IEditableControlSource;
     onEdit: (field: data.IField) => void;
     onDelete: (index: number) => void;
 }

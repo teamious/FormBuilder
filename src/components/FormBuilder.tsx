@@ -34,11 +34,11 @@ export interface IFormBuilderProps {
 
     // editButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "edit".
-    editButton?: data.IClickSource;
+    editButton?: data.IEditableControlSource;
 
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
-    deleteButton?: data.IClickSource;
+    deleteButton?: data.IEditableControlSource;
 }
 
 export interface IFormBuilderState {

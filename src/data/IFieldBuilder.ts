@@ -1,6 +1,7 @@
 import { IField } from './IField';
 import { IFieldContext } from './IFieldContext';
 import { FieldRegistry } from './FieldRegistry';
+import { IEditableControlSource } from './IClickSource';
 
 export interface IFieldBuilderProps {
     field: IField;

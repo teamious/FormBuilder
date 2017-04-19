@@ -34,11 +34,11 @@ export interface IFormBuilderProps {
 
     // editButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "edit".
-    editButtonText?: React.ReactNode;
+    editButton?: data.IEditableControlSource;
 
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
-    deleteButtonText?: React.ReactNode;
+    deleteButton?: data.IEditableControlSource;
 }
 
 export interface IFormBuilderState {
@@ -169,10 +169,12 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             fields: this.props.fields,
             index,
             registry: this.props.registry,
+            editButton: this.props.editButton,
+            deleteButton: this.props.deleteButton,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
-        };
+        }
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
@@ -186,6 +188,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
                     field={field}
                 >
                     <Editable
+                        deleteButton={this.props.deleteButton}
+                        editButton={this.props.editButton}
                         onEdit={this.onEditField}
                         onDelete={this.onDeleteField}
                         index={index}

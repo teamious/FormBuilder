@@ -172,7 +172,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
-        }
+        };
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 

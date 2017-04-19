@@ -27,4 +27,14 @@ export class FieldRegistry {
 
         this[field.type] = field;
     }
+
+    public getFields(): IFieldDef[] {
+        const fields: IFieldDef[] = []
+        for (let key in this) {
+            if (typeof this[key] !== "function") {
+                fields.push(this[key]);
+            }
+        }
+        return fields;
+    }
 }

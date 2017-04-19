@@ -1,12 +1,13 @@
 import { IField } from './IField';
 import { FieldRegistry } from './FieldRegistry';
+import { IClickSource } from './IClickSource';
 
 export interface IFieldBuilderProps {
     field: IField;
     index: number;
     registry: FieldRegistry;
-    editButtonText?: React.ReactNode;
-    deleteButtonText?: React.ReactNode;
+    editButton?: IClickSource;
+    deleteButton?: IClickSource;
     onChange: (field: IField, index: number) => void;
     onFieldEditing: (field: IField, done: (field: IField) => void) => void;
     onBeforeAddField: (field: IField) => boolean;

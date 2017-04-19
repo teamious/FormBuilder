@@ -34,11 +34,11 @@ export interface IFormBuilderProps {
 
     // editButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "edit".
-    editButtonText?: React.ReactNode;
+    editButton?: data.IClickSource;
 
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
-    deleteButtonText?: React.ReactNode;
+    deleteButton?: data.IClickSource;
 }
 
 export interface IFormBuilderState {
@@ -163,16 +163,19 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             console.warn('Field defintion is not registered: ' + field.type);
             return;
         }
-        const component = React.createElement(fieldDef.builder, {
+
+        const props: data.IFieldBuilderProps = {
             field,
             index,
             registry: this.props.registry,
-            editButtonText: this.props.editButtonText,
-            deleteButtonText: this.props.deleteButtonText,
+            editButton: this.props.editButton,
+            deleteButton: this.props.deleteButton,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
-        });
+        }
+
+        const component = React.createElement(fieldDef.builder, props);
 
         const isEditing = (field === this.state.editingField);
 
@@ -184,8 +187,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
                     field={field}
                 >
                     <Editable
-                        deleteButtonText={this.props.deleteButtonText}
-                        editButtonText={this.props.editButtonText}
+                        deleteButton={this.props.deleteButton}
+                        editButton={this.props.editButton}
                         onEdit={this.onEditField}
                         onDelete={this.onDeleteField}
                         index={index}

@@ -7,8 +7,8 @@ export interface IFormBuilderEditableProps {
     index: number;
     isEditing: boolean;
     showEditButton?: boolean;
-    editButtonText?: React.ReactNode;
-    deleteButtonText?: React.ReactNode;
+    editButton?: data.IClickSource;
+    deleteButton?: data.IClickSource;
     onEdit: (field: data.IField) => void;
     onDelete: (index: number) => void;
 }
@@ -26,13 +26,13 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         this.onClicked = this.onClicked.bind(this);
     }
 
-    private onEdit(event: any) {
+    private onEdit(event: React.MouseEvent<HTMLElement>) {
         event.stopPropagation();
         event.preventDefault();
         this.props.onEdit(this.props.field);
     }
 
-    private onDelete(event: any) {
+    private onDelete(event: React.MouseEvent<HTMLElement>) {
         event.stopPropagation();
         event.preventDefault();
         this.props.onDelete(this.props.index);
@@ -44,9 +44,49 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         this.props.onEdit(this.props.field);
     }
 
+    private renderEditButton() {
+        const source = this.props.editButton;
+
+        if (!this.props.showEditButton) {
+            return null;
+        }
+
+        if (!source || typeof source === 'string') {
+            return (
+                <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
+                    {source || 'Edit'}
+                </button>
+            )
+        }
+
+        if (React.isValidElement(source)) {
+            return React.cloneElement(source, {
+                onClick: this.onEdit,
+                className: classNames(source.props.className, 'form-builder-editable-button form-builder-editable-edit-button'),
+            })
+        }
+    }
+
+    private renderDeleteButton() {
+        const source = this.props.deleteButton;
+
+        if (!source || typeof source === 'string') {
+            return (
+                <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onEdit}>
+                    {source || 'Delete'}
+                </button>
+            )
+        }
+
+        if (React.isValidElement(source)) {
+            return React.cloneElement(source, {
+                onClick: this.onDelete,
+                className: classNames(source.props.className, 'form-builder-editable-button form-builder-editable-delete-button'),
+            })
+        }
+    }
+
     render() {
-        const editButtonText = this.props.editButtonText || 'Edit';
-        const deleteButtonText = this.props.deleteButtonText || 'Delete';
         const css = classNames(
             'form-builder-editable-controls',
             {
@@ -55,14 +95,8 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
         );
         return (
             <div className={css} onClick={this.onClicked}>
-                {
-                    this.props.showEditButton && <button className='form-builder-editable-button form-builder-editable-edit-button' type='button' onClick={this.onEdit}>
-                        {editButtonText}
-                    </button>
-                }
-                <button className='form-builder-editable-button form-builder-editable-delete-button' type='button' onClick={this.onDelete}>
-                    {deleteButtonText}
-                </button>
+                {this.renderEditButton()}
+                {this.renderDeleteButton()}
                 {this.props.children}
             </div>
         );

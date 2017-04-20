@@ -14,10 +14,10 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
         this.onBeforeAddField = this.onBeforeAddField.bind(this);
     }
 
-    private onChangeFields(fields: data.IField[]) {
+    private onChangeFields(fields: data.IField[], change: data.IFieldChange) {
         let field = assign({}, this.props.field);
         field.fields = fields;
-        this.props.onChange(field, this.props.index);
+        this.props.onChange(field, this.props.index, change);
     }
 
     private onBeforeAddField(field: data.IField): boolean {

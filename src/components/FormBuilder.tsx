@@ -77,7 +77,10 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             let fields = this.props.fields.slice();
             fields[editingIndex] = field;
             this.setState({ editingField: field });
-            this.props.onChange(fields);
+            this.props.onChange(fields, {
+                action: data.FieldAction.Change,
+                source: field
+            });
         }.bind(this));
     }
 

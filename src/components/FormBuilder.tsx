@@ -13,7 +13,7 @@ export interface IFormBuilderProps {
     // uses this map to render the control.
     registry: data.FieldRegistry;
 
-    // onChange is called wheneven user changes all settings of all fields.
+    // onChange is called wheneven user changes any settings of fields.
     onChange: (fields: data.IField[], change: data.IFieldChange) => void;
 
     // fieldEditing is called when the user want to edit field options.

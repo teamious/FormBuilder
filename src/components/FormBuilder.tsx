@@ -13,9 +13,14 @@ export interface IFormBuilderProps {
     // uses this map to render the control.
     registry: data.FieldRegistry;
 
-    // onChange is called whenever the user has reordered or added
-    // fields to the editor via drag and drop.
+    // onChange is called whenever the user has reordered fields to the editor via drag and drop.
     onChange: (fields: data.IField[]) => void;
+
+    // onAddField is called when the user adds a new field.
+    onAddField: (fields: data.IField[], newField: data.IField) => void;
+
+    // onDeleteField is called when the user deletes a field.
+    onDeleteField: (fields: data.IField[], deletedField: data.IField) => void;
 
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField, fieldContext: data.IFieldContext, done: (field: data.IField) => void) => void;
@@ -97,7 +102,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             this.setState({ editingField: null });
         }
         fields.splice(index, 1);
-        this.props.onChange(fields);
+        this.props.onDeleteField(fields, field);
     }
 
     // onDrop is called whenever a field is dropped on a <Droppable> component.
@@ -145,7 +150,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             fields.splice(source.index, 1);
             fields.splice(target.index, 0, sourceField)
         }
-        this.props.onChange(fields);
+        this.props.onAddField(fields, sourceField);
     }
 
     private onFieldChanged(field: data.IField, index: number) {

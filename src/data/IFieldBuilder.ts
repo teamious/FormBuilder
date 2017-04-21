@@ -2,6 +2,7 @@ import { IField } from './IField';
 import { IFieldContext } from './IFieldContext';
 import { FieldRegistry } from './FieldRegistry';
 import { IEditableControlSource } from './IEditableControlSource';
+import { IFieldChange } from './IFieldChange';
 
 export interface IFieldBuilderProps {
     field: IField;
@@ -10,7 +11,7 @@ export interface IFieldBuilderProps {
     editButton?: IEditableControlSource;
     deleteButton?: IEditableControlSource;
     editingField: IField;
-    onChange: (field: IField, index: number) => void;
+    onChange: (field: IField, index: number, change: IFieldChange) => void;
     onFieldEditing: (field: IField, editingContext: IFieldContext, done: (field: IField) => void) => void;
     onBeforeAddField: (field: IField) => boolean;
 }

@@ -126,7 +126,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         }
 
         let sourceField = source.field;
-        if (source.index === null) {
+        const isAdd = (source.index === null);
+        if (isAdd) {
             // NOTE: If source is from the FieldSelector, we should create a clone field.
             sourceField = JSON.parse(JSON.stringify(sourceField));
             let hook = this.props.onBeforeAddField;
@@ -141,7 +142,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         }
 
         let fields = this.props.fields.concat([]);
-        if (source.index === null) {
+        if (isAdd) {
             fields.splice(target.index, 0, sourceField)
         } else if (source.index < target.index) {
             fields.splice(target.index, 0, sourceField)
@@ -151,7 +152,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             fields.splice(target.index, 0, sourceField)
         }
         this.props.onChange(fields, {
-            action: data.FieldAction.Add,
+            action: isAdd ? data.FieldAction.Add : data.FieldAction.Change,
             source: sourceField
         });
     }

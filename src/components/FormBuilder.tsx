@@ -6,7 +6,9 @@ import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 import { FormBuilderContext } from './FormBuilderContext';
 
-export interface IFormBuilderProps {
+export interface IFormBuilderProps extends IFormBuilderRequiredProps, IFormBuilderOptionalProps {
+}
+export interface IFormBuilderRequiredProps {
     fields: data.IField[];
 
     // registry contains a map of field types to classes. FormBuilder
@@ -18,7 +20,9 @@ export interface IFormBuilderProps {
 
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField, fieldContext: data.IFieldContext, done: (field: data.IField) => void) => void;
+}
 
+export interface IFormBuilderOptionalProps {
     // onBeforeAddField is called before add the new field into the array.
     // If this method returns false, onChange will not be called.
     onBeforeAddField?: (field: data.IField) => boolean;

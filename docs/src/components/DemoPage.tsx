@@ -1,18 +1,20 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { Panel, FormControl, Grid, Row, Col } from 'react-bootstrap';
+import store from '../state/store';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DragDropContext } from 'react-dnd';
 import {
     IField,
     IFieldContext,
     IFormError,
-    FieldOptionEditor,
-    FieldSelector,
-    FormBuilder,
     FormInput,
     FormDisplay,
 } from 'react-dynamic-formbuilder';
+
+import FormBuilder from './FormBuilder';
+import FieldSelector from './FieldSelector';
+import FieldOptionEditor from './FieldOptionEditor';
 
 import './DemoPage.css';
 
@@ -20,8 +22,6 @@ import { FieldRegistry } from './constants';
 
 interface IState {
     fields: IField[],
-    editingField: IField,
-    editingContext: IFieldContext;
     value: any,
     error: IFormError,
 }
@@ -31,37 +31,22 @@ class DemoPage extends React.Component<void, IState> {
 
     constructor() {
         super()
-        this.onChangeFields = this.onChangeFields.bind(this);
-        this.onFieldEditing = this.onFieldEditing.bind(this);
-        this.onDeleteField = this.onDeleteField.bind(this);
-        this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
-        this.onValueChanged = this.onValueChanged.bind(this);
         this.onBeforeAddField = this.onBeforeAddField.bind(this);
+        this.onValueChanged = this.onValueChanged.bind(this);
+        this.getStoreState = this.getStoreState.bind(this);
         this.state = {
-            fields: [],
-            editingField: null,
-            editingContext: null,
+            fields: store.getFields(),
             value: {},
             error: null,
         };
     }
 
-    private onFieldEditing(field: IField, fieldContext: IFieldContext, done: (field: IField) => void) {
-        this.setState({ editingField: field, editingContext: fieldContext } as IState);
-        this.fieldEdited = done;
+    componentDidMount() {
+        store.subscribe(this.getStoreState);
     }
 
-    private onDeleteField(fields: IField[]) {
-        this.setState({ fields } as IState);
-    }
-
-    private onChangeFields(fields: IField[]) {
-        this.setState({ fields } as IState);
-    }
-
-    private onFieldOptionChanged(field: IField) {
-        this.setState({ editingField: field } as IState);
-        this.fieldEdited(field);
+    private getStoreState() {
+        this.setState({fields: store.getFields()} as IState);
     }
 
     private onValueChanged(value: any, error: IFormError) {
@@ -85,34 +70,21 @@ class DemoPage extends React.Component<void, IState> {
                         <Col md={3}>
                             <span>Field Selector</span>
                             <Panel>
-                                <FieldSelector
-                                    registry={FieldRegistry}
-                                />
+                                <FieldSelector/>
                             </Panel>
                         </Col>
                         <Col md={5}>
                             <span>Form Builder</span>
                             <Panel>
                                 <div className='form-horizontal'>
-                                    <FormBuilder
-                                        onFieldEditing={this.onFieldEditing}
-                                        onChange={this.onChangeFields}
-                                        registry={FieldRegistry}
-                                        fields={this.state.fields}
-                                        onBeforeAddField={this.onBeforeAddField}
-                                    />
+                                    <FormBuilder onBeforeAddField={this.onBeforeAddField}/>
                                 </div>
                             </Panel>
                         </Col>
                         <Col md={4}>
                             <span>Option Editor</span>
                             <Panel>
-                                <FieldOptionEditor
-                                    registry={FieldRegistry}
-                                    field={this.state.editingField}
-                                    fieldContext={this.state.editingContext}
-                                    onChange={this.onFieldOptionChanged}
-                                />
+                                <FieldOptionEditor/>
                             </Panel>
                         </Col>
                     </Row>

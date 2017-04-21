@@ -95,6 +95,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <div className='form-horizontal'>
                                     <FormBuilder
+                                        editingField={this.state.editingField}
                                         onFieldEditing={this.onFieldEditing}
                                         onChange={this.onChangeFields}
                                         registry={FieldRegistry}

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { FormControl, Button } from 'react-bootstrap';
 import * as assign from 'object-assign';
 
-import { IFieldOptionEditorProps } from '../../../../src/data';
+import { IFieldOptionEditorProps } from 'react-dynamic-formbuilder';
 import OrderedListInput from '../controls/OrderedListInput';
 
 interface IState { }

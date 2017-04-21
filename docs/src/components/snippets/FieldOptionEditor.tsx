@@ -127,6 +127,7 @@ export default class MyApp extends React.Component<{}, IState> {
                 </Modal>
 
                 <FormBuilder
+                    editingField={this.state.field}
                     registry={registry}
                     onFieldEditing={this.onFieldEditing}
                     onChange={this.onChangeFields}

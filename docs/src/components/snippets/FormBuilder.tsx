@@ -15,6 +15,7 @@ interface IProps {}
 
 interface IState {
     fields: IField[],
+    field: IField;
 }
 
 
@@ -61,6 +62,7 @@ export default class extends React.Component<IProps, IState> {
         super();
         this.onChangeFields = this.onChangeFields.bind(this);
         this.state = {
+            field: null,
             fields: [
                 {
                     id: '',
@@ -86,6 +88,7 @@ export default class extends React.Component<IProps, IState> {
 
     private onFieldEditing(field: IField, editingContext: IFieldContext, callback: (field: IField) => void) {
         // Do nothing for this example
+        this.setState({field} as IState);
     }
 
     private onChangeFields(fields: IField[]) {
@@ -95,6 +98,7 @@ export default class extends React.Component<IProps, IState> {
     render() {
         return (
             <FormBuilder
+                editingField={this.state.field}
                 registry={registry}
                 onFieldEditing={this.onFieldEditing}
                 onChange={this.onChangeFields}

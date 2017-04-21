@@ -38,10 +38,12 @@ export interface IFormBuilderProps {
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
     deleteButton?: data.IEditableControlSource;
+
+    // editingField is the field that is currently being edited.
+    editingField: data.IField;
 }
 
 export interface IFormBuilderState {
-    editingField: data.IField;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -56,9 +58,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
-
         this.state = {
-            editingField: null
         };
     }
 
@@ -71,17 +71,15 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        this.setState({ editingField: field });
-        this.props.onFieldEditing(field, { fields: this.props.fields }, function (field: data.IField) {
-            const editingIndex = this.props.fields.indexOf(this.state.editingField);
+        this.props.onFieldEditing(field, { fields: this.props.fields }, (field: data.IField) => {
+            const editingIndex = this.props.fields.indexOf(this.props.editingField);
             let fields = this.props.fields.slice();
             fields[editingIndex] = field;
-            this.setState({ editingField: field });
             this.props.onChange(fields, {
                 action: data.FieldAction.Change,
                 source: field
             });
-        }.bind(this));
+        });
     }
 
     // onDeleteField is called when the user wants to delete a field.
@@ -95,7 +93,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        if (field === this.state.editingField) {
+        if (field === this.props.editingField) {
             this.setState({ editingField: null });
         }
         fields.splice(index, 1);
@@ -179,6 +177,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             registry: this.props.registry,
             editButton: this.props.editButton,
             deleteButton: this.props.deleteButton,
+            editingField: this.props.editingField,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
             onBeforeAddField: this.props.onBeforeAddField,
@@ -186,7 +185,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
-        const isEditing = (field === this.state.editingField);
+        const isEditing = (field === this.props.editingField);
 
         return (
             <div className='form-builder-field' key={index}>

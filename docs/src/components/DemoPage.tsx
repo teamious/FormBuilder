@@ -6,7 +6,7 @@ import { DragDropContext } from 'react-dnd';
 import {
     IField,
     IFieldContext,
-    IFormError,
+    IFormState,
     FieldOptionEditor,
     FieldSelector,
     FormBuilder,
@@ -23,7 +23,7 @@ interface IState {
     editingField: IField,
     editingContext: IFieldContext;
     value: any,
-    error: IFormError,
+    formState: IFormState,
 }
 
 class DemoPage extends React.Component<void, IState> {
@@ -42,7 +42,7 @@ class DemoPage extends React.Component<void, IState> {
             editingField: null,
             editingContext: null,
             value: {},
-            error: null,
+            formState: {},
         };
     }
 
@@ -64,8 +64,8 @@ class DemoPage extends React.Component<void, IState> {
         this.fieldEdited(field);
     }
 
-    private onValueChanged(value: any, error: IFormError) {
-        this.setState({ value, error } as IState);
+    private onValueChanged(value: any, formState: IFormState) {
+        this.setState({ value, formState } as IState);
     }
 
     private onBeforeAddField(field: IField) {
@@ -76,7 +76,7 @@ class DemoPage extends React.Component<void, IState> {
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
-        const error = JSON.stringify(this.state.error);
+        const formState = JSON.stringify(this.state.formState);
 
         return (
             <div>
@@ -148,8 +148,8 @@ class DemoPage extends React.Component<void, IState> {
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={form} />
                                 <div>Debug: Form values</div>
                                 <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={value} />
-                                <div>Debug: Form validation error</div>
-                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={error} />
+                                <div>Debug: Form state</div>
+                                <FormControl componentClass='textarea' style={{ width: '100%', height: 120 }} readOnly value={formState} />
                             </Panel>
                         </Col>
                     </Row>

@@ -15,7 +15,7 @@ export interface IFormInputProps {
     // form submission attempt.
     attempt?: boolean;
 
-    onChange: (value: any, status: data.FormStatus) => void;
+    onChange: (value: any, status: data.IFormState) => void;
 }
 
 export interface IFormInputState {
@@ -23,8 +23,8 @@ export interface IFormInputState {
 
 export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
     // The status of the current form input component.
-    // The status is internal state of form input which is not controled by Props.
-    private status: data.FormStatus;
+    // The status is internal state of form input.
+    private status: data.IFormState;
 
     public static defaultProps: Partial<IFormInputProps> = {
         value: {}
@@ -32,7 +32,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
 
     constructor(props: IFormInputProps) {
         super(props);
-        this.status = new data.FormStatus();
+        this.status = {};
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
     }
@@ -62,7 +62,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
         )
     }
 
-    private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldStatus) {
+    private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
         const newValue = assign({}, this.props.value);
         newValue[field.id] = value;
         this.status[field.id] = fieldStatus;

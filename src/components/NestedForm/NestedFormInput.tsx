@@ -8,7 +8,7 @@ export interface INestedFormInputState {
 }
 
 export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, INestedFormInputState> {
-    private fieldStatus: data.INestedFieldStatus;
+    private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps = {
         value: [{}]
@@ -63,7 +63,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
         this.props.onValueChange(this.props.field, entries, this.fieldStatus);
     }
 
-    private onEntryValueChanged(value: any, formStatus: data.IFormStatus, index: number) {
+    private onEntryValueChanged(value: any, formStatus: data.IFormState, index: number) {
         let newValue = this.props.value.slice();
         newValue[index] = value;
         this.fieldStatus.nestedStatus[index] = formStatus;
@@ -88,7 +88,7 @@ interface IEntryProps {
     value: any;
     fields: data.IField[];
     registry: data.FieldRegistry;
-    onChange: (value: any, formStatus: data.IFormStatus, index: number) => void;
+    onChange: (value: any, formStatus: data.IFormState, index: number) => void;
     onDelete: (index: number) => void;
 }
 
@@ -116,7 +116,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
         this.props.onDelete(this.props.index);
     }
 
-    private onValueChanged(value: any, formStatus: data.FormStatus) {
+    private onValueChanged(value: any, formStatus: data.IFormState) {
         this.props.onChange(value, formStatus, this.props.index);
     }
 }

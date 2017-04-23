@@ -1,5 +1,5 @@
 import { IField } from './IField';
-import { IFieldError } from './IFieldError';
+import { IFieldStatus } from './FormStatus';
 import { FieldRegistry } from './FieldRegistry';
 
 export interface IFieldInputProps {
@@ -16,7 +16,7 @@ export interface IFieldInputProps {
     attempt: boolean;
 
     // The callback when the value has been changed.
-    onValueChange: (field: IField, value: any, error: IFieldError) => void;
+    onValueChange: (field: IField, value: any, fieldStatus: IFieldStatus) => void;
 }
 
 export interface IGenericFieldInputProps<T extends IField, V> extends IFieldInputProps {

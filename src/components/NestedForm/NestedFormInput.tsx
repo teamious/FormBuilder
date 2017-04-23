@@ -8,10 +8,7 @@ export interface INestedFormInputState {
 }
 
 export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, INestedFormInputState> {
-    // This maintains all errors from nested entries's error.
-    private nestedEntryErrors: {
-        [key: number]: data.IFormError
-    }
+    private fieldStatus: data.INestedFieldStatus;
 
     public static defaultProps: data.IFieldInputProps = {
         value: [{}]
@@ -23,7 +20,10 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
         this.onCreateEntry = this.onCreateEntry.bind(this);
         this.onDeleteEntry = this.onDeleteEntry.bind(this);
         this.onEntryValueChanged = this.onEntryValueChanged.bind(this);
-        this.nestedEntryErrors = {};
+        this.fieldStatus = {
+            error: '',
+            nestedStatus: [],
+        };
     }
 
     render() {
@@ -52,46 +52,34 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
     private onCreateEntry() {
         let entries = this.props.value.slice();
         entries.push({});
-        this.props.onValueChange(this.props.field, entries, this.buildFieldError());
+        this.props.onValueChange(this.props.field, entries, this.fieldStatus);
     }
 
     private onDeleteEntry(index: number) {
         const entries = this.props.value.slice();
         entries.splice(index, 1);
-        delete this.nestedEntryErrors[index];
-        this.props.onValueChange(this.props.field, entries, this.buildFieldError());
+        delete this.fieldStatus.nestedStatus[index];
+        this.updateFieldStatus();
+        this.props.onValueChange(this.props.field, entries, this.fieldStatus);
     }
 
-    private onEntryValueChanged(value: any, error: data.IFormError, index: number) {
+    private onEntryValueChanged(value: any, formStatus: data.IFormStatus, index: number) {
         let newValue = this.props.value.slice();
         newValue[index] = value;
-
-        let newError = assign({}, this.nestedEntryErrors);
-        if (error) {
-            this.nestedEntryErrors[index] = error;
-        }
-        else {
-            delete this.nestedEntryErrors[index];
-        }
-
-        this.props.onValueChange(this.props.field, newValue, this.buildFieldError());
+        this.fieldStatus.nestedStatus[index] = formStatus;
+        this.updateFieldStatus();
+        this.props.onValueChange(this.props.field, newValue, this.fieldStatus);
     }
 
-    private buildFieldError(): data.IFieldError {
-        let errors = [];
-        for (let prop in this.nestedEntryErrors) {
-            errors.push(this.nestedEntryErrors[prop]);
-        }
+    private updateFieldStatus() {
+        let error = false;
+        this.fieldStatus.nestedStatus.forEach(status => {
+            if (data.isFormError(status)) {
+                error = true;
+            }
+        })
 
-        if (errors.length === 0) {
-            return null;
-        }
-
-        return {
-            error: true,
-            errorMsg: "nestedError",
-            details: errors,
-        };
+        this.fieldStatus.error = error ? 'nestedError' : '';
     }
 }
 
@@ -100,7 +88,7 @@ interface IEntryProps {
     value: any;
     fields: data.IField[];
     registry: data.FieldRegistry;
-    onChange: (value: any, errors: data.IFormError, index: number) => void;
+    onChange: (value: any, formStatus: data.IFormStatus, index: number) => void;
     onDelete: (index: number) => void;
 }
 
@@ -128,7 +116,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
         this.props.onDelete(this.props.index);
     }
 
-    private onValueChanged(value: any, errors: data.IFormError) {
-        this.props.onChange(value, errors, this.props.index);
+    private onValueChanged(value: any, formStatus: data.FormStatus) {
+        this.props.onChange(value, formStatus, this.props.index);
     }
 }

@@ -15,15 +15,16 @@ export interface IFormInputProps {
     // form submission attempt.
     attempt?: boolean;
 
-    onChange: (value: any, errors: data.IFormError) => void;
+    onChange: (value: any, status: data.FormStatus) => void;
 }
 
 export interface IFormInputState {
 }
 
 export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
-    // This maintains all field errors during onValueChanged.
-    private errors: data.IFormError;
+    // The status of the current form input component.
+    // The status is internal state of form input which is not controled by Props.
+    private status: data.FormStatus;
 
     public static defaultProps: Partial<IFormInputProps> = {
         value: {}
@@ -31,6 +32,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
 
     constructor(props: IFormInputProps) {
         super(props);
+        this.status = new data.FormStatus();
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
     }
@@ -60,23 +62,11 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
         )
     }
 
-    private onValueChanged(field: data.IField, value: any, error: data.IFieldError) {
+    private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldStatus) {
         const newValue = assign({}, this.props.value);
         newValue[field.id] = value;
-        this.errors = this.errors || {} as data.IFormError;
-        if (error) {
-            this.errors[field.id] = error;
-        }
-        else {
-            delete this.errors[field.id];
-        }
-
-        // NOTE: If there are no errors from the fields, set errors to be null.
-        if (Object.getOwnPropertyNames(this.errors).length === 0) {
-            this.errors = null;
-        }
-
-        this.props.onChange(newValue, this.errors);
+        this.status[field.id] = fieldStatus;
+        this.props.onChange(newValue, this.status);
     }
 
     // render displays a list of fields based on the field registry.

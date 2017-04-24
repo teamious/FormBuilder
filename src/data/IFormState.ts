@@ -4,7 +4,7 @@ export interface IFormState {
 }
 
 export interface IFieldState {
-    error: string,
+    error: any,
 }
 
 export interface INestedFieldState extends IFieldState {

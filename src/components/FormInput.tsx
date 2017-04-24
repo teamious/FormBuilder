@@ -50,7 +50,6 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
             index,
             field,
             value,
-            values: this.props.value,
             attempt: this.props.attempt,
             onValueChange: this.onValueChanged,
         });

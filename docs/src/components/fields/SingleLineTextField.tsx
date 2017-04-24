@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField, IFieldError, IFieldBuilderProps, IFieldInputProps } from 'react-dynamic-formbuilder';
+import { IField, IFieldBuilderProps, IFieldInputProps } from 'react-dynamic-formbuilder';
 
 interface IState {
 }
@@ -19,7 +19,7 @@ export default class SingleLineTextField extends React.PureComponent<IFieldInput
     public componentDidMount() {
         const error = this.validate(this.props.value);
         if (this.props.onValueChange) {
-            this.props.onValueChange(this.props.field, this.props.value, error);
+            this.props.onValueChange(this.props.field, this.props.value, { error });
         }
     }
 
@@ -41,16 +41,13 @@ export default class SingleLineTextField extends React.PureComponent<IFieldInput
     private onTextFieldChange(event: any) {
         const value = event.target.value;
         const error = this.validate(value);
-        this.props.onValueChange(this.props.field, value, error);
+        this.props.onValueChange(this.props.field, value, { error });
     }
 
-    private validate(value: string): IFieldError {
+    private validate(value: string): string {
         if (this.props.field.options && this.props.field.options.required) {
             if (value.trim() === '') {
-                return {
-                    error: true,
-                    errorMsg: "required"
-                };
+                return 'required';
             }
         }
 

@@ -15,7 +15,7 @@ export interface IFormInputProps {
     // form submission attempt.
     attempt?: boolean;
 
-    onChange: (value: any, status: data.IFormState) => void;
+    onChange: (value: any, state: data.IFormState) => void;
 }
 
 export interface IFormInputState {
@@ -24,7 +24,7 @@ export interface IFormInputState {
 export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
     // The status of the current form input component.
     // The status is internal state of form input.
-    private status: data.IFormState;
+    private formState: data.IFormState;
 
     public static defaultProps: Partial<IFormInputProps> = {
         value: {}
@@ -32,7 +32,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
 
     constructor(props: IFormInputProps) {
         super(props);
-        this.status = {};
+        this.formState = {};
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
     }
@@ -65,8 +65,19 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
     private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
         const newValue = assign({}, this.props.value);
         newValue[field.id] = value;
-        this.status[field.id] = fieldStatus;
-        this.props.onChange(newValue, this.status);
+        this.formState[field.id] = fieldStatus;
+        this.fireValuesChange(newValue);
+        this.props.onChange(newValue, this.formState);
+    }
+
+    private fireValuesChange(value: any) {
+        this.props.fields.forEach(field => {
+            let fieldDef: data.IFieldDef = this.props.registry[field.type];
+            if (fieldDef.injector && fieldDef.injector.onValuesChanged) {
+                let fieldState = fieldDef.injector.onValuesChanged(field, value);
+                this.formState[field.id] = fieldState;
+            }
+        })
     }
 
     // render displays a list of fields based on the field registry.

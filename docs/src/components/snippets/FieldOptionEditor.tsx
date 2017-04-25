@@ -3,13 +3,13 @@ import { Modal, Button } from 'react-bootstrap';
 import SingleSelector from '../fields/SingleSelector';
 import SingleSelectorOptionEditor from '../fields/SingleSelectorOptionEditor';
 import SingleLineTextField from '../fields/SingleLineTextField';
-import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOptionEditor'
+import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOptionEditor';
 import {
     FieldOptionEditor,
     FormBuilder,
     IField,
     IFieldContext,
-    FieldRegistry
+    FieldRegistry,
 } from 'react-dynamic-formbuilder';
 
 
@@ -93,18 +93,16 @@ export default class MyApp extends React.Component<{}, IState> {
         this.setState({ fields } as IState);
     }
 
-    private onChangeField(field: IField) {
-        this.setState({ field } as IState);
-        this.callback(field);
+    private onChangeField(field: IField, fields: IField[]) {
+        this.setState({ field, fields } as IState);
     }
 
     private closeModal() {
         this.setState({ field: null } as IState);
     }
 
-    private onFieldEditing(field: IField, editingContext: IFieldContext, callback: (field: IField) => void) {
-        this.setState({ field, editingContext } as IState);
-        this.callback = callback;
+    private onFieldEditing(field: IField) {
+        this.setState({ field } as IState);
     }
 
     render() {
@@ -116,7 +114,7 @@ export default class MyApp extends React.Component<{}, IState> {
                             onChange={this.onChangeField}
                             registry={registry}
                             field={this.state.field}
-                            fieldContext={this.state.editingContext}
+                            fields={this.state.fields}
                         />
                     </Modal.Body>
                     <Modal.Footer>

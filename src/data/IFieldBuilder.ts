@@ -12,7 +12,7 @@ export interface IFieldBuilderProps {
     deleteButton?: IEditableControlSource;
     editingField: IField;
     onChange: (field: IField, index: number, change: IFieldChange) => void;
-    onFieldEditing: (field: IField, editingContext: IFieldContext, done: (field: IField) => void) => void;
+    onFieldEditing: (field: IField) => void;
     onBeforeAddField: (field: IField) => boolean;
 }
 

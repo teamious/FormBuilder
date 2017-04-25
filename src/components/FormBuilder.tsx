@@ -17,7 +17,7 @@ export interface IFormBuilderProps {
     onChange: (fields: data.IField[], change: data.IFieldChange) => void;
 
     // fieldEditing is called when the user want to edit field options.
-    onFieldEditing: (field: data.IField, fieldContext: data.IFieldContext, done: (field: data.IField) => void) => void;
+    onFieldEditing: (field: data.IField) => void;
 
     // onBeforeAddField is called before add the new field into the array.
     // If this method returns false, onChange will not be called.
@@ -71,15 +71,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
             return;
         }
 
-        this.props.onFieldEditing(field, { fields: this.props.fields }, (field: data.IField) => {
-            const editingIndex = this.props.fields.indexOf(this.props.editingField);
-            let fields = this.props.fields.slice();
-            fields[editingIndex] = field;
-            this.props.onChange(fields, {
-                action: data.FieldAction.Change,
-                source: field
-            });
-        });
+        this.props.onFieldEditing(field);
     }
 
     // onDeleteField is called when the user wants to delete a field.

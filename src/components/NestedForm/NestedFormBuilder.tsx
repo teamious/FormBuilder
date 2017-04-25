@@ -5,9 +5,7 @@ import * as data from '../../data';
 import { NestedForm } from '.'
 import { FormBuilder } from '../FormBuilder';
 
-export interface IFieldBuilderState { }
-
-export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, IFieldBuilderState> {
+export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, {}> {
     constructor() {
         super();
         this.onChangeFields = this.onChangeFields.bind(this);

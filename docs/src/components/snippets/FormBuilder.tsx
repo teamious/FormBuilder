@@ -86,7 +86,7 @@ export default class extends React.Component<IProps, IState> {
         }
     }
 
-    private onFieldEditing(field: IField, editingContext: IFieldContext, callback: (field: IField) => void) {
+    private onFieldEditing(field: IField) {
         // Do nothing for this example
         this.setState({field} as IState);
     }

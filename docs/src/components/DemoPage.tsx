@@ -21,14 +21,11 @@ import { FieldRegistry } from './constants';
 interface IState {
     fields: IField[],
     editingField: IField,
-    editingContext: IFieldContext;
     value: any,
     formState: IFormState,
 }
 
 class DemoPage extends React.Component<void, IState> {
-    private fieldEdited: (field: IField) => void;
-
     constructor() {
         super()
         this.onChangeFields = this.onChangeFields.bind(this);
@@ -40,15 +37,13 @@ class DemoPage extends React.Component<void, IState> {
         this.state = {
             fields: [],
             editingField: null,
-            editingContext: null,
             value: {},
             formState: {},
         };
     }
 
-    private onFieldEditing(field: IField, fieldContext: IFieldContext, done: (field: IField) => void) {
-        this.setState({ editingField: field, editingContext: fieldContext } as IState);
-        this.fieldEdited = done;
+    private onFieldEditing(field: IField) {
+        this.setState({ editingField: field} as IState);
     }
 
     private onDeleteField(fields: IField[]) {
@@ -59,9 +54,8 @@ class DemoPage extends React.Component<void, IState> {
         this.setState({ fields } as IState);
     }
 
-    private onFieldOptionChanged(field: IField) {
-        this.setState({ editingField: field } as IState);
-        this.fieldEdited(field);
+    private onFieldOptionChanged(field: IField, fields: IField[]) {
+        this.setState({ editingField: field, fields } as IState);
     }
 
     private onValueChanged(value: any, formState: IFormState) {
@@ -111,7 +105,7 @@ class DemoPage extends React.Component<void, IState> {
                                 <FieldOptionEditor
                                     registry={FieldRegistry}
                                     field={this.state.editingField}
-                                    fieldContext={this.state.editingContext}
+                                    fields={this.state.fields}
                                     onChange={this.onFieldOptionChanged}
                                 />
                             </Panel>

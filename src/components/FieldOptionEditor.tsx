@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as data from '../data/';
+import * as util from '../utils';
 
 export interface IFieldOptionEditorComponentProps {
     field: data.IField;
-    fieldContext: data.IFieldContext;
+    fields: Array<data.IField>;
     registry: data.FieldRegistry;
-    onChange: (field: data.IField) => void;
+    onChange: (editedField: data.IField, fields: data.IField[], change: data.IFieldChange) => void;
 }
 
 export interface IFieldOptionEditorState { }
@@ -28,10 +29,14 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
             return <div />;
         }
 
-        const optionEditorProps: data.IFieldOptionEditorProps = { 
+        const context = {
+            fields: util.getFieldSiblings(field, this.props.fields)
+        };
+
+        const optionEditorProps: data.IFieldOptionEditorProps = {
             field,
-            fieldContext: this.props.fieldContext,
-            onChange: this.onOptionChanged 
+            fieldContext: context,
+            onChange: this.onOptionChanged
         };
 
         const component = React.createElement(fieldDef.editor, optionEditorProps);
@@ -43,6 +48,10 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
     }
 
     private onOptionChanged(field: data.IField) {
-        this.props.onChange(field);
+        const fields = util.updateField(this.props.field, field, this.props.fields);
+        this.props.onChange(field, fields, {
+            action: data.FieldAction.Change,
+            source: field
+        });
     }
 }

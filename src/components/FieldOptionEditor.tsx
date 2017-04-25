@@ -6,7 +6,7 @@ export interface IFieldOptionEditorComponentProps {
     field: data.IField;
     fields: Array<data.IField>;
     registry: data.FieldRegistry;
-    onChange: (editedField: data.IField, fields: data.IField[], change: data.IFieldChange) => void;
+    onChange: (editedField: data.IField, fields: data.IField[]) => void;
 }
 
 export interface IFieldOptionEditorState { }
@@ -49,9 +49,11 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
 
     private onOptionChanged(field: data.IField) {
         const fields = util.updateField(this.props.field, field, this.props.fields);
-        this.props.onChange(field, fields, {
-            action: data.FieldAction.Change,
-            source: field
-        });
+        if (!fields) {
+            console.warn('cannot update field inside fields.', this.props.field, this.props.fields);
+        }
+        else {
+            this.props.onChange(field, fields);
+        }
     }
 }

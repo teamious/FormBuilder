@@ -18,13 +18,11 @@ export interface IFormInputProps {
     onChange: (value: any, state: data.IFormState) => void;
 }
 
-export interface IFormInputState {
-}
-
-export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
+export class FormInput extends React.PureComponent<IFormInputProps, {}> {
     // The status of the current form input component.
     // The status is internal state of form input.
     private formState: data.IFormState;
+    private fieldInputs: { [index: string]: any } = {};
 
     public static defaultProps: Partial<IFormInputProps> = {
         value: {}
@@ -52,6 +50,9 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
             value,
             attempt: this.props.attempt,
             onValueChange: this.onValueChanged,
+            ref: (input) => {
+                this.fieldInputs[index] = input
+            }
         });
 
         return (
@@ -70,10 +71,10 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
     }
 
     private fireValuesChange(value: any) {
-        this.props.fields.forEach(field => {
-            let fieldDef: data.IFieldDef = this.props.registry[field.type];
-            if (fieldDef.injector && fieldDef.injector.onValuesChanged) {
-                let fieldState = fieldDef.injector.onValuesChanged(field, value);
+        this.props.fields.forEach((field, index) => {
+            const input = this.fieldInputs[index];
+            if (input && input.onValuesChanged) {
+                const fieldState = input.onValuesChanged(value);
                 this.formState[field.id] = fieldState;
             }
         })

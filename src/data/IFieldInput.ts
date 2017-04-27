@@ -24,3 +24,11 @@ export interface IGenericFieldInputProps<T extends IField, V> extends IFieldInpu
 
 export interface IFieldInputComponent extends React.ComponentClass<IFieldInputProps> {
 }
+
+// Implements this interface in order to inject logic when field input need to react when form got changed.
+export interface IFieldInputInjector {
+    // The event will be triggered when form values has been changed.
+    // The corresponding values update can be preformed here.
+    // Don't call onValueChange inside of this method.
+    onValuesChanged?: (values: { [id: string]: any }) => IFieldState;
+}

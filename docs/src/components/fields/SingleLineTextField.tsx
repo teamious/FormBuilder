@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField, IFieldBuilderProps, IFieldInputProps } from 'react-dynamic-formbuilder';
+import { IField, IFieldBuilderProps, IFieldInputProps, IFieldInputInjector } from 'react-dynamic-formbuilder';
 
 interface IState {
 }
 
-export default class SingleLineTextField extends React.PureComponent<IFieldInputProps & IFieldBuilderProps, IState> {
+export default class SingleLineTextField extends React.PureComponent<IFieldInputProps & IFieldBuilderProps, IState> implements IFieldInputInjector {
     public static defaultProps = {
         value: ''
     } as IFieldInputProps & IFieldBuilderProps
@@ -36,6 +36,11 @@ export default class SingleLineTextField extends React.PureComponent<IFieldInput
                 </FormGroup>
             </div>
         );
+    }
+
+    public onValuesChanged(value: { [id: string]: any }): any {
+        console.log("SingleLineTextField onValuesChange", value);
+        return null;
     }
 
     private onTextFieldChange(event: any) {

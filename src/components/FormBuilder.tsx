@@ -43,13 +43,10 @@ export interface IFormBuilderProps {
     editingField: data.IField;
 }
 
-export interface IFormBuilderState {
-}
-
 // FormBuilder expects a list of field definitions and will wrap each field definition
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
-export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilderState> {
+export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
     constructor(props: IFormBuilderProps) {
         super(props);
 
@@ -58,8 +55,6 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
-        this.state = {
-        };
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -78,16 +73,13 @@ export class FormBuilder extends React.Component<IFormBuilderProps, IFormBuilder
     // If the `onBeforeDeleteField` hook is provided, it will be used
     // to determine if the field can be deleted.
     private onDeleteField(index: number) {
-        let fields = this.props.fields.concat([]);
         const field = this.props.fields[index];
         const hook = this.props.onBeforeDeleteField;
         if (hook && !hook(field)) {
             return;
         }
 
-        if (field === this.props.editingField) {
-            this.setState({ editingField: null });
-        }
+        let fields = this.props.fields.concat([]);
         fields.splice(index, 1);
         this.props.onChange(fields, {
             action: data.FieldAction.Delete,

@@ -170,6 +170,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
         const isEditing = (field === this.props.editingField);
+        const allowDelete = !field.isSystemField;
 
         return (
             <div className='form-builder-field' key={index}>
@@ -180,6 +181,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
                 >
                     <Editable
                         deleteButton={this.props.deleteButton}
+                        showDeleteButton={allowDelete}
                         editButton={this.props.editButton}
                         onEdit={this.onEditField}
                         onDelete={this.onDeleteField}

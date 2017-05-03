@@ -8,6 +8,7 @@ export interface IFormBuilderEditableProps {
     isEditing: boolean;
     showEditButton?: boolean;
     editButton?: data.IEditableControlSource;
+    showDeleteButton?: boolean;
     deleteButton?: data.IEditableControlSource;
     onEdit: (field: data.IField) => void;
     onDelete: (index: number) => void;
@@ -68,6 +69,10 @@ export class FormBuilderEditable extends React.Component<IFormBuilderEditablePro
     }
 
     private renderDeleteButton() {
+        if (!this.props.showDeleteButton) {
+            return null;
+        }
+
         const source = this.props.deleteButton;
 
         if (!source || typeof source === 'string') {

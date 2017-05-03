@@ -5,7 +5,7 @@ export interface IField {
     hint?: string;
     options?: any;
     fields?: Array<IField>;
-    // This flag will decide whether the field will be on FieldSelector.
+    // This flag indicates whether the field will be on FieldSelector.
     // The field should be created by default in the form.
     isSystemField?: boolean;
 };

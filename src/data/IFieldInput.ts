@@ -12,7 +12,8 @@ export interface IFieldInputProps {
     value: any;
     // It indicates whether user has tried to submit.
     attempt: boolean;
-
+    // The context is provided by consumer.
+    context: any;
     // The callback when the value has been changed.
     onValueChange: (field: IField, value: any, fieldStatus: IFieldState) => void;
 }

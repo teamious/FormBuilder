@@ -41,6 +41,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
                 key={index}
                 index={index}
                 value={entry}
+                context={this.props.context}
                 fields={this.props.field.fields}
                 registry={this.props.registry}
                 onChange={this.onEntryValueChanged}
@@ -86,6 +87,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
 interface IEntryProps {
     index: number;
     value: any;
+    context: any;
     fields: data.IField[];
     registry: data.FieldRegistry;
     onChange: (value: any, formStatus: data.IFormState, index: number) => void;
@@ -107,6 +109,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
                     fields={this.props.fields}
                     registry={this.props.registry}
                     value={this.props.value}
+                    context={this.props.context}
                     onChange={this.onValueChanged} />
             </div>
         );

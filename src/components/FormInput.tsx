@@ -12,6 +12,9 @@ export interface IFormInputProps {
 
     value: any;
 
+    // Context provides additional context which will be passed to each form field input.
+    context?: any;
+
     // form submission attempt.
     attempt?: boolean;
 
@@ -43,17 +46,20 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         }
 
         const value = this.props.value[field.id];
-        const component = React.createElement(fieldDef.input, {
+        const fieldInputProps = {
             registry: this.props.registry,
             index,
             field,
             value,
+            context: this.props.context,
             attempt: this.props.attempt,
             onValueChange: this.onValueChanged,
             ref: (input) => {
                 this.fieldInputs[index] = input
             }
-        });
+        };
+
+        const component = React.createElement(fieldDef.input, fieldInputProps);
 
         return (
             <div className='form-submission-field' key={index}>

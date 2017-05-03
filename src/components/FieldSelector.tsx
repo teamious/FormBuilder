@@ -16,7 +16,11 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
 
     render() {
         const options = this.props.registry.getFields().map(def => {
-            const {field, displayName, type} = def;
+            const { field, displayName, type } = def;
+            if (field.isSystemField) {
+                return null;
+            }
+
             return <FieldSelectorOption field={field} key={type} label={displayName} />;
         });
         return (

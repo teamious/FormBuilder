@@ -105,11 +105,10 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
     }
 
     render() {
-        const index = <div className='form-submission-nested-entry-index'>{this.props.index + 1}</div>
         return (
             <div className='form-submission-nested-entry'>
                 <button type='button' onClick={this.onDeleted}>Delete</button>
-                {this.props.showIndex && index}
+                {this.props.showIndex && <div className='form-submission-nested-entry-index'>{this.props.index + 1}</div>}
                 <FormInput
                     fields={this.props.fields}
                     registry={this.props.registry}

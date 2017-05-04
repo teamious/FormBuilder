@@ -9,7 +9,13 @@ const FieldTemplate: IField = {
     id: '',
     label: 'Detail',
     type: Type,
-    fields: Array<IField>()
+    fields: Array<IField>(),
+    options: {
+        uiOptions: {
+            showIndex: true,
+            showDeleteBtn: true
+        }
+    }
 };
 
 export const NestedForm = {

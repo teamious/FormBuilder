@@ -35,6 +35,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     render() {
         return (
             <div className='form-builder-nested'>
+                <div className='form-builder-nested-label'>{this.props.field.label}</div>
                 <FormBuilder
                     editButton={this.props.editButton}
                     deleteButton={this.props.deleteButton}

@@ -12,7 +12,8 @@ const FieldTemplate: IField = {
     fields: Array<IField>(),
     options: {
         uiOptions: {
-            showIndex: true
+            showIndex: true,
+            showDeleteBtn: true
         }
     }
 };

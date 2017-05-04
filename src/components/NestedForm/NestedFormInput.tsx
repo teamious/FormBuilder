@@ -48,6 +48,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
                 showIndex={this.props.field.options.uiOptions.showIndex}
+                showDeleteBtn={this.props.field.options.uiOptions.showDeleteBtn}
             />
         );
     }
@@ -95,6 +96,7 @@ interface IEntryProps {
     onChange: (value: any, formStatus: data.IFormState, index: number) => void;
     onDelete: (index: number) => void;
     showIndex?: boolean;
+    showDeleteBtn?: boolean;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
@@ -105,10 +107,12 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
     }
 
     render() {
+        const deleteBtn = <button type='button' onClick={this.onDeleted}>Delete</button>
+        const index = <div className='form-submission-nested-entry-index'>{this.props.index + 1}</div>
         return (
             <div className='form-submission-nested-entry'>
-                <button type='button' onClick={this.onDeleted}>Delete</button>
-                {this.props.showIndex && <div className='form-submission-nested-entry-index'>{this.props.index + 1}</div>}
+                {this.props.showDeleteBtn && deleteBtn}
+                {this.props.showIndex && index}
                 <FormInput
                     fields={this.props.fields}
                     registry={this.props.registry}

@@ -11,7 +11,9 @@ const FieldTemplate: IField = {
     type: Type,
     fields: Array<IField>(),
     options: {
-        showIndex: true
+        uiOptions: {
+            showIndex: true
+        }
     }
 };
 

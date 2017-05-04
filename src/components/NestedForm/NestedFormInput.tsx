@@ -47,7 +47,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
                 registry={this.props.registry}
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
-                showIndex={this.props.field.options.showIndex}
+                showIndex={this.props.field.options.uiOptions.showIndex}
             />
         );
     }

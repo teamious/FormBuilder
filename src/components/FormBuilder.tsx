@@ -16,6 +16,10 @@ export interface IFormBuilderProps {
     // onChange is called wheneven user changes any settings of fields.
     onChange: (fields: data.IField[], change: data.IFieldChange) => void;
 
+    // onError is called when field builder validates options and gets an error,
+    // or error has been resolved.
+    onError: (error: { [id: string]: any }) => void;
+
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField) => void;
 
@@ -47,6 +51,8 @@ export interface IFormBuilderProps {
 // in utility components for editing, dragging, and dropping. The FormBuilder uses
 // a registry to determine which class is responsible for rendering the field type.
 export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
+    private builderError: { [id: string]: any } = {};
+
     constructor(props: IFormBuilderProps) {
         super(props);
 
@@ -55,6 +61,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.onEditField = this.onEditField.bind(this);
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
+        this.onFieldError = this.onFieldError.bind(this);
     }
 
     // onEditField is called when the user wants to edit a field.
@@ -145,6 +152,18 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.props.onChange(fields, change);
     }
 
+    private onFieldError(field: data.IField, index: number, error: any) {
+        if (error) {
+            this.builderError[field.id] = error;
+        }
+        else {
+            delete this.builderError[field.id];
+        }
+
+        const hasError = Object.keys(this.builderError).length > 0;
+        this.props.onError(hasError ? this.builderError : null);
+    }
+
     // renderField takes the field.type to be rendered and looks up the
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
@@ -162,8 +181,10 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             editButton: this.props.editButton,
             deleteButton: this.props.deleteButton,
             editingField: this.props.editingField,
+            fields: this.props.fields,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
+            onError: this.onFieldError,
             onBeforeAddField: this.props.onBeforeAddField,
         }
 

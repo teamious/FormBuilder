@@ -54,7 +54,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
             context: this.props.context,
             attempt: this.props.attempt,
             onValueChange: this.onValueChanged,
-            ref: (input) => {
+            ref: (input: any) => {
                 this.fieldInputs[index] = input
             }
         };

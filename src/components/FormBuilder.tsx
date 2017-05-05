@@ -18,7 +18,7 @@ export interface IFormBuilderProps {
 
     // onError is called when field builder validates options and gets an error,
     // or error has been resolved.
-    onError: (error: { [id: string]: any }) => void;
+    onError?: (error: { [id: string]: any }) => void;
 
     // fieldEditing is called when the user want to edit field options.
     onFieldEditing: (field: data.IField) => void;

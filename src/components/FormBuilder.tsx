@@ -92,6 +92,11 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             action: data.FieldAction.Delete,
             source: field
         });
+
+        if (this.builderError[field.id]) {
+            // Resets the deleted field error.
+            this.onFieldError(field, index, null);
+        }
     }
 
     // onDrop is called whenever a field is dropped on a <Droppable> component.

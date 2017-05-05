@@ -10,6 +10,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
         super();
         this.onChangeFields = this.onChangeFields.bind(this);
         this.onBeforeAddField = this.onBeforeAddField.bind(this);
+        this.onError = this.onError.bind(this);
     }
 
     private onChangeFields(fields: data.IField[], change: data.IFieldChange) {
@@ -32,6 +33,10 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
         return true;
     }
 
+    private onError(error: any) {
+        this.props.onError(this.props.field, this.props.index, error);
+    }
+
     render() {
         return (
             <div className='form-builder-nested'>
@@ -45,6 +50,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     onBeforeAddField={this.onBeforeAddField}
                     fields={this.props.field.fields}
                     onChange={this.onChangeFields}
+                    onError={this.onError}
                 />
             </div>
         )

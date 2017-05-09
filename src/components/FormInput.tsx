@@ -62,7 +62,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         const component = React.createElement(fieldDef.input, fieldInputProps);
 
         return (
-            <div className='form-submission-field' key={index}>
+            <div className='form-input-field' key={index}>
                 {component}
             </div>
         )
@@ -86,10 +86,10 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         })
     }
 
-    // render displays a list of fields based on the field registry.
+    // render a list of fields based on the field registry.
     render() {
         return (
-            <div className='form-submission'>
+            <div className='form-input'>
                 {this.props.fields.map(this.renderField)}
             </div>
         );

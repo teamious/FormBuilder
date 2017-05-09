@@ -28,8 +28,8 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
 
     render() {
         return (
-            <div className='form-submission-nested'>
-                <div className='form-submission-nested-label'>{this.props.field.label}</div>
+            <div className='form-input-nested'>
+                <div className='form-input-nested-label'>{this.props.field.label}</div>
                 <button type='button' onClick={this.onCreateEntry}>Create</button>
                 {this.props.value.map(this.renderEntry)}
             </div>
@@ -108,9 +108,9 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
 
     render() {
         const deleteBtn = <button type='button' onClick={this.onDeleted}>Delete</button>
-        const index = <div className='form-submission-nested-entry-index'>{this.props.index + 1}</div>
+        const index = <div className='form-input-nested-entry-index'>{this.props.index + 1}</div>
         return (
-            <div className='form-submission-nested-entry'>
+            <div className='form-input-nested-entry'>
                 {this.props.showDeleteBtn && deleteBtn}
                 {this.props.showIndex && index}
                 <FormInput

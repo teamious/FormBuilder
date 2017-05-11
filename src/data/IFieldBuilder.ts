@@ -11,7 +11,7 @@ export interface IFieldBuilderProps {
     registry: FieldRegistry;
     editButton?: IEditableControlSource;
     deleteButton?: IEditableControlSource;
-    editingField: IField;
+    editingFieldId: string;
     fields: IField[];
     onChange: (field: IField, index: number, change: IFieldChange) => void;
     onFieldEditing: (field: IField) => void;

@@ -65,6 +65,12 @@ class DemoPage extends React.Component<void, IState> {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
         const formState = JSON.stringify(this.state.formState);
+        const {editingField} = this.state;
+
+        let editingFieldId = null;
+        if (editingField) {
+            editingFieldId = editingField.id;
+        }
 
         return (
             <div>
@@ -83,7 +89,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <div className='form-horizontal'>
                                     <FormBuilder
-                                        editingField={this.state.editingField}
+                                        editingFieldId={editingFieldId}
                                         onFieldEditing={this.onFieldEditing}
                                         onChange={this.onChangeFields}
                                         registry={FieldRegistry}

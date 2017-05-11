@@ -6,7 +6,7 @@ import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 import { FormBuilderContext } from './FormBuilderContext';
 
-export interface FormBuilderIDFunc {
+export interface FormBuilderIDGenerator {
     (): string;
 }
 
@@ -50,7 +50,7 @@ export interface IFormBuilderProps {
     // idFunc is an optional hook for providing a function to generate ID's for
     // a field. This func will get called whenever a field is added to the formBuilder
     // without an existing ID.
-    idFunc?: FormBuilderIDFunc;
+    idGenerator?: FormBuilderIDGenerator;
 
     // editingField is the field that is currently being edited.
     editingField: data.IField;
@@ -163,7 +163,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 
     private ensureID(field: data.IField) {
         if (!field.id) {
-            const idFunc = this.props.idFunc || generateID;
+            const idFunc = this.props.idGenerator || generateID;
             field.id = idFunc();
         }
     }

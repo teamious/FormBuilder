@@ -6,6 +6,10 @@ import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 import { FormBuilderContext } from './FormBuilderContext';
 
+export interface FormBuilderIDGenerator {
+    (): string;
+}
+
 export interface IFormBuilderProps {
     fields: data.IField[];
 
@@ -42,6 +46,11 @@ export interface IFormBuilderProps {
     // deleteButtonText is consumed by the FormBuilderEditable so that
     // i18n strings can be displayed. If not provided, it defaults to English "delete".
     deleteButton?: data.IEditableControlSource;
+
+    // idFunc is an optional hook for providing a function to generate ID's for
+    // a field. This func will get called whenever a field is added to the formBuilder
+    // without an existing ID.
+    idGenerator?: FormBuilderIDGenerator;
 
     // editingField is the field that is currently being edited.
     editingField: data.IField;
@@ -124,6 +133,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         if (isAdd) {
             // NOTE: If source is from the FieldSelector, we should create a clone field.
             sourceField = JSON.parse(JSON.stringify(sourceField));
+            this.ensureID(sourceField);
             let hook = this.props.onBeforeAddField;
             if (hook && !hook(sourceField)) {
                 return;
@@ -149,6 +159,13 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             action: isAdd ? data.FieldAction.Add : data.FieldAction.Change,
             source: sourceField
         });
+    }
+
+    private ensureID(field: data.IField) {
+        if (!field.id) {
+            const idFunc = this.props.idGenerator || generateID;
+            field.id = idFunc();
+        }
     }
 
     private onFieldChanged(field: data.IField, index: number, change: data.IFieldChange) {
@@ -199,7 +216,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         const allowDelete = !field.isSystemField;
 
         return (
-            <div className='form-builder-field' key={index}>
+            <div className='form-builder-field' key={field.id}>
                 <Droppable
                     index={index}
                     onDrop={this.onDrop}
@@ -242,4 +259,14 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             </FormBuilderContext>
         );
     }
+}
+
+// Attribution: http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+function generateID(len: number = 5) {
+    var text = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (let i = 0; i < len; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
 }

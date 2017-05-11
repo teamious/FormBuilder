@@ -53,7 +53,7 @@ export interface IFormBuilderProps {
     idGenerator?: FormBuilderIDGenerator;
 
     // editingField is the field that is currently being edited.
-    editingField: data.IField;
+    editingFieldId: string;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -202,7 +202,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             registry: this.props.registry,
             editButton: this.props.editButton,
             deleteButton: this.props.deleteButton,
-            editingField: this.props.editingField,
+            editingFieldId: this.props.editingFieldId,
             fields: this.props.fields,
             onFieldEditing: this.props.onFieldEditing,
             onChange: this.onFieldChanged,
@@ -212,7 +212,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
 
-        const isEditing = (field === this.props.editingField);
+        const isEditing = (field.id === this.props.editingFieldId);
         const allowDelete = !field.isSystemField;
 
         return (

@@ -61,11 +61,12 @@ export default class extends React.Component<IProps, IState> {
     constructor() {
         super();
         this.onChangeFields = this.onChangeFields.bind(this);
+        this.onFieldEditing = this.onFieldEditing.bind(this);
         this.state = {
             field: null,
             fields: [
                 {
-                    id: '',
+                    id: 'field1',
                     label: 'Please select:',
                     type: 'SingleSelector',
                     options: {
@@ -73,7 +74,7 @@ export default class extends React.Component<IProps, IState> {
                     }
                 },
                 {
-                    id: '',
+                    id: 'field2',
                     label: 'Name',
                     type: 'SingleLineTextField',
                     options: {
@@ -96,9 +97,13 @@ export default class extends React.Component<IProps, IState> {
     }
 
     render() {
+        let editingFieldId = null;
+        if (this.state.field) {
+            editingFieldId = this.state.field.id;
+        }
         return (
             <FormBuilder
-                editingField={this.state.field}
+                editingFieldId={editingFieldId}
                 registry={registry}
                 onFieldEditing={this.onFieldEditing}
                 onChange={this.onChangeFields}

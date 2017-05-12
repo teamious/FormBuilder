@@ -7,14 +7,20 @@ import { FormInput } from '../FormInput';
 export interface INestedFormInputState {
 }
 
-export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, INestedFormInputState> {
+export interface INestedFormInputProps {
+    showIndex: boolean;
+    showDeleteBtn: boolean;
+    createButton: data.IEditableControlSource;
+}
+
+export class NestedFormInput extends React.PureComponent<data.IFieldInputProps & INestedFormInputProps, INestedFormInputState> {
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps = {
         value: [{}]
     } as data.IFieldInputProps;
 
-    constructor(props: data.IFieldInputProps) {
+    constructor(props: data.IFieldInputProps & INestedFormInputProps) {
         super(props);
         this.renderEntry = this.renderEntry.bind(this);
         this.onCreateEntry = this.onCreateEntry.bind(this);
@@ -30,9 +36,7 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
         return (
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
-                <button className='form-input-nested-button form-input-nested-create-button' type='button' onClick={this.onCreateEntry}>
-                    {this.props.field.options.createButtonLabel}
-                </button>
+                {this.renderCreateButton()}
                 {this.props.value.map(this.renderEntry)}
             </div>
         );
@@ -49,13 +53,15 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
                 registry={this.props.registry}
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
-                showIndex={this.props.field.options.showIndex}
-                showDeleteBtn={this.props.field.options.showDeleteBtn}
+                showIndex={this.props.showIndex}
+                showDeleteBtn={this.props.showDeleteBtn}
             />
         );
     }
 
-    private onCreateEntry() {
+    private onCreateEntry(event: React.MouseEvent<HTMLElement>) {
+        event.stopPropagation();
+        event.preventDefault();
         let entries = this.props.value.slice();
         entries.push({});
         this.props.onValueChange(this.props.field, entries, this.fieldStatus);
@@ -86,6 +92,25 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
         })
 
         this.fieldStatus.error = error ? 'nestedError' : '';
+    }
+
+    private renderCreateButton() {
+        const source = this.props.createButton;
+
+        if (!source || typeof source === 'string') {
+            return (
+                <button className='form-input-nested-button form-input-nested-create-button' type='button' onClick={this.onCreateEntry}>
+                    {source || 'Create'}
+                </button>
+            )
+        }
+
+        if (React.isValidElement(source)) {
+            return React.cloneElement(source, {
+                onClick: this.onCreateEntry,
+                className: classNames(source.props.className, 'form-input-nested-button form-input-nested-create-button'),
+            })
+        }
     }
 }
 

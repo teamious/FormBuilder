@@ -8,17 +8,20 @@ export interface INestedFormInputState {
 }
 
 export interface INestedFormInputProps {
-    showIndex: boolean;
-    showDeleteBtn: boolean;
-    createButton: data.IEditableControlSource;
+    showIndex?: boolean;
+    showDeleteBtn?: boolean;
+    createButton?: data.IEditableControlSource;
 }
 
 export class NestedFormInput extends React.PureComponent<data.IFieldInputProps & INestedFormInputProps, INestedFormInputState> {
     private fieldStatus: data.INestedFieldState;
 
-    public static defaultProps: data.IFieldInputProps = {
-        value: [{}]
-    } as data.IFieldInputProps;
+    public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
+        value: [{}],
+        showIndex: false,
+        showDeleteBtn: false,
+        createButton: 'Create',
+    } as data.IFieldInputProps & INestedFormInputProps;
 
     constructor(props: data.IFieldInputProps & INestedFormInputProps) {
         super(props);
@@ -36,8 +39,8 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps &
         return (
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
-                {this.renderCreateButton()}
                 {this.props.value.map(this.renderEntry)}
+                {this.renderCreateButton()}
             </div>
         );
     }
@@ -111,6 +114,8 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps &
                 className: classNames(source.props.className, 'form-input-nested-button form-input-nested-create-button'),
             })
         }
+
+        throw new Error('Cannot render create button');
     }
 }
 

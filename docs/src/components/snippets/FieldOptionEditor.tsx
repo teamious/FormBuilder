@@ -68,14 +68,14 @@ export default class MyApp extends React.Component<{}, IState> {
         this.onFieldEditing = this.onFieldEditing.bind(this);
         this.state = {
             fields: [{
-                id: '',
+                id: 'field1',
                 label: 'Please select:',
                 type: 'SingleSelector',
                 options: {
                     selectOpts: ['a', 'b', 'c'],
                 }
             }, {
-                id: '',
+                id: 'field2',
                 label: 'Name',
                 type: 'SingleLineTextField',
                 options: {
@@ -106,6 +106,10 @@ export default class MyApp extends React.Component<{}, IState> {
     }
 
     render() {
+        let editingFieldId = null;
+        if (this.state.field) {
+            editingFieldId = this.state.field.id;
+        }
         return (
             <div>
                 <Modal onHide={this.closeModal} show={!!this.state.field}>
@@ -125,7 +129,7 @@ export default class MyApp extends React.Component<{}, IState> {
                 </Modal>
 
                 <FormBuilder
-                    editingField={this.state.field}
+                    editingFieldId={editingFieldId}
                     registry={registry}
                     onFieldEditing={this.onFieldEditing}
                     onChange={this.onChangeFields}

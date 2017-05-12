@@ -48,7 +48,7 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
     }
 
     private onOptionChanged(field: data.IField, error: any) {
-        const fields = util.updateField(this.props.field, field, this.props.fields);
+        const fields = util.updateFieldInFieldTree(field, this.props.fields);
         if (!fields) {
             console.warn('cannot update field inside fields.', this.props.field, this.props.fields);
         }

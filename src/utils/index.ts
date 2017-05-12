@@ -1,15 +1,22 @@
 import * as assign from 'object-assign';
 import { IField } from '../data';
 
-export function updateField(oldField: IField, newField: IField, fields: Array<IField>): Array<IField> {
-    let index = fields.indexOf(oldField);
-    if (index < 0) {
+export function updateFieldInFieldTree(field: IField, fields: Array<IField>): Array<IField> {
+    let items = fields.filter(f => f.id === field.id);
+    let index = -1;
+    if (items.length > 1) {
+        throw new Error('impossible');
+    }
+    else if (items.length == 1) {
+        index = fields.indexOf(items[0]);
+    }
+    else {
         for (let i = 0; i < fields.length; i++) {
             if (fields[i].fields) {
-                let nestedFields = updateField(oldField, newField, fields[i].fields);
+                let nestedFields = updateFieldInFieldTree(field, fields[i].fields);
                 if (nestedFields) {
-                    index = i;
-                    newField = assign({}, fields[i], {
+                    let index = i;
+                    field = assign({}, fields[i], {
                         fields: nestedFields
                     });
                     break;
@@ -20,7 +27,7 @@ export function updateField(oldField: IField, newField: IField, fields: Array<IF
 
     if (index >= 0) {
         const newFields = fields.slice();
-        newFields[index] = newField;
+        newFields[index] = field;
         return newFields;
     }
 

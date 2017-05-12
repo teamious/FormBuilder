@@ -30,7 +30,9 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps, 
         return (
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
-                <button type='button' onClick={this.onCreateEntry}>Create</button>
+                <button className='form-input-nested-button form-input-nested-create-button' type='button' onClick={this.onCreateEntry}>
+                    {this.props.field.options.uiOptions.createButtonLabel}
+                </button>
                 {this.props.value.map(this.renderEntry)}
             </div>
         );

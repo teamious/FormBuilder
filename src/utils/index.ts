@@ -15,7 +15,7 @@ export function updateFieldInFieldTree(field: IField, fields: Array<IField>): Ar
             if (fields[i].fields) {
                 let nestedFields = updateFieldInFieldTree(field, fields[i].fields);
                 if (nestedFields) {
-                    let index = i;
+                    index = i;
                     field = assign({}, fields[i], {
                         fields: nestedFields
                     });

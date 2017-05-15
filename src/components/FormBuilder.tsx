@@ -52,6 +52,16 @@ export interface IFormBuilderProps {
     // without an existing ID.
     idGenerator?: FormBuilderIDGenerator;
 
+    // canDrag determines whether or not the field can be dragged. If false, the field
+    // will not be draggable. This method is called by ReactDnD before the drag operation begins.
+    canDrag?: (field: data.IField) => boolean;
+
+    // canDrop determines whether or not source can be dropped onto target. In this case
+    // source is the field being dragged and target is the field being dropped onto.
+    // target is optional because it can be null in the case the droppable target
+    // is the first/only field in the builder.
+    canDrop?: (source: data.IField, target?: data.IField) => boolean;
+
     // editingField is the field that is currently being edited.
     editingFieldId: string;
 }
@@ -218,6 +228,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         return (
             <div className='form-builder-field' key={field.id}>
                 <Droppable
+                    canDrop={this.props.canDrop}
                     index={index}
                     onDrop={this.onDrop}
                     field={field}
@@ -233,6 +244,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
                         isEditing={isEditing}
                     >
                         <Draggable
+                            canDrag={this.props.canDrag}
                             index={index}
                             field={field}
                         >

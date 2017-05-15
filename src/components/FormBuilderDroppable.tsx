@@ -6,6 +6,7 @@ export interface IFormBuilderDroppableProps {
     index: number;
     field: data.IField;
     onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) => void;
+    canDrop?: (source: data.IField, target: data.IField) => boolean;
 }
 
 interface IState {
@@ -42,6 +43,14 @@ const spec: DropTargetSpec<IFormBuilderDroppableProps> = {
         const didDrop = monitor.didDrop();
         props.onDrop(target, source, didDrop);
     },
+
+    canDrop(props, monitor) {
+        const source: data.IDragSourceItem = monitor.getItem() as any;
+        if (props.canDrop) {
+            return props.canDrop(source.field, props.field);
+        }
+        return true;
+    }
 }
 
 const collect: DropTargetCollector = (connect, monitor): IDNDProps => {

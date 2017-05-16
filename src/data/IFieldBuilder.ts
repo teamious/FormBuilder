@@ -17,6 +17,8 @@ export interface IFieldBuilderProps {
     onFieldEditing: (field: IField) => void;
     onBeforeAddField: (field: IField) => boolean;
     onError: (field: IField, index: number, error: any) => void;
+    canDrag?: (field: IField) => boolean;
+    canDrop?: (source: IField, target?: IField) => boolean;
 }
 
 export interface IGenericFieldBuilderProps<T extends IField> extends IFieldBuilderProps {

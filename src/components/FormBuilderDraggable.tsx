@@ -5,6 +5,7 @@ import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceSpec } fr
 export interface IFormBuilderDraggableProps {
     index: number;
     field: data.IField;
+    canDrag?: (field: data.IField) => boolean;
 }
 
 interface IState {}
@@ -28,6 +29,13 @@ class FormBuilderDraggableComponent extends React.Component<IFormBuilderDraggabl
 }
 
 const spec: DragSourceSpec<IFormBuilderDraggableProps> = {
+    canDrag(props, monitor): boolean {
+        if (props.canDrag) {
+            return props.canDrag(props.field);
+        }
+        return true;
+    },
+
     beginDrag(props): data.IDragSourceItem {
         return {
             index: props.index,

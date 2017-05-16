@@ -51,6 +51,8 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     fields={this.props.field.fields}
                     onChange={this.onChangeFields}
                     onError={this.onError}
+                    canDrag={this.props.canDrag}
+                    canDrop={this.props.canDrop}
                 />
             </div>
         )

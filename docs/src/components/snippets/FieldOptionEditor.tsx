@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import SingleSelector from '../fields/SingleSelector';
+import { SingleSelector, SingleSelectorBuilder } from '../fields/SingleSelector';
 import SingleSelectorOptionEditor from '../fields/SingleSelectorOptionEditor';
-import SingleLineTextField from '../fields/SingleLineTextField';
+import { SingleLineTextField, SingleLineTextBuilder } from '../fields/SingleLineTextField';
 import SingleLineTextFieldOptionEditor from '../fields/SingleLineTextFieldOptionEditor';
 import {
     FieldOptionEditor,
@@ -32,7 +32,7 @@ registry.register({
     type: 'SingleSelector',
     displayName: '单选(selector)',
     input: SingleSelector,
-    builder: SingleSelector,
+    builder: SingleSelectorBuilder,
     editor: SingleSelectorOptionEditor,
     display: null,
 });
@@ -51,7 +51,7 @@ registry.register({
     type: 'SingleLineTextField',
     displayName: '单行输入(input)',
     input: SingleLineTextField,
-    builder: SingleLineTextField,
+    builder: SingleLineTextBuilder,
     editor: SingleLineTextFieldOptionEditor,
     display: null,
 });

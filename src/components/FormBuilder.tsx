@@ -206,7 +206,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             return;
         }
 
-        const fieldBuilderProps: data.IFieldBuilderProps = {
+        const fieldBuilderProps: data.IFieldBuilderWrapperProps = {
             field,
             index,
             registry: this.props.registry,
@@ -220,40 +220,16 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             onBeforeAddField: this.props.onBeforeAddField,
             canDrag: this.props.canDrag,
             canDrop: this.props.canDrop,
+
+            onDeleteField: this.onDeleteField,
+            onDrop: this.onDrop,
+            onEditField: this.onEditField
         }
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
-
-        const isEditing = (field.id === this.props.editingFieldId);
-        const allowDelete = !field.isSystemField;
-
         return (
             <div className='form-builder-field' key={field.id}>
-                <Droppable
-                    canDrop={this.props.canDrop}
-                    index={index}
-                    onDrop={this.onDrop}
-                    field={field}
-                >
-                    <Editable
-                        deleteButton={this.props.deleteButton}
-                        showDeleteButton={allowDelete}
-                        editButton={this.props.editButton}
-                        onEdit={this.onEditField}
-                        onDelete={this.onDeleteField}
-                        index={index}
-                        field={field}
-                        isEditing={isEditing}
-                    >
-                        <Draggable
-                            canDrag={this.props.canDrag}
-                            index={index}
-                            field={field}
-                        >
-                            {component}
-                        </Draggable>
-                    </Editable>
-                </Droppable>
+                {component}
             </div>
         )
     }

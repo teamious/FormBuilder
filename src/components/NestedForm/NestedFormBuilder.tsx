@@ -4,6 +4,7 @@ import * as assign from 'object-assign';
 import * as data from '../../data';
 import { NestedForm } from '.'
 import { FormBuilder } from '../FormBuilder';
+import { createFieldBuilderWrapper } from '../FieldBuilderWrapper';
 
 export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, {}> {
     constructor() {
@@ -58,3 +59,5 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
         )
     }
 }
+
+export const NestedFormBuilderWrapper: React.ComponentClass<data.IFieldBuilderProps> = createFieldBuilderWrapper()(NestedFormBuilder);

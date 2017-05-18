@@ -1,7 +1,7 @@
 import { SingleSelectorField } from './fields/SingleSelectorField';
 import { SingleLineField } from './fields/SingleLineField';
 import {
-    NestedFormBuilder,
+    NestedFormBuilderWrapper,
     NestedFormInput,
     NestedFormDisplay,
     NestedForm,
@@ -17,7 +17,7 @@ FieldRegistry.register({
     displayName: '明细(NestForm)',
     type: NestedForm.Type,
     input: NestedFormInput,
-    builder: NestedFormBuilder,
+    builder: NestedFormBuilderWrapper,
     display: NestedFormDisplay,
 });
 

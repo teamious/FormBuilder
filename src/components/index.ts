@@ -1,3 +1,8 @@
+export * from './FieldBuilderWrapper';
+export * from './FormBuilderDraggable';
+export * from './FormBuilderDroppable';
+export * from './FormBuilderEditable';
+
 export * from './FieldOptionEditor';
 export * from './FieldSelector';
 export * from './FormBuilder';

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { FormControl, FormGroup, ControlLabel, Col } from 'react-bootstrap';
-import { IField, IFieldBuilderProps, IFieldInputProps } from 'react-dynamic-formbuilder';
+import { IField, IFieldBuilderProps, IFieldInputProps, createFieldBuilderWrapper } from 'react-dynamic-formbuilder';
 
 interface IState { }
 
-export default class SingleSelector extends React.PureComponent<IFieldBuilderProps & IFieldInputProps, IState> {
+export class SingleSelector extends React.PureComponent<IFieldBuilderProps & IFieldInputProps, IState> {
     public static defaultProps = {
         value: ''
     } as IFieldInputProps & IFieldBuilderProps
@@ -42,3 +42,5 @@ export default class SingleSelector extends React.PureComponent<IFieldBuilderPro
         );
     }
 }
+
+export const SingleSelectorBuilder = createFieldBuilderWrapper()(SingleSelector);

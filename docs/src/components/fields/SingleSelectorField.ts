@@ -1,5 +1,5 @@
 import { IField, IFieldDef } from 'react-dynamic-formbuilder';
-import SingleSelector from './SingleSelector';
+import { SingleSelector, SingleSelectorBuilder } from './SingleSelector';
 import KeyValueDisplay from './KeyValueDisplay';
 import SingleSelectorOptionEditor from './SingleSelectorOptionEditor';
 
@@ -18,7 +18,7 @@ export const SingleSelectorField: IFieldDef = {
     type: Type,
     field: Field,
     displayName: '单选(selector)',
-    builder: SingleSelector,
+    builder: SingleSelectorBuilder,
     input: SingleSelector,
     display: KeyValueDisplay,
     editor: SingleSelectorOptionEditor,

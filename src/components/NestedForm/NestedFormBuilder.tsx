@@ -60,4 +60,4 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     }
 }
 
-export const NestedFormBuilderWrapper = createFieldBuilderWrapper()(NestedFormBuilder);
+export const NestedFormBuilderWrapper: React.ComponentClass<data.IFieldBuilderProps> = createFieldBuilderWrapper()(NestedFormBuilder);

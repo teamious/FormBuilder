@@ -11,9 +11,12 @@ export interface INestedFormInputProps {
     showIndex?: boolean;
     showDeleteBtn?: boolean;
     createButton?: data.IEditableControlSource;
+    // onBeforeDeleteEntry will be fired when user wants to delete one nested form entry.
+    // return a Promise with boolean to indicate whether delete option can be continued.
+    onBeforeDeleteEntry?: (value: any) => Promise<boolean>;
 }
 
-export class NestedFormInput extends React.PureComponent<data.IFieldInputProps & INestedFormInputProps, INestedFormInputState> {
+export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, INestedFormInputState> {
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
@@ -71,6 +74,25 @@ export class NestedFormInput extends React.PureComponent<data.IFieldInputProps &
     }
 
     private onDeleteEntry(index: number) {
+        if (this.props.onBeforeDeleteEntry) {
+            const before = this.props.onBeforeDeleteEntry(this.props.value[index]);
+            if (before && before.then) {
+                before.then(result => {
+                    if (result) {
+                        this.deleteEntry(index);
+                    }
+                })
+            }
+            else {
+                console.warn('Must return a promise');
+            }
+        }
+        else {
+            this.deleteEntry(index);
+        }
+    }
+
+    private deleteEntry(index: number) {
         const entries = this.props.value.slice();
         entries.splice(index, 1);
         delete this.fieldStatus.nestedStatus[index];

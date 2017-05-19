@@ -18,7 +18,7 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
         const selectors = this.props.registry.getFields().map(def => {
             const { field, displayName, type } = def;
             const fieldDef = this.props.registry[field.type];
-            if (fieldDef.selector !== undefined) {
+            if (fieldDef.selector) {
                 const fieldSelectorProps: data.IFieldSelectorProps = { field };
                 const component = React.createElement(fieldDef.selector, fieldSelectorProps);
                 return {component};

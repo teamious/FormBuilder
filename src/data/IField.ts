@@ -5,9 +5,6 @@ export interface IField {
     hint?: string;
     options?: any;
     fields?: Array<IField>;
-    // This flag indicates whether the field will be on FieldSelector.
-    // The field should be created by default in the form.
-    isSystemField?: boolean;
 };
 
 export interface IGenericField<T> extends IField {

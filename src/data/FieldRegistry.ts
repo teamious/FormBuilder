@@ -3,6 +3,7 @@ import { IFieldBuilderComponent } from './IFieldBuilder';
 import { IFieldOptionEditorComponent } from './IFieldOptionEditor';
 import { IFieldInputComponent } from './IFieldInput';
 import { IFieldDisplayComponent } from './IFieldDisplay';
+import { IFieldSelectorComponent } from './IFieldSelector';
 
 export interface IFieldDef {
     type: string;
@@ -12,6 +13,7 @@ export interface IFieldDef {
     input: IFieldInputComponent;
     display: IFieldDisplayComponent;
     editor?: IFieldOptionEditorComponent;
+    selector?: IFieldSelectorComponent;
 }
 
 // FieldRegistry maps field types to the class responsible for rendering the field and the class responsible for editing the field.

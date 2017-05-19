@@ -5,6 +5,7 @@ import { IEditableControlSource } from './IEditableControlSource';
 import { IFieldChange } from './IFieldChange';
 import { IFieldState } from './IFormState';
 import { IDropTargetItem, IDragSourceItem} from './IDragDrop';
+import { FormBuilderIDGenerator } from './IFormBuilder';
 
 export interface IFieldBuilderProps {
     field: IField;
@@ -19,6 +20,7 @@ export interface IFieldBuilderProps {
     onBeforeAddField: (field: IField) => boolean;
     onError: (field: IField, index: number, error: any) => void;
     canDrag?: (field: IField) => boolean;
+    idGenerator?: FormBuilderIDGenerator;
     canDrop?: (source: IField, target?: IField) => boolean;
 }
 

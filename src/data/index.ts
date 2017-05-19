@@ -9,6 +9,7 @@ export * from './IFieldSelector';
 export * from './IFieldContext';
 export * from './IFieldChange';
 export * from './IEditableControlSource';
+export * from './IFormBuilder';
 
 export * from './IFormState';
 

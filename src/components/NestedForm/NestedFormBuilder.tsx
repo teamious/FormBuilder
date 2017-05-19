@@ -54,6 +54,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     onError={this.onError}
                     canDrag={this.props.canDrag}
                     canDrop={this.props.canDrop}
+                    idGenerator={this.props.idGenerator}
                 />
             </div>
         )

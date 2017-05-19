@@ -21,7 +21,7 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
             if (fieldDef.selector) {
                 const fieldSelectorProps: data.IFieldSelectorItemProps = { field };
                 const component = React.createElement(fieldDef.selector, fieldSelectorProps);
-                return {component};
+                return component;
             }
 
             return <FieldSelectorOption field={field} key={type} label={displayName} />;

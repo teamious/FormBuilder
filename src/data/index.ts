@@ -5,6 +5,7 @@ export * from './IFieldBuilder';
 export * from './IFieldInput';
 export * from './FieldRegistry';
 export * from './IFieldDisplay';
+export * from './IFieldSelector';
 export * from './IFieldContext';
 export * from './IFieldChange';
 export * from './IEditableControlSource';

@@ -6,10 +6,6 @@ import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 import { FormBuilderContext } from './FormBuilderContext';
 
-export interface FormBuilderIDGenerator {
-    (): string;
-}
-
 export interface IFormBuilderProps {
     fields: data.IField[];
 
@@ -50,7 +46,7 @@ export interface IFormBuilderProps {
     // idFunc is an optional hook for providing a function to generate ID's for
     // a field. This func will get called whenever a field is added to the formBuilder
     // without an existing ID.
-    idGenerator?: FormBuilderIDGenerator;
+    idGenerator?: data.FormBuilderIDGenerator;
 
     // canDrag determines whether or not the field can be dragged. If false, the field
     // will not be draggable. This method is called by ReactDnD before the drag operation begins.
@@ -223,7 +219,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 
             onDeleteField: this.onDeleteField,
             onDrop: this.onDrop,
-            onEditField: this.onEditField
+            onEditField: this.onEditField,
+            idGenerator: this.props.idGenerator,
         }
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);

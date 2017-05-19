@@ -76,12 +76,15 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     private onDeleteEntry(index: number) {
         if (this.props.onBeforeDeleteEntry) {
             const before = this.props.onBeforeDeleteEntry(this.props.value[index]);
-            if (before) {
+            if (before && before.then) {
                 before.then(result => {
                     if (result) {
                         this.deleteEntry(index);
                     }
                 })
+            }
+            else {
+                console.warn('Must return a promise');
             }
         }
         else {

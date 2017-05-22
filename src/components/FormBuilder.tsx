@@ -269,7 +269,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 }
 
 // Attribution: http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-export function generateID(len: number = 5) {
+function generateID(len: number = 5) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < len; i++) {

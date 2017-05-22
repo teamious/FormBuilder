@@ -5,6 +5,7 @@ import { DragSource, DragSourceCollector, ConnectDragSource, DragSourceConnector
 export interface IFieldSelectorOptionProps {
     field: data.IField;
     label: string;
+    onClick?: (field: data.IField) => void;
 }
 
 interface IState { }
@@ -17,10 +18,21 @@ interface IDNDProps {
 // When an option is dragged, it will send the field and index (always null) of the option
 // to the drag an drop context.
 class FieldSelectorOptionComponent extends React.Component<IFieldSelectorOptionProps & IDNDProps, IState> {
+    constructor() {
+        super();
+        this.onClick = this.onClick.bind(this);
+    }
+
+    private onClick() {
+        if (this.props.onClick) {
+            this.props.onClick(this.props.field)
+        }
+    }
+
     render() {
         const { connectDragSource, field, label } = this.props;
         return connectDragSource(
-            <div className='field-selector-option'>
+            <div className='field-selector-option' onClick={this.onClick}>
                 <span className='field-selector-option-label'>
                     {label}
                 </span>

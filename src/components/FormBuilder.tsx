@@ -79,6 +79,26 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.onFieldError = this.onFieldError.bind(this);
     }
 
+    // NOTE(andrews): This is public API. Consumers should call this method
+    // directly if they wish to add a field to the fields array. This encapsulates
+    // all of the behavior surrounding adding a field such as cloning the field,
+    // ensuring an ID exists, and running hooks. Internally this method calls onDrop.
+    public addField(field: data.IField) {
+        const targetIndex = this.props.fields.length - 1;
+
+        const target: data.IDropTargetItem = {
+            field: this.props.fields[targetIndex],
+            index: targetIndex,
+        }
+
+        const source: data.IDragSourceItem = {
+            field,
+            index: null,
+        }
+
+        this.onDrop(target, source, false);
+    }
+
     // onEditField is called when the user wants to edit a field.
     // If the `onBeforeEditField` hook is provided, it will be used
     // to determine if the field can be edited.
@@ -249,7 +269,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 }
 
 // Attribution: http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-function generateID(len: number = 5) {
+export function generateID(len: number = 5) {
     var text = '';
     var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for (let i = 0; i < len; i++) {

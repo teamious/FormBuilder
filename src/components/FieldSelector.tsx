@@ -5,6 +5,7 @@ import { FormBuilderContext } from './FormBuilderContext';
 
 export interface IFieldSelectorProps {
     registry: data.FieldRegistry;
+    onSelect?: (field: data.IField) => void;
 }
 
 export interface IFieldSelectorState { }
@@ -23,8 +24,7 @@ export class FieldSelector extends React.PureComponent<IFieldSelectorProps, IFie
                 const component = React.createElement(fieldDef.selector, fieldSelectorProps);
                 return component;
             }
-
-            return <FieldSelectorOption field={field} key={type} label={displayName} />;
+            return <FieldSelectorOption field={field} key={type} label={displayName} onClick={this.props.onSelect}/>;
         });
         return (
             <FormBuilderContext>

@@ -26,6 +26,8 @@ interface IState {
 }
 
 class DemoPage extends React.Component<void, IState> {
+    private formBuilder: FormBuilder;
+
     constructor() {
         super()
         this.onChangeFields = this.onChangeFields.bind(this);
@@ -33,6 +35,8 @@ class DemoPage extends React.Component<void, IState> {
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldOptionChanged = this.onFieldOptionChanged.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
+        this.refFormBuilder = this.refFormBuilder.bind(this);
+        this.onSelectField = this.onSelectField.bind(this);
         this.state = {
             fields: [],
             editingField: null,
@@ -61,6 +65,14 @@ class DemoPage extends React.Component<void, IState> {
         this.setState({ value, formState } as IState);
     }
 
+    private refFormBuilder(formBuilder: FormBuilder) {
+        this.formBuilder = formBuilder;
+    }
+
+    private onSelectField(field: IField) {
+        this.formBuilder.addField(field);
+    }
+
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
@@ -81,6 +93,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <FieldSelector
                                     registry={FieldRegistry}
+                                    onSelect={this.onSelectField}
                                 />
                             </Panel>
                         </Col>
@@ -89,6 +102,7 @@ class DemoPage extends React.Component<void, IState> {
                             <Panel>
                                 <div className='form-horizontal'>
                                     <FormBuilder
+                                        ref={this.refFormBuilder}
                                         editingFieldId={editingFieldId}
                                         onFieldEditing={this.onFieldEditing}
                                         onChange={this.onChangeFields}

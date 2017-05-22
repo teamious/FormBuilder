@@ -61,6 +61,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 onDelete={this.onDeleteEntry}
                 showIndex={this.props.showIndex}
                 showDeleteBtn={this.props.showDeleteBtn}
+                attempt={this.props.attempt}
             />
         );
     }
@@ -151,6 +152,7 @@ interface IEntryProps {
     onDelete: (index: number) => void;
     showIndex?: boolean;
     showDeleteBtn?: boolean;
+    attempt?: boolean;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
@@ -172,7 +174,9 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
                     registry={this.props.registry}
                     value={this.props.value}
                     context={this.props.context}
-                    onChange={this.onValueChanged} />
+                    onChange={this.onValueChanged}
+                    attempt={this.props.attempt}
+                />
             </div>
         );
     }

@@ -71,9 +71,16 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
     private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
         const newValue = assign({}, this.props.value);
         newValue[field.id] = value;
-        this.formState[field.id] = fieldStatus;
         this.fireValuesChange(newValue);
-        this.props.onChange(newValue, this.formState);
+
+        if (fieldStatus.error) {
+            this.formState[field.id] = fieldStatus;
+        } else {
+            delete this.formState[field.id];
+        }
+        const formState = Object.keys(this.formState).length > 0 ? this.formState : null;
+
+        this.props.onChange(newValue, formState);
     }
 
     private fireValuesChange(value: any) {

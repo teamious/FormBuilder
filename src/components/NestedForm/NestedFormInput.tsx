@@ -19,7 +19,7 @@ export interface INestedFormInputProps {
     // return a Promise with boolean to indicate whether delete operation can be continued.
     onBeforeDeleteEntry?: (value: any) => Promise<boolean>;
     // The wrapper allow to customize form entry render which wrappers the nested form input.
-    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapperProps>;
+    nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
 
 export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
@@ -161,7 +161,7 @@ interface IEntryProps {
     showIndex?: boolean;
     showDeleteBtn?: boolean;
     attempt?: boolean;
-    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapperProps>;
+    nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
@@ -182,11 +182,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
         />;
 
         if (this.props.nestedFormEntryWrapper) {
-            if (!React.isValidElement(this.props.nestedFormEntryWrapper)) {
-                throw new Error('invalid nestedFormEntryWrapper');
-            }
-
-            return React.cloneElement(
+            return React.createElement(
                 this.props.nestedFormEntryWrapper,
                 {
                     index: this.props.index,

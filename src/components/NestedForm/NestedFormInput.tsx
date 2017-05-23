@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
 import * as data from '../../data';
+import { generateID } from '../../utils'
 
 import { FormInput } from '../FormInput';
 
@@ -20,7 +21,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
-        value: [{}],
+        value: [{id: generateID()}],
         showIndex: false,
         showDeleteBtn: false,
         createButton: 'Create',
@@ -51,7 +52,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     private renderEntry(entry: any, index: number) {
         return (
             <NestedFormEntry
-                key={index}
+                key={entry.id}
                 index={index}
                 value={entry}
                 context={this.props.context}
@@ -70,7 +71,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
         event.stopPropagation();
         event.preventDefault();
         let entries = this.props.value.slice();
-        entries.push({});
+        entries.push({ id: generateID() });
         this.props.onValueChange(this.props.field, entries, this.fieldStatus);
     }
 
@@ -95,8 +96,9 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
 
     private deleteEntry(index: number) {
         const entries = this.props.value.slice();
+        const deletedEntry = this.props.value[index];
         entries.splice(index, 1);
-        delete this.fieldStatus.nestedStatus[index];
+        delete this.fieldStatus.nestedStatus[deletedEntry.id];
         this.updateFieldStatus();
         this.props.onValueChange(this.props.field, entries, this.fieldStatus);
     }
@@ -104,7 +106,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     private onEntryValueChanged(value: any, formStatus: data.IFormState, index: number) {
         let newValue = this.props.value.slice();
         newValue[index] = value;
-        this.fieldStatus.nestedStatus[index] = formStatus;
+        this.fieldStatus.nestedStatus[value.id] = formStatus;
         this.updateFieldStatus();
         this.props.onValueChange(this.props.field, newValue, this.fieldStatus);
     }

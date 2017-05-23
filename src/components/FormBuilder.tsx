@@ -5,6 +5,7 @@ import { FormBuilderDraggable as Draggable } from './FormBuilderDraggable';
 import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
 import { FormBuilderContext } from './FormBuilderContext';
+import { generateID } from '../utils'
 
 export interface IFormBuilderProps {
     fields: data.IField[];
@@ -268,12 +269,3 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
     }
 }
 
-// Attribution: http://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
-function generateID(len: number = 5) {
-    var text = '';
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for (let i = 0; i < len; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}

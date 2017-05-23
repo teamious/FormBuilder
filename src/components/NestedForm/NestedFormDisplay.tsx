@@ -27,7 +27,7 @@ export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayPro
     private renderEntry(entry: any, index: number) {
         return (
             <div className='form-display-nested-entry'>
-                {this.props.field.options.uiOptions.showIndex && <div className='form-display-nested-entry-index'>{index + 1}</div>}
+                {this.props.showIndex && <div className='form-display-nested-entry-index'>{index + 1}</div>}
                 <FormDisplay
                     fields={this.props.field.fields}
                     registry={this.props.registry}

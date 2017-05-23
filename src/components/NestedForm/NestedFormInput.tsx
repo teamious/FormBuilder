@@ -52,7 +52,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     private renderEntry(entry: any, index: number) {
         return (
             <NestedFormEntry
-                key={index}
+                key={entry.id}
                 index={index}
                 value={entry}
                 context={this.props.context}

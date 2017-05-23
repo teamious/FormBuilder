@@ -5,7 +5,8 @@ import { generateID } from '../../utils'
 
 import { FormInput } from '../FormInput';
 
-export interface INestedFormInputState {
+export interface INestedFormEntryWrapper {
+    onDelete: () => void;
 }
 
 export interface INestedFormInputProps {
@@ -13,15 +14,17 @@ export interface INestedFormInputProps {
     showDeleteBtn?: boolean;
     createButton?: data.IEditableControlSource;
     // onBeforeDeleteEntry will be fired when user wants to delete one nested form entry.
-    // return a Promise with boolean to indicate whether delete option can be continued.
+    // return a Promise with boolean to indicate whether delete operation can be continued.
     onBeforeDeleteEntry?: (value: any) => Promise<boolean>;
+    // The wrapper allow to customize form entry render which wrappers the nested form input.
+    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapper>;
 }
 
-export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, INestedFormInputState> {
+export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
-        value: [{id: generateID()}],
+        value: [{ id: generateID() }],
         showIndex: false,
         showDeleteBtn: false,
         createButton: 'Create',
@@ -63,6 +66,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 showIndex={this.props.showIndex}
                 showDeleteBtn={this.props.showDeleteBtn}
                 attempt={this.props.attempt}
+                nestedFormEntryWrapper={this.props.nestedFormEntryWrapper}
             />
         );
     }
@@ -155,6 +159,7 @@ interface IEntryProps {
     showIndex?: boolean;
     showDeleteBtn?: boolean;
     attempt?: boolean;
+    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapper>;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
@@ -165,22 +170,38 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
     }
 
     render() {
-        const deleteBtn = <button type='button' onClick={this.onDeleted}>Delete</button>
-        const index = <div className='form-input-nested-entry-index'>{this.props.index + 1}</div>
-        return (
-            <div className='form-input-nested-entry'>
-                {this.props.showDeleteBtn && deleteBtn}
-                {this.props.showIndex && index}
-                <FormInput
-                    fields={this.props.fields}
-                    registry={this.props.registry}
-                    value={this.props.value}
-                    context={this.props.context}
-                    onChange={this.onValueChanged}
-                    attempt={this.props.attempt}
-                />
-            </div>
-        );
+        const formInput = <FormInput
+            fields={this.props.fields}
+            registry={this.props.registry}
+            value={this.props.value}
+            context={this.props.context}
+            onChange={this.onValueChanged}
+            attempt={this.props.attempt}
+        />;
+
+        if (this.props.nestedFormEntryWrapper) {
+            if (!React.isValidElement(this.props.nestedFormEntryWrapper)) {
+                throw new Error('invalid nestedFormEntryWrapper');
+            }
+
+            return React.cloneElement(
+                this.props.nestedFormEntryWrapper,
+                {
+                    onDelete: this.onDeleted,
+                },
+                formInput)
+        }
+        else {
+            const deleteBtn = <button type='button' onClick={this.onDeleted}>Delete</button>
+            const index = <div className='form-input-nested-entry-index'>{this.props.index + 1}</div>
+            return (
+                <div className='form-input-nested-entry'>
+                    {this.props.showDeleteBtn && deleteBtn}
+                    {this.props.showIndex && index}
+                    {formInput}
+                </div>
+            );
+        }
     }
 
     private onDeleted() {

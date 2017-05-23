@@ -5,7 +5,7 @@ import { generateID } from '../../utils'
 
 import { FormInput } from '../FormInput';
 
-export interface INestedFormEntryWrapper {
+export interface INestedFormEntryWrapperProps {
     field: data.IField;
     index: number;
     onDelete: () => void;
@@ -19,7 +19,7 @@ export interface INestedFormInputProps {
     // return a Promise with boolean to indicate whether delete operation can be continued.
     onBeforeDeleteEntry?: (value: any) => Promise<boolean>;
     // The wrapper allow to customize form entry render which wrappers the nested form input.
-    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapper>;
+    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapperProps>;
 }
 
 export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
@@ -161,7 +161,7 @@ interface IEntryProps {
     showIndex?: boolean;
     showDeleteBtn?: boolean;
     attempt?: boolean;
-    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapper>;
+    nestedFormEntryWrapper?: React.ReactElement<INestedFormEntryWrapperProps>;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {

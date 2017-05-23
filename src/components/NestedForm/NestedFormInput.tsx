@@ -6,6 +6,8 @@ import { generateID } from '../../utils'
 import { FormInput } from '../FormInput';
 
 export interface INestedFormEntryWrapper {
+    field: data.IField;
+    index: number;
     onDelete: () => void;
 }
 
@@ -59,7 +61,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 index={index}
                 value={entry}
                 context={this.props.context}
-                fields={this.props.field.fields}
+                field={this.props.field}
                 registry={this.props.registry}
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
@@ -152,7 +154,7 @@ interface IEntryProps {
     index: number;
     value: any;
     context: any;
-    fields: data.IField[];
+    field: data.IField;
     registry: data.FieldRegistry;
     onChange: (value: any, formStatus: data.IFormState, index: number) => void;
     onDelete: (index: number) => void;
@@ -171,7 +173,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
 
     render() {
         const formInput = <FormInput
-            fields={this.props.fields}
+            fields={this.props.field.fields}
             registry={this.props.registry}
             value={this.props.value}
             context={this.props.context}
@@ -187,6 +189,8 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
             return React.cloneElement(
                 this.props.nestedFormEntryWrapper,
                 {
+                    index: this.props.index,
+                    field: this.props.field,
                     onDelete: this.onDeleted,
                 },
                 formInput)

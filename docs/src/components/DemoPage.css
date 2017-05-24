@@ -2,10 +2,15 @@
     margin: 0 50px;
 }
 
+
 .form-builder-droppable-indicator {
     width: 100%;
     height: 1px;
     background: #CCC;
+}
+
+.form-builder-droppable-indicator.form-builder-droppable-indicator-disabled {
+    display: none;
 }
 
 .form-builder-editable-controls {

@@ -5,10 +5,15 @@ import { FormDisplay } from '../FormDisplay';
 
 export interface INestedFormDisplayState { };
 
-export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayProps, INestedFormDisplayState> {
+export interface INestedFormDisplayProps {
+    showIndex?: boolean;
+}
+
+export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayProps & INestedFormDisplayProps, INestedFormDisplayState> {
     public static defaultProps: data.IFieldDisplayProps = {
-        value: [{}]
-    } as data.IFieldDisplayProps;
+        value: [{}],
+        showIndex: false,
+    } as data.IFieldDisplayProps & INestedFormDisplayProps;
 
     constructor(props: data.IFieldDisplayProps) {
         super(props);
@@ -27,7 +32,7 @@ export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayPro
     private renderEntry(entry: any, index: number) {
         return (
             <div className='form-display-nested-entry'>
-                {this.props.field.options.uiOptions.showIndex && <div className='form-display-nested-entry-index'>{index + 1}</div>}
+                {this.props.showIndex && <div className='form-display-nested-entry-index'>{index + 1}</div>}
                 <FormDisplay
                     fields={this.props.field.fields}
                     registry={this.props.registry}

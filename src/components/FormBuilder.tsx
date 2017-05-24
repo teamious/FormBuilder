@@ -1,6 +1,8 @@
 import * as React from 'react';
-import * as data from '../data';
 import { DropTarget, DropTargetSpec, ConnectDropTarget, DropTargetCollector } from 'react-dnd';
+import * as classnames from 'classnames'
+
+import * as data from '../data';
 import { FormBuilderDraggable as Draggable } from './FormBuilderDraggable';
 import { FormBuilderEditable as Editable } from './FormBuilderEditable';
 import { FormBuilderDroppable as Droppable } from './FormBuilderDroppable';
@@ -61,6 +63,9 @@ export interface IFormBuilderProps {
 
     // editingField is the field that is currently being edited.
     editingFieldId: string;
+
+    // The layout will be rendered when there is no fields.
+    emptyLayout?: JSX.Element
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -256,12 +261,16 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
     // providing editing, dragging, and dropping functionality. At the end of the list
     // is a <Droppable> field.
     render() {
+        const isEmpty = this.props.fields.length === 0;
+        const emptyLayout = this.props.emptyLayout;
         return (
             <FormBuilderContext>
-                <div className='form-builder'>
+                <div className={classnames('form-builder', { 'form-builder-empty': isEmpty })}>
                     {this.props.fields.map(this.renderField)}
                     <Droppable canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
-                        <div style={{ padding: 25 }} />
+                        <div className='form-builder-default-droppable'>
+                            {isEmpty && emptyLayout}
+                        </div>
                     </Droppable>
                 </div>
             </FormBuilderContext>

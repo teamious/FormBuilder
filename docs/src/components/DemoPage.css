@@ -28,3 +28,11 @@
 .form-display-nested {
     border: 1px solid #ccc;
 }
+
+.form-builder .form-builder-default-droppable {
+    padding: 10px;
+}
+
+.form-builder.form-builder-empty .form-builder-default-droppable{
+    padding: 25px;
+}

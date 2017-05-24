@@ -54,6 +54,8 @@ const spec: DropTargetSpec<IFormBuilderDroppableProps> = {
         const source: data.IDragSourceItem = monitor.getItem() as any;
         const target: data.IDropTargetItem = { field, index, parentId };
         if (canDrop) {
+            // NOTE(andrews): isOver prevents a parent from being considered
+            // the drop target when the child is not droppable.
             return monitor.isOver({shallow: true}) && canDrop(source, target);
         }
         return true;

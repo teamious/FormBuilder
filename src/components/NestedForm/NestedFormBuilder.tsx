@@ -7,7 +7,7 @@ import { FormBuilder } from '../FormBuilder';
 import { createFieldBuilderWrapper } from '../FieldBuilderWrapper';
 
 export interface INestedFormBuilderProps {
-    emptyLayout?: JSX.Element
+    emptyLayout?: React.ReactNode;
 }
 
 export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps & INestedFormBuilderProps, void> {

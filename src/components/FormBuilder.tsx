@@ -65,7 +65,7 @@ export interface IFormBuilderProps {
     editingFieldId: string;
 
     // The layout will be rendered when there is no fields.
-    emptyLayout?: JSX.Element
+    emptyLayout?: React.ReactNode;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition

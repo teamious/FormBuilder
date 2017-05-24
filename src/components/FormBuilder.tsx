@@ -54,7 +54,7 @@ export interface IFormBuilderProps {
     canDrag?: (field: data.IField) => boolean;
 
     // canDrop determines whether or not the source can be dropped onto target. Note,
-    // this method is not called when directly adding fields.
+    // this method is not called using the addField API on your FormBuilder instance.
     canDrop?: (source: data.IDragSourceItem, target: data.IDropTargetItem) => boolean;
 
     // editingField is the field that is currently being edited.

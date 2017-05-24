@@ -6,7 +6,6 @@ export interface IFieldDisplayProps {
     field: IField;
     index: number;
     value: any;
-    showIndex?: boolean;
 }
 
 export interface IGenericFieldDisplayProps<T extends IField> extends IFieldDisplayProps {

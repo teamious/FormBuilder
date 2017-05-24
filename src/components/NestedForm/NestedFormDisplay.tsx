@@ -5,10 +5,15 @@ import { FormDisplay } from '../FormDisplay';
 
 export interface INestedFormDisplayState { };
 
-export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayProps, INestedFormDisplayState> {
+export interface INestedFormDisplayProps {
+    showIndex?: boolean;
+}
+
+export class NestedFormDisplay extends React.PureComponent<data.IFieldDisplayProps & INestedFormDisplayProps, INestedFormDisplayState> {
     public static defaultProps: data.IFieldDisplayProps = {
-        value: [{}]
-    } as data.IFieldDisplayProps;
+        value: [{}],
+        showIndex: false,
+    } as data.IFieldDisplayProps & INestedFormDisplayProps;
 
     constructor(props: data.IFieldDisplayProps) {
         super(props);

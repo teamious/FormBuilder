@@ -260,7 +260,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             <FormBuilderContext>
                 <div className='form-builder'>
                     {this.props.fields.map(this.renderField)}
-                    <Droppable index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                    <Droppable canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
                         <div style={{ padding: 25 }} />
                     </Droppable>
                 </div>

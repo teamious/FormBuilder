@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as data from '../data';
 import { DropTarget, DropTargetSpec, DropTargetCollector, ConnectDropTarget } from 'react-dnd';
+import * as classnames from 'classnames';
 
 export interface IFormBuilderDroppableProps {
     index: number;
@@ -15,6 +16,7 @@ interface IState {
 interface IDNDProps {
     isOver: boolean;
     connectDropTarget: ConnectDropTarget;
+    canDrop: boolean;
 }
 
 // FormBuilderDroppable provides a droppable container that can be used to wrap a field.
@@ -24,11 +26,19 @@ interface IDNDProps {
 // at the top of the droppable space (or above the field).
 class FormBuilderDroppableComponent extends React.Component<IFormBuilderDroppableProps & IDNDProps, IState> {
     render() {
-        const { connectDropTarget } = this.props;
+        const { connectDropTarget, canDrop } = this.props;
+        let type = '<type undefined>';
+        let id = '<id undefined>';
+        if (this.props.field) {
+            type = this.props.field.type;
+            id = this.props.field.id;
+        }
+        console.log(`Can drop onto field type ${type} ${id}: ${canDrop}`);
+
         return connectDropTarget(
             <div className='form-builder-droppable'>
                  {/*<div className='form-builder-droppable-indicator'/>*/}
-                {this.props.isOver && <div className='form-builder-droppable-indicator'/>}
+                {this.props.isOver && <div className={classnames('form-builder-droppable-indicator', {'form-builder-droppable-indicator-disabled': !canDrop})}/>}
                 {this.props.children}
             </div>
         );
@@ -57,6 +67,7 @@ const collect: DropTargetCollector = (connect, monitor): IDNDProps => {
     return {
         isOver: monitor.isOver({ shallow: true }),
         connectDropTarget: connect.dropTarget(),
+        canDrop: monitor.canDrop(),
     }
 }
 

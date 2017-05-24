@@ -53,14 +53,15 @@ export interface IFormBuilderProps {
     // will not be draggable. This method is called by ReactDnD before the drag operation begins.
     canDrag?: (field: data.IField) => boolean;
 
-    // canDrop determines whether or not source can be dropped onto target. In this case
-    // source is the field being dragged and target is the field being dropped onto.
-    // target is optional because it can be null in the case the droppable target
-    // is the first/only field in the builder.
-    canDrop?: (source: data.IField, target?: data.IField) => boolean;
+    // canDrop determines whether or not the source can be dropped onto target. Note,
+    // this method is not called when directly adding fields.
+    canDrop?: (source: data.IDragSourceItem, target: data.IDropTargetItem) => boolean;
 
     // editingField is the field that is currently being edited.
     editingFieldId: string;
+
+    // parentId is the ID of the field to which this FormBuilder belongs.
+    parentId?: string;
 }
 
 // FormBuilder expects a list of field definitions and will wrap each field definition
@@ -237,7 +238,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             onBeforeAddField: this.props.onBeforeAddField,
             canDrag: this.props.canDrag,
             canDrop: this.props.canDrop,
-
+            parentId: this.props.parentId,
             onDeleteField: this.onDeleteField,
             onDrop: this.onDrop,
             onEditField: this.onEditField,
@@ -260,7 +261,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             <FormBuilderContext>
                 <div className='form-builder'>
                     {this.props.fields.map(this.renderField)}
-                    <Droppable canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                    <Droppable parentId={this.props.parentId} canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
                         <div style={{ padding: 25 }} />
                     </Droppable>
                 </div>

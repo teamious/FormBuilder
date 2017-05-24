@@ -7,7 +7,8 @@ export interface IFormBuilderDroppableProps {
     index: number;
     field: data.IField;
     onDrop: (target: data.IDropTargetItem, source: data.IDragSourceItem, didDrop: boolean) => void;
-    canDrop?: (source: data.IField, target: data.IField) => boolean;
+    parentId?: string;
+    canDrop?: (source: data.IDragSourceItem, target: data.IDropTargetItem) => boolean;
 }
 
 interface IState {
@@ -39,17 +40,21 @@ class FormBuilderDroppableComponent extends React.Component<IFormBuilderDroppabl
 
 const spec: DropTargetSpec<IFormBuilderDroppableProps> = {
     drop(props, monitor) {
-        const { index, field } = props;
+        const { index, field, parentId } = props;
         const source: data.IDragSourceItem = monitor.getItem() as any;
         const target: data.IDropTargetItem = { field, index };
         const didDrop = monitor.didDrop();
-        props.onDrop(target, source, didDrop);
+        if (monitor.canDrop()) {
+            props.onDrop(target, source, didDrop);
+        }
     },
 
     canDrop(props, monitor) {
+        const {field, index, parentId, canDrop} = props;
         const source: data.IDragSourceItem = monitor.getItem() as any;
-        if (props.canDrop) {
-            return props.canDrop(source.field, props.field);
+        const target: data.IDropTargetItem = { field, index, parentId };
+        if (canDrop) {
+            return monitor.isOver({shallow: true}) && canDrop(source, target);
         }
         return true;
     }

@@ -21,7 +21,8 @@ export interface IFieldBuilderProps {
     onError: (field: IField, index: number, error: any) => void;
     canDrag?: (field: IField) => boolean;
     idGenerator?: FormBuilderIDGenerator;
-    canDrop?: (source: IField, target?: IField) => boolean;
+    canDrop?: (source: IDragSourceItem, target: IDropTargetItem) => boolean;
+    parentId?: string;
 }
 
 export interface IFieldBuilderWrapperProps extends IFieldBuilderProps {

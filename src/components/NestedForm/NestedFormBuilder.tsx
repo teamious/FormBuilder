@@ -21,10 +21,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     }
 
     private onBeforeAddField(field: data.IField): boolean {
-        if (field.type === NestedForm.Type) {
-            console.warn('Nested Field cannot be added into another Nested Field.');
-            return false;
-        }
+        field.parentId = this.props.field.id;
 
         const hook = this.props.onBeforeAddField;
         if (hook) {
@@ -55,6 +52,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     canDrag={this.props.canDrag}
                     canDrop={this.props.canDrop}
                     idGenerator={this.props.idGenerator}
+                    parentId={this.props.field.id}
                 />
             </div>
         )

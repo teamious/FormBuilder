@@ -140,6 +140,7 @@ class DemoPage extends React.Component<void, IState> {
                                         registry={FieldRegistry}
                                         fields={this.state.fields}
                                         canDrop={this.canDrop}
+                                        emptyLayout={<div>Please drop fields inside</div>}
                                     />
                                 </div>
                             </Panel>

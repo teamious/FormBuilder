@@ -6,7 +6,11 @@ import { NestedForm } from '.'
 import { FormBuilder } from '../FormBuilder';
 import { createFieldBuilderWrapper } from '../FieldBuilderWrapper';
 
-export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps, {}> {
+export interface INestedFormBuilderProps {
+    emptyLayout?: React.ReactNode;
+}
+
+export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderProps & INestedFormBuilderProps, void> {
     constructor() {
         super();
         this.onChangeFields = this.onChangeFields.bind(this);
@@ -55,10 +59,11 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     canDrag={this.props.canDrag}
                     canDrop={this.props.canDrop}
                     idGenerator={this.props.idGenerator}
+                    emptyLayout={this.props.emptyLayout}
                 />
             </div>
         )
     }
 }
 
-export const NestedFormBuilderWrapper: React.ComponentClass<data.IFieldBuilderProps> = createFieldBuilderWrapper()(NestedFormBuilder);
+export const NestedFormBuilderWrapper: React.ComponentClass<data.IFieldBuilderProps & INestedFormBuilderProps> = createFieldBuilderWrapper()(NestedFormBuilder);

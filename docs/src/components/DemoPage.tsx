@@ -108,6 +108,7 @@ class DemoPage extends React.Component<void, IState> {
                                         onChange={this.onChangeFields}
                                         registry={FieldRegistry}
                                         fields={this.state.fields}
+                                        emptyLayout={<div>Please drop fields inside</div>}
                                     />
                                 </div>
                             </Panel>

@@ -27,14 +27,6 @@ interface IDNDProps {
 class FormBuilderDroppableComponent extends React.Component<IFormBuilderDroppableProps & IDNDProps, IState> {
     render() {
         const { connectDropTarget, canDrop } = this.props;
-        let type = '<type undefined>';
-        let id = '<id undefined>';
-        if (this.props.field) {
-            type = this.props.field.type;
-            id = this.props.field.id;
-        }
-        console.log(`Can drop onto field type ${type} ${id}: ${canDrop}`);
-
         return connectDropTarget(
             <div className='form-builder-droppable'>
                  {/*<div className='form-builder-droppable-indicator'/>*/}

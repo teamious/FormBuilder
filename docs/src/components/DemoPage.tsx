@@ -12,6 +12,8 @@ import {
     FormBuilder,
     FormInput,
     FormDisplay,
+    IDragSourceItem,
+    IDropTargetItem,
 } from 'react-dynamic-formbuilder';
 
 import './DemoPage.css';

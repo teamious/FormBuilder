@@ -55,14 +55,15 @@ export interface IFormBuilderProps {
     // will not be draggable. This method is called by ReactDnD before the drag operation begins.
     canDrag?: (field: data.IField) => boolean;
 
-    // canDrop determines whether or not source can be dropped onto target. In this case
-    // source is the field being dragged and target is the field being dropped onto.
-    // target is optional because it can be null in the case the droppable target
-    // is the first/only field in the builder.
-    canDrop?: (source: data.IField, target?: data.IField) => boolean;
+    // canDrop determines whether or not the source can be dropped onto target. Note,
+    // this method is not called using the addField API on your FormBuilder instance.
+    canDrop?: (source: data.IDragSourceItem, target: data.IDropTargetItem) => boolean;
 
     // editingField is the field that is currently being edited.
     editingFieldId: string;
+
+    // parentId is the ID of the field to which this FormBuilder belongs.
+    parentId?: string;
 
     // The layout will be rendered when there is no fields.
     emptyLayout?: React.ReactNode;
@@ -83,6 +84,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
         this.onFieldError = this.onFieldError.bind(this);
+        this.canDrop = this.canDrop.bind(this);
     }
 
     // NOTE(andrews): This is public API. Consumers should call this method
@@ -218,6 +220,33 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.props.onError(hasError ? this.builderError : null);
     }
 
+    // NOTE(andrews) canDrop holds the business logic for determining if the source item can
+    // be dropped on the target item.
+    private canDrop(source: data.IDragSourceItem, target: data.IDropTargetItem): boolean {
+        // NOTE(andrews): Prohibit moving non-new fields between parents
+        // (eg. moving non-nested field into nested form)
+        if (source.field.id && source.parentId !== target.parentId) {
+            return false;
+        }
+
+        // NOTE(andrews): Prohibit the field from being dropped on itself.
+        // This prevents the indicator from showing up.
+        if (target.field && source.field.id === target.field.id) {
+            return false;
+        }
+
+        // NOTE(andrews): Prohibit the field from dropped back into the same index.
+        if (source.index !== undefined && source.index === target.index - 1) {
+            return false;
+        }
+
+        if (this.props.canDrop) {
+            return this.props.canDrop(source, target);
+        }
+
+        return true;
+    }
+
     // renderField takes the field.type to be rendered and looks up the
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
@@ -241,8 +270,8 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             onError: this.onFieldError,
             onBeforeAddField: this.props.onBeforeAddField,
             canDrag: this.props.canDrag,
-            canDrop: this.props.canDrop,
-
+            canDrop: this.canDrop,
+            parentId: this.props.parentId,
             onDeleteField: this.onDeleteField,
             onDrop: this.onDrop,
             onEditField: this.onEditField,
@@ -267,7 +296,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             <FormBuilderContext>
                 <div className={classnames('form-builder', { 'form-builder-empty': isEmpty })}>
                     {this.props.fields.map(this.renderField)}
-                    <Droppable canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                    <Droppable parentId={this.props.parentId} canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
                         <div className='form-builder-default-droppable'>
                             {isEmpty && emptyLayout}
                         </div>

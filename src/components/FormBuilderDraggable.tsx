@@ -6,6 +6,7 @@ export interface IFormBuilderDraggableProps {
     index: number;
     field: data.IField;
     canDrag?: (field: data.IField) => boolean;
+    parentId?: string;
 }
 
 interface IState {}
@@ -40,6 +41,7 @@ const spec: DragSourceSpec<IFormBuilderDraggableProps> = {
         return {
             index: props.index,
             field: props.field,
+            parentId: props.parentId,
         }
     }
 }

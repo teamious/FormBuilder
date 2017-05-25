@@ -16,6 +16,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
         this.onChangeFields = this.onChangeFields.bind(this);
         this.onBeforeAddField = this.onBeforeAddField.bind(this);
         this.onError = this.onError.bind(this);
+        this.canDrop = this.canDrop.bind(this);
     }
 
     private onChangeFields(fields: data.IField[], change: data.IFieldChange) {
@@ -25,14 +26,26 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     }
 
     private onBeforeAddField(field: data.IField): boolean {
-        if (field.type === NestedForm.Type) {
-            console.warn('Nested Field cannot be added into another Nested Field.');
-            return false;
-        }
+        field.parentId = this.props.field.id;
 
         const hook = this.props.onBeforeAddField;
         if (hook) {
             return hook(field);
+        }
+
+        return true;
+    }
+
+        // NOTE(andrews) canDrop holds the business logic for determining if the source item can
+    // be dropped on the target item.
+    private canDrop(source: data.IDragSourceItem, target: data.IDropTargetItem): boolean {
+        // NOTE(andrews): Prohibit more than one layer of nested fields
+        if (source.field.type === this.props.field.type &&  target.parentId) {
+            return false;
+        }
+
+        if (this.props.canDrop) {
+            return this.props.canDrop(source, target);
         }
 
         return true;
@@ -57,8 +70,9 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
                     onChange={this.onChangeFields}
                     onError={this.onError}
                     canDrag={this.props.canDrag}
-                    canDrop={this.props.canDrop}
+                    canDrop={this.canDrop}
                     idGenerator={this.props.idGenerator}
+                    parentId={this.props.field.id}
                     emptyLayout={this.props.emptyLayout}
                 />
             </div>

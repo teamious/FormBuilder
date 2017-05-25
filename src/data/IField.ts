@@ -5,6 +5,7 @@ export interface IField {
     hint?: string;
     options?: any;
     fields?: Array<IField>;
+    parentId?: string;
 };
 
 export interface IGenericField<T> extends IField {

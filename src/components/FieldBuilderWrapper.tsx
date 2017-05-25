@@ -14,13 +14,14 @@ export function createFieldBuilderWrapper(): FieldBuilderCreator {
         return class FieldBuilderWrapper extends React.PureComponent<data.IFieldBuilderWrapperProps, void> {
             public render() {
                 const isEditing = (this.props.field.id === this.props.editingFieldId);
-                const {onDrop, onEditField, onDeleteField, ...builderProps} = this.props; 
+                const {onDrop, onEditField, onDeleteField, ...builderProps} = this.props;
                 return (
                     <Droppable
                         canDrop={this.props.canDrop}
                         index={this.props.index}
                         onDrop={onDrop}
                         field={this.props.field}
+                        parentId={builderProps.parentId}
                     >
                         <Editable
                             deleteButton={this.props.deleteButton}
@@ -36,6 +37,7 @@ export function createFieldBuilderWrapper(): FieldBuilderCreator {
                                 canDrag={this.props.canDrag}
                                 index={this.props.index}
                                 field={this.props.field}
+                                parentId={builderProps.parentId}
                             >
                                 <FieldBuilder {...builderProps} />
                             </Draggable>

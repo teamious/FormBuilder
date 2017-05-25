@@ -40,7 +40,7 @@ export class NestedFormBuilder extends React.PureComponent<data.IFieldBuilderPro
     // be dropped on the target item.
     private canDrop(source: data.IDragSourceItem, target: data.IDropTargetItem): boolean {
         // NOTE(andrews): Prohibit more than one layer of nested fields
-        if (source.field.type === 'NestedForm' &&  target.parentId) {
+        if (source.field.type === this.props.field.type &&  target.parentId) {
             return false;
         }
 

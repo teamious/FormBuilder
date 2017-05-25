@@ -116,11 +116,11 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
 
     private updateFieldStatus() {
         let error = false;
-        this.fieldStatus.nestedStatus.forEach(status => {
-            if (data.isFormError(status)) {
+        for (let id in this.fieldStatus.nestedStatus) {
+            if (data.isFormError(this.fieldStatus.nestedStatus[id])) {
                 error = true;
             }
-        })
+        }
 
         this.fieldStatus.error = error ? 'nestedError' : '';
     }

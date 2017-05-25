@@ -84,6 +84,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.onDeleteField = this.onDeleteField.bind(this);
         this.onFieldChanged = this.onFieldChanged.bind(this);
         this.onFieldError = this.onFieldError.bind(this);
+        this.canDrop = this.canDrop.bind(this);
     }
 
     // NOTE(andrews): This is public API. Consumers should call this method
@@ -219,6 +220,38 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.props.onError(hasError ? this.builderError : null);
     }
 
+    // NOTE(andrews) canDrop holds the business logic for determining if the source item can
+    // be dropped on the target item.
+    private canDrop(source: IDragSourceItem, target: IDropTargetItem): boolean {
+        // NOTE(andrews): Prohibit more than one layer of nested fields
+        if (source.field.type === 'NestedForm' &&  target.parentId) {
+            return false;
+        }
+
+        // NOTE(andrews): Prohibit moving non-new fields between parents
+        // (eg. moving non-nested field into nested form)
+        if (source.field.id && source.parentId !== target.parentId) {
+            return false;
+        }
+
+        // NOTE(andrews): Prohibit the field from being dropped on itself.
+        // This prevents the indicator from showing up.
+        if (target.field && source.field.id === target.field.id) {
+            return false;
+        }
+
+        // NOTE(andrews): Prohibit the field from dropped back into the same index.
+        if (source.index !== undefined && source.index === target.index - 1) {
+            return false;
+        }
+
+        if (this.props.canDrop) {
+            return this.props.canDrop(source, target);
+        }
+
+        return true;
+    }
+
     // renderField takes the field.type to be rendered and looks up the
     // appropriate component class in the registry that can render the component.
     // The rendered component is passed the field as a prop.
@@ -242,7 +275,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             onError: this.onFieldError,
             onBeforeAddField: this.props.onBeforeAddField,
             canDrag: this.props.canDrag,
-            canDrop: this.props.canDrop,
+            canDrop: this.canDrop,
             parentId: this.props.parentId,
             onDeleteField: this.onDeleteField,
             onDrop: this.onDrop,

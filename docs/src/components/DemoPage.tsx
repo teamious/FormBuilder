@@ -75,35 +75,6 @@ class DemoPage extends React.Component<void, IState> {
         this.formBuilder.addField(field);
     }
 
-    // NOTE(andrews) canDrop holds the business logic for determining if the source item can
-    // be dropped on the target item.
-    private canDrop(source: IDragSourceItem, target: IDropTargetItem): boolean {
-
-        // NOTE(andrews): Prohibit more than one layer of nested fields
-        if (source.field.type === 'NestedForm' &&  target.parentId) {
-            return false;
-        }
-
-        // NOTE(andrews): Prohibit moving non-new fields between parents
-        // (eg. moving non-nested field into nested form)
-        if (source.field.id && source.parentId !== target.parentId) {
-            return false;
-        }
-
-        // NOTE(andrews): Prohibit the field from being dropped on itself.
-        // This prevents the indicator from showing up.
-        if (target.field && source.field.id === target.field.id) {
-            return false;
-        }
-
-        // NOTE(andrews): Prohibit the field from dropped back into the same index.
-        if (source.index !== undefined && source.index === target.index - 1) {
-            return false;
-        }
-
-        return true;
-    }
-
     render() {
         const form = JSON.stringify(this.state.fields);
         const value = JSON.stringify(this.state.value);
@@ -139,7 +110,6 @@ class DemoPage extends React.Component<void, IState> {
                                         onChange={this.onChangeFields}
                                         registry={FieldRegistry}
                                         fields={this.state.fields}
-                                        canDrop={this.canDrop}
                                         emptyLayout={<div>Please drop fields inside</div>}
                                     />
                                 </div>

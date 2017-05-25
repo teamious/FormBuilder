@@ -222,12 +222,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 
     // NOTE(andrews) canDrop holds the business logic for determining if the source item can
     // be dropped on the target item.
-    private canDrop(source: IDragSourceItem, target: IDropTargetItem): boolean {
-        // NOTE(andrews): Prohibit more than one layer of nested fields
-        if (source.field.type === 'NestedForm' &&  target.parentId) {
-            return false;
-        }
-
+    private canDrop(source: data.IDragSourceItem, target: data.IDropTargetItem): boolean {
         // NOTE(andrews): Prohibit moving non-new fields between parents
         // (eg. moving non-nested field into nested form)
         if (source.field.id && source.parentId !== target.parentId) {

@@ -296,7 +296,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
             <FormBuilderContext>
                 <div className={classnames('form-builder', { 'form-builder-empty': isEmpty })}>
                     {this.props.fields.map(this.renderField)}
-                    <Droppable parentId={this.props.parentId} canDrop={this.props.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
+                    <Droppable parentId={this.props.parentId} canDrop={this.canDrop} index={this.props.fields.length} field={null} onDrop={this.onDrop}>
                         <div className='form-builder-default-droppable'>
                             {isEmpty && emptyLayout}
                         </div>

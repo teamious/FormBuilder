@@ -8,12 +8,11 @@ import { FormInput } from '../FormInput';
 export interface INestedFormEntryWrapperProps {
     field: data.IField;
     index: number;
+    showDeleteButton: boolean;
     onDelete: () => void;
 }
 
 export interface INestedFormInputProps {
-    showIndex?: boolean;
-    showDeleteBtn?: boolean;
     createButton?: data.IEditableControlSource;
     // onBeforeDeleteEntry will be fired when user wants to delete one nested form entry.
     // return a Promise with boolean to indicate whether delete operation can be continued.
@@ -27,8 +26,6 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
         value: [{ id: generateID() }],
-        showIndex: false,
-        showDeleteBtn: false,
         createButton: 'Create',
     } as data.IFieldInputProps & INestedFormInputProps;
 
@@ -55,6 +52,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     }
 
     private renderEntry(entry: any, index: number) {
+        const showDeleteButton = this.props.value.length !== 1;
         return (
             <NestedFormEntry
                 key={entry.id}
@@ -63,10 +61,9 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 context={this.props.context}
                 field={this.props.field}
                 registry={this.props.registry}
+                showDeleteButton={showDeleteButton}
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
-                showIndex={this.props.showIndex}
-                showDeleteBtn={this.props.showDeleteBtn}
                 attempt={this.props.attempt}
                 nestedFormEntryWrapper={this.props.nestedFormEntryWrapper}
             />
@@ -156,10 +153,9 @@ interface IEntryProps {
     context: any;
     field: data.IField;
     registry: data.FieldRegistry;
+    showDeleteButton: boolean;
     onChange: (value: any, formStatus: data.IFormState, index: number) => void;
     onDelete: (index: number) => void;
-    showIndex?: boolean;
-    showDeleteBtn?: boolean;
     attempt?: boolean;
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
@@ -187,17 +183,16 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
                 {
                     index: this.props.index,
                     field: this.props.field,
+                    showDeleteButton: this.props.showDeleteButton,
                     onDelete: this.onDeleted,
                 },
                 formInput)
         }
         else {
-            const deleteBtn = <button type='button' onClick={this.onDeleted}>Delete</button>
-            const index = <div className='form-input-nested-entry-index'>{this.props.index + 1}</div>
+            const deleteBtn = <button type='button' className='form-input-nested-entry-delete' onClick={this.onDeleted}>Delete</button>
             return (
                 <div className='form-input-nested-entry'>
-                    {this.props.showDeleteBtn && deleteBtn}
-                    {this.props.showIndex && index}
+                    {this.props.showDeleteButton && deleteBtn}
                     {formInput}
                 </div>
             );

@@ -92,7 +92,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
     // all of the behavior surrounding adding a field such as cloning the field,
     // ensuring an ID exists, and running hooks. Internally this method calls onDrop.
     public addField(field: data.IField) {
-        const targetIndex = this.props.fields.length - 1;
+        const targetIndex = this.props.fields.length;
 
         const target: data.IDropTargetItem = {
             field: this.props.fields[targetIndex],

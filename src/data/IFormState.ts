@@ -12,6 +12,10 @@ export interface INestedFieldState extends IFieldState {
 }
 
 export function isFormError(formStatus: IFormState) {
+    if (!formStatus) {
+        return false;
+    }
+
     const ids = Object.keys(formStatus)
     for (let id of ids) {
         let fieldStatus = formStatus[id];

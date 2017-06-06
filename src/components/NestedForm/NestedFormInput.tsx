@@ -10,6 +10,7 @@ export interface INestedFormEntryWrapperProps {
     index: number;
     showDeleteButton: boolean;
     onDelete: () => void;
+    showIndex: boolean;
 }
 
 export interface INestedFormInputProps {
@@ -19,6 +20,8 @@ export interface INestedFormInputProps {
     onBeforeDeleteEntry?: (value: any) => Promise<boolean>;
     // The wrapper allow to customize form entry render which wrappers the nested form input.
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
+
+    showIndex?: boolean;
 }
 
 export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
@@ -53,6 +56,8 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
 
     private renderEntry(entry: any, index: number) {
         const showDeleteButton = this.props.value.length !== 1;
+        const showIndex = this.props.showIndex !== undefined ? this.props.showIndex : true;
+
         return (
             <NestedFormEntry
                 key={entry.id}
@@ -66,6 +71,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 onDelete={this.onDeleteEntry}
                 attempt={this.props.attempt}
                 nestedFormEntryWrapper={this.props.nestedFormEntryWrapper}
+                showIndex={showIndex}
             />
         );
     }
@@ -158,6 +164,7 @@ interface IEntryProps {
     onDelete: (index: number) => void;
     attempt?: boolean;
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
+    showIndex: boolean;
 }
 
 class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
@@ -185,6 +192,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
                     field: this.props.field,
                     showDeleteButton: this.props.showDeleteButton,
                     onDelete: this.onDeleted,
+                    showIndex: this.props.showIndex,
                 },
                 formInput)
         }

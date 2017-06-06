@@ -30,6 +30,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
         value: [{ id: generateID() }],
         createButton: 'Create',
+        showIndex: true,
     } as data.IFieldInputProps & INestedFormInputProps;
 
     constructor(props: data.IFieldInputProps & INestedFormInputProps) {
@@ -56,7 +57,6 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
 
     private renderEntry(entry: any, index: number) {
         const showDeleteButton = this.props.value.length !== 1;
-        const showIndex = this.props.showIndex !== undefined ? this.props.showIndex : true;
 
         return (
             <NestedFormEntry
@@ -71,7 +71,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 onDelete={this.onDeleteEntry}
                 attempt={this.props.attempt}
                 nestedFormEntryWrapper={this.props.nestedFormEntryWrapper}
-                showIndex={showIndex}
+                showIndex={this.props.showIndex}
             />
         );
     }

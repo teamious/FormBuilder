@@ -19,7 +19,7 @@ export function isFormError(formStatus: IFormState) {
     const ids = Object.keys(formStatus)
     for (let id of ids) {
         let fieldStatus = formStatus[id];
-        if (fieldStatus.error) {
+        if (fieldStatus && fieldStatus.error) {
             return true;
         }
     };

@@ -88,7 +88,12 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
             const input = this.fieldInputs[index];
             if (input && input.onValuesChanged) {
                 const fieldState = input.onValuesChanged(value);
-                this.formState[field.id] = fieldState;
+                if (fieldState) {
+                    this.formState[field.id] = fieldState;
+                }
+                else {
+                    delete this.formState[field.id];
+                }
             }
         })
     }

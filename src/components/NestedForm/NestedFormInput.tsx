@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as assign from 'object-assign';
+import * as classNames from 'classnames'
 import * as data from '../../data';
 import { generateID } from '../../utils'
 
@@ -45,8 +46,10 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
         return (
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
-                {this.props.value.map(this.renderEntry)}
-                {this.renderCreateButton()}
+                <div className='form-input-nested-content'>
+                    {this.props.value.map(this.renderEntry)}
+                    {this.renderCreateButton()}
+                </div>
             </div>
         );
     }

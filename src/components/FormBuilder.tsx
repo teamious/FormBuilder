@@ -85,13 +85,6 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
         this.onFieldChanged = this.onFieldChanged.bind(this);
         this.onFieldError = this.onFieldError.bind(this);
         this.canDrop = this.canDrop.bind(this);
-        this.attachFieldRef = this.attachFieldRef.bind(this);
-    }
-
-    private attachFieldRef(div: HTMLDivElement) {
-        if (div) {
-            div.scrollIntoView()
-        }
     }
 
     // NOTE(andrews): This is public API. Consumers should call this method
@@ -287,7 +280,7 @@ export class FormBuilder extends React.Component<IFormBuilderProps, {}> {
 
         const component = React.createElement(fieldDef.builder, fieldBuilderProps);
         return (
-            <div ref={this.attachFieldRef} className='form-builder-field' key={field.id}>
+            <div className='form-builder-field' key={field.id}>
                 {component}
             </div>
         )

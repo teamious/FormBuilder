@@ -7,6 +7,7 @@ export interface IFieldOptionEditorComponentProps {
     fields: Array<data.IField>;
     registry: data.FieldRegistry;
     onChange: (editedField: data.IField, fields: data.IField[], error: any) => void;
+    onError?: (field: data.IField, error: any) => void;
 }
 
 export interface IFieldOptionEditorState { }
@@ -36,7 +37,8 @@ export class FieldOptionEditor extends React.PureComponent<IFieldOptionEditorCom
         const optionEditorProps: data.IFieldOptionEditorProps = {
             field,
             fieldContext: context,
-            onChange: this.onOptionChanged
+            onChange: this.onOptionChanged,
+            onError: this.props.onError,
         };
 
         const component = React.createElement(fieldDef.editor, optionEditorProps);

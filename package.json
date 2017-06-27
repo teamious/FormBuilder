@@ -1,6 +1,6 @@
 {
   "name": "react-dynamic-formbuilder",
-  "version": "1.0.53",
+  "version": "1.0.54",
   "repository": "teamious/FormBuilder",
   "dependencies": {
     "classnames": "^2.2.5",

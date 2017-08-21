@@ -95,3 +95,32 @@
  .modal-container .modal, .modal-container .modal-backdrop {
    position: absolute;
  }
+
+ .dotted-box {
+    position: relative;
+    padding: 8px;
+    margin-top: 12px;
+    border: 1px dashed #ccc;
+    &:hover {
+        border-color: #29e;
+        .box-close {
+            display: block;
+        }
+    }
+    .box-close {
+        display: none;
+        position: absolute;
+        right: -8px;
+        top: -8px;
+        width: 16px;
+        height: 16px;
+        background: #ff5a47;
+        color: #fff;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 12px;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+ }

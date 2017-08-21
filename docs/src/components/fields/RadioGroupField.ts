@@ -16,7 +16,7 @@ const Field: IField = {
         },
         {
             id: '002',
-            label: 'WEB',
+            label: 'WEB前端',
             type: 'ABCDEFG',
         },
         {

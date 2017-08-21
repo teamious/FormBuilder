@@ -1,5 +1,6 @@
 import { SingleSelectorField } from './fields/SingleSelectorField';
 import { SingleLineField } from './fields/SingleLineField';
+import { RadioGroupField } from './fields/RadioGroupField';
 import {
     NestedFormBuilderWrapper,
     NestedFormInput,
@@ -12,6 +13,7 @@ import {
 export const FieldRegistry = new _FieldRegistry();
 FieldRegistry.register(SingleLineField);
 FieldRegistry.register(SingleSelectorField);
+FieldRegistry.register(RadioGroupField);
 FieldRegistry.register({
     field: NestedForm.FieldTemplate,
     displayName: '明细(NestForm)',

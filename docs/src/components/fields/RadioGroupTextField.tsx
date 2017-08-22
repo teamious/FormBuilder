@@ -16,19 +16,19 @@ export class RadioGroupTextField extends React.PureComponent<IFieldInputProps & 
 
     public render() {
         const { label, fields } = this.props.field;
-        const { others } = this.props.field.options;
+        const { labels, others } = this.props.field.options;
+
         return (
             <div>
                 <FormGroup className='clearfix'>
                     <Col componentClass={ControlLabel} md={5}>{label}</Col>
                     <Col md={7}>
-                        {fields.map((item)=>{
-                            //TODO: (xiongchao) radio name is wrong
-                            return <Radio name={item.type} key={item.id}>{item.label}</Radio>
+                        {labels.map((item: any)=>{
+                            return <Radio name={item.name} key={item.id}>{item.value}</Radio>
                         })}
                         {others.checked &&
                             <div>
-                                <Radio>{others.label}</Radio>
+                                <Radio name={others.name}>{others.label}</Radio>
                                 <FormControl
                                     type='text'
                                     value={others.value}
@@ -42,7 +42,6 @@ export class RadioGroupTextField extends React.PureComponent<IFieldInputProps & 
     }
 
     public onValuesChanged(value: { [id: string]: any }): any {
-        console.log("Radio onValuesChange", value);
         return null;
     }
 

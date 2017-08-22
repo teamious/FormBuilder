@@ -8,28 +8,28 @@ const Field: IField = {
     id: '',
     label: '单选按钮',
     type: Type,
-    fields: [
-        {
+    fields: [],
+    options: {
+        labels: [{
             id: '001',
-            label: 'JAVA',
-            type: 'ABCDEFG',
+            name: 'check1',
+            value: 'JAVA',
         },
         {
             id: '002',
-            label: 'WEB前端',
-            type: 'ABCDEFG',
+            name: 'check1',
+            value: 'WEB前端',
         },
         {
             id: '003',
-            label: 'IOS',
-            type: 'ABCDEFG',
-        }
-    ],
-    options: {
+            name: 'check1',
+            value: 'IOS',
+        }],
         required: true,
         others: {
             checked: false,
             label: 'Others',
+            name: 'check1',
             value: ''
         }
     }

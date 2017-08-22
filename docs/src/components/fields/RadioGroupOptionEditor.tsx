@@ -4,10 +4,8 @@ import * as assign from 'object-assign';
 
 import { IFieldOptionEditorProps } from 'react-dynamic-formbuilder';
 
-interface IState { }
 
-
-export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOptionEditorProps, IState> {
+export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOptionEditorProps, void> {
 
     addOptionId: number;
 
@@ -25,15 +23,15 @@ export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOp
     }
 
     render() {
-        const { label, fields } = this.props.field;
-        const { required, unique, others } = this.props.field.options;
+        const { label } = this.props.field;
+        const { labels, required, unique, others } = this.props.field.options;
         return (
             <div>
                 <div>
                     <span>Label</span>
                     <FormControl type='text' value={label} onChange={this.onLabelChange} />
                     <span>选项设置</span>
-                    {fields.map((item) => {
+                    {labels.map((item: any) => {
                         return <div className="dotted-box" key={item.id}>
                             <a
                                 href="javascript:void(0)"
@@ -43,7 +41,7 @@ export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOp
                             <FormControl
                                 id={item.id}
                                 type='text'
-                                value={item.label}
+                                value={item.value}
                                 onChange={this.onLabelValueChange}
                             />
                         </div>
@@ -91,9 +89,9 @@ export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOp
 
     private onLabelValueChange(event: any) {
         let field = assign({}, this.props.field);
-        field.fields.map((item, index) => {
+        field.options.labels.map((item: any, index: number) => {
             if (event.target.id === item.id) {
-                field.fields[index].label = event.target.value
+                field.options.labels[index].value = event.target.value
             }
         });
         this.props.onChange(field);
@@ -101,9 +99,9 @@ export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOp
 
     private removeOption(option: any) {
         let field = assign({}, this.props.field);
-        field.fields.map((item, index) => {
+        field.options.labels.map((item: any, index: number) => {
             if (option.id === item.id) {
-                field.fields.splice(index, 1);
+                field.options.labels.splice(index, 1);
             }
         });
         this.props.onChange(field);
@@ -111,12 +109,13 @@ export default class RadioGroupOptionEditor extends React.PureComponent<IFieldOp
 
     private addOption() {
         let field = assign({}, this.props.field);
+        let labelArr = field.options.labels;
         let new_option = {
-            id: (this.addOptionId++).toString(),
-            label: "选项"+this.addOptionId,
-            type: "ABCDEFG"
+            id: labelArr[labelArr.length - 1].id + this.addOptionId++,
+            name: labelArr[0].name,
+            value: "选项" + this.addOptionId
         };
-        field.fields.push(new_option);
+        field.options.labels.push(new_option);
         this.props.onChange(field);
     }
 

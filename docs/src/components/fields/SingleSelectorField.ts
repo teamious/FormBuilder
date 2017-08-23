@@ -11,6 +11,7 @@ const Field: IField = {
     options: {
         hint: 'Please enter your hint',
         required: true,
+        selectOpts: ['a', 'b', 'c'],
     }
 };
 

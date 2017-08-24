@@ -31,6 +31,14 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         value: {}
     }
 
+    // NOTE(andrews): transformValue can be used by the consumer to manually transform
+    // the value object.
+    public transformValue() {
+        const value = JSON.parse(JSON.stringify(this.props.value));
+        this.fireValuesChange(value);
+        this.onChange(value);
+    }
+
     constructor(props: IFormInputProps) {
         super(props);
         this.formState = {};
@@ -78,9 +86,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         } else {
             delete this.formState[field.id];
         }
-        const formState = Object.keys(this.formState).length > 0 ? this.formState : null;
-
-        this.props.onChange(newValue, formState);
+        this.onChange(newValue)
     }
 
     private fireValuesChange(value: any) {
@@ -96,6 +102,11 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
                 }
             }
         })
+    }
+
+    public onChange(value: any) {
+        const formState = Object.keys(this.formState).length > 0 ? this.formState : null;
+        this.props.onChange(value, formState)
     }
 
     // render a list of fields based on the field registry.

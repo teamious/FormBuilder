@@ -1,7 +1,7 @@
 import { IField } from './IField';
 import { IFieldBuilderComponent } from './IFieldBuilder';
 import { IFieldOptionEditorComponent } from './IFieldOptionEditor';
-import { IFieldInputComponent } from './IFieldInput';
+import { IFieldInputComponent, IFieldInputInjector } from './IFieldInput';
 import { IFieldDisplayComponent } from './IFieldDisplay';
 import { IFieldSelectorComponent } from './IFieldSelector';
 
@@ -11,6 +11,7 @@ export interface IFieldDef {
     field: IField;
     builder: IFieldBuilderComponent;
     input: IFieldInputComponent;
+    inputInjector?: IFieldInputInjector;
     display: IFieldDisplayComponent;
     editor?: IFieldOptionEditorComponent;
     selector?: IFieldSelectorComponent;

@@ -31,5 +31,5 @@ export interface IFieldInputInjector {
     // The event will be triggered when form values has been changed.
     // The corresponding values update can be preformed here.
     // Don't call onValueChange inside of this method.
-    onValuesChanged?: (values: { [id: string]: any }) => IFieldState;
+    onValuesChanged?: (field: IField, values: { [id: string]: any }) => IFieldState;
 }

@@ -111,7 +111,6 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         if (this.props.fields && this.props.value) {
             const newValue = assign({}, this.props.value);
             this.fireValuesInit(newValue);
-            console.log('componentWillMount->onChange', newValue);
             this.onChange(newValue);
         }
     }

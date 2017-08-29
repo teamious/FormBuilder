@@ -30,14 +30,6 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         value: {}
     }
 
-    // NOTE(andrews): transformValue can be used by the consumer to manually transform
-    // the value object.
-    public transformValue() {
-        const value = JSON.parse(JSON.stringify(this.props.value));
-        this.fireValuesChange(value);
-        this.onChange(value);
-    }
-
     constructor(props: IFormInputProps) {
         super(props);
         this.formState = {};
@@ -98,6 +90,30 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
                 }
             }
         })
+    }
+
+    private fireValuesInit(value: any) {
+        this.props.fields.forEach((field, index)=> {
+            const fieldDef = this.props.registry[field.type] as data.IFieldDef;
+            if (fieldDef && fieldDef.inputInjector && fieldDef.inputInjector.onValuesInit) {
+                const fieldState = fieldDef.inputInjector.onValuesInit(field, value);
+                if (fieldState) {
+                    this.formState[field.id] = fieldState;
+                }
+                else {
+                    delete this.formState[field.id];
+                }
+            }
+        })
+    }
+
+    public componentWillMount() {
+        if (this.props.fields && this.props.value) {
+            const newValue = assign({}, this.props.value);
+            this.fireValuesInit(newValue);
+            console.log('componentWillMount->onChange', newValue);
+            this.onChange(newValue);
+        }
     }
 
     public onChange(value: any) {

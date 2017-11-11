@@ -22,7 +22,11 @@ export interface INestedFormInputProps {
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
 
-export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
+export interface INestedFormInputState {
+    values: any;
+}
+
+export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, INestedFormInputState> {
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {

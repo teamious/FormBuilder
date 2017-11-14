@@ -73,48 +73,23 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
     }
 
     private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
-        // console.log('formInput.onValueChanged', field, value, fieldStatus)
         this.setState((state, props) => {
-            console.log('formInput prevState', state)
-            console.log(field.id)
-            console.log(state.values[field.id])
-            console.log(value)
             let values = {
                 ...state.values,
-                // [field.id]: value
             }
 
             values[field.id] = value
-            console.log('formInput change state', values)
-            this.onChange(values)
-
+            this.fireValuesChange(values);
+            if (fieldStatus.error) {
+                this.formState[field.id] = fieldStatus;
+            } else {
+                delete this.formState[field.id];
+            }
+            this.onChange(values);
 
             return { values }
         })
-        // const newValue = assign({}, this.props.value);
-        // newValue[field.id] = value;
-        // this.fireValuesChange(newValue);
-
-        // if (fieldStatus.error) {
-        //     this.formState[field.id] = fieldStatus;
-        // } else {
-        //     delete this.formState[field.id];
-        // }
-        // this.onChange(newValue)
     }
-
-    // private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
-    //     const newValue = assign({}, this.props.value);
-    //     newValue[field.id] = value;
-    //     this.fireValuesChange(newValue);
-
-    //     if (fieldStatus.error) {
-    //         this.formState[field.id] = fieldStatus;
-    //     } else {
-    //         delete this.formState[field.id];
-    //     }
-    //     this.onChange(newValue)
-    // }
 
     private fireValuesChange(value: any) {
         this.props.fields.forEach((field, index) => {
@@ -161,8 +136,6 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
 
     // render a list of fields based on the field registry.
     render() {
-        console.log('formInput.render props', this.props.value)
-        console.log('formInput.render state', this.state.values)
         return (
             <div className='form-input'>
                 {this.props.fields.map(this.renderField)}

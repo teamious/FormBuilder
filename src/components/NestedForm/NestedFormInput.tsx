@@ -44,6 +44,10 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
             error: '',
             nestedStatus: [],
         };
+
+        this.state = {
+            values: this.props.value
+        }
     }
 
     render() {
@@ -114,11 +118,29 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     }
 
     private onEntryValueChanged(value: any, formStatus: data.IFormState, index: number) {
-        let newValue = this.props.value.slice();
-        newValue[index] = value;
+        // let newValue = this.props.value.slice();
+        // newValue[index] = value;
         this.fieldStatus.nestedStatus[value.id] = formStatus;
         this.updateFieldStatus();
-        this.props.onValueChange(this.props.field, newValue, this.fieldStatus);
+        // console.log('NestedFormInput.onEntryValueChanged', newValue)
+
+        this.setState((state, props) => {
+            let values = [
+                ...state.values,
+            ]
+            values[index] = value
+            props.onValueChange(this.props.field, values, this.fieldStatus)
+            return { values }
+        })
+
+        // this.props.onValueChange(this.props.field, newValue, this.fieldStastus);
+
+        // this.setState((state, props) => {
+        //     let values = {
+        //         ...state.values,
+        //     }
+        //     values[index] =
+        // })
     }
 
     private updateFieldStatus() {

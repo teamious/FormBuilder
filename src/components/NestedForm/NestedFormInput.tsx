@@ -55,7 +55,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
                 <div className='form-input-nested-content'>
-                    {this.props.value.map(this.renderEntry)}
+                    {this.state.values.map(this.renderEntry)}
                     {this.renderCreateButton()}
                 </div>
             </div>

@@ -52,7 +52,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
             return;
         }
 
-        const value = this.props.value[field.id];
+        const value = this.state.values[field.id];
         const fieldInputProps = {
             registry: this.props.registry,
             index,

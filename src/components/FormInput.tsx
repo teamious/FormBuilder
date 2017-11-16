@@ -35,6 +35,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         this.formState = {};
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
+        this.onErrorOccured = this.onErrorOccured.bind(this);
     }
 
     private renderField(field: data.IField, index: number) {
@@ -53,6 +54,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
             context: this.props.context,
             attempt: this.props.attempt,
             onValueChange: this.onValueChanged,
+            onErrorOccured: this.onErrorOccured,
         };
 
         const component = React.createElement(fieldDef.input, fieldInputProps);
@@ -64,16 +66,11 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         )
     }
 
-    private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
+    private onValueChanged(field: data.IField, value: any) {
         const newValue = assign({}, this.props.value);
         newValue[field.id] = value;
         this.fireValuesChange(newValue);
 
-        if (fieldStatus.error) {
-            this.formState[field.id] = fieldStatus;
-        } else {
-            delete this.formState[field.id];
-        }
         this.onChange(newValue)
     }
 
@@ -92,8 +89,16 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         })
     }
 
+    private onErrorOccured(field: data.IField, fieldStatus: data.IFieldState) {
+        if (fieldStatus.error) {
+            this.formState[field.id] = fieldStatus;
+        } else {
+            delete this.formState[field.id];
+        }
+    }
+
     private fireValuesInit(value: any) {
-        this.props.fields.forEach((field, index)=> {
+        this.props.fields.forEach((field, index) => {
             const fieldDef = this.props.registry[field.type] as data.IFieldDef;
             if (fieldDef && fieldDef.inputInjector && fieldDef.inputInjector.onValuesInit) {
                 const fieldState = fieldDef.inputInjector.onValuesInit(field, value);

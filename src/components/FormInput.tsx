@@ -21,11 +21,7 @@ export interface IFormInputProps {
     onChange: (value: any, state: data.IFormState) => void;
 }
 
-export interface IFormInputState {
-    values: any
-}
-
-export class FormInput extends React.PureComponent<IFormInputProps, IFormInputState> {
+export class FormInput extends React.PureComponent<IFormInputProps, {}> {
     // The status of the current form input component.
     // The status is internal state of form input.
     private formState: data.IFormState;
@@ -39,10 +35,6 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
         this.formState = {};
         this.renderField = this.renderField.bind(this);
         this.onValueChanged = this.onValueChanged.bind(this);
-
-        this.state = {
-            values: this.props.value
-        }
     }
 
     private renderField(field: data.IField, index: number) {
@@ -52,7 +44,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
             return;
         }
 
-        const value = this.state.values[field.id];
+        const value = this.props.value[field.id];
         const fieldInputProps = {
             registry: this.props.registry,
             index,
@@ -73,22 +65,16 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
     }
 
     private onValueChanged(field: data.IField, value: any, fieldStatus: data.IFieldState) {
-        this.setState((state, props) => {
-            let values = {
-                ...state.values,
-            }
+        const newValue = assign({}, this.props.value);
+        newValue[field.id] = value;
+        this.fireValuesChange(newValue);
 
-            values[field.id] = value
-            this.fireValuesChange(values);
-            if (fieldStatus.error) {
-                this.formState[field.id] = fieldStatus;
-            } else {
-                delete this.formState[field.id];
-            }
-            this.onChange(values);
-
-            return { values }
-        })
+        if (fieldStatus.error) {
+            this.formState[field.id] = fieldStatus;
+        } else {
+            delete this.formState[field.id];
+        }
+        this.onChange(newValue)
     }
 
     private fireValuesChange(value: any) {
@@ -107,7 +93,7 @@ export class FormInput extends React.PureComponent<IFormInputProps, IFormInputSt
     }
 
     private fireValuesInit(value: any) {
-        this.props.fields.forEach((field, index) => {
+        this.props.fields.forEach((field, index)=> {
             const fieldDef = this.props.registry[field.type] as data.IFieldDef;
             if (fieldDef && fieldDef.inputInjector && fieldDef.inputInjector.onValuesInit) {
                 const fieldState = fieldDef.inputInjector.onValuesInit(field, value);

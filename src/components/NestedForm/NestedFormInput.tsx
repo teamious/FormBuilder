@@ -22,11 +22,7 @@ export interface INestedFormInputProps {
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
 
-export interface INestedFormInputState {
-    values: any;
-}
-
-export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, INestedFormInputState> {
+export class NestedFormInput extends React.PureComponent<data.IGenericFieldInputProps<data.IField, any[]> & INestedFormInputProps, void> {
     private fieldStatus: data.INestedFieldState;
 
     public static defaultProps: data.IFieldInputProps & INestedFormInputProps = {
@@ -44,10 +40,6 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
             error: '',
             nestedStatus: [],
         };
-
-        this.state = {
-            values: this.props.value
-        }
     }
 
     render() {
@@ -55,7 +47,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
             <div className='form-input-nested'>
                 <div className='form-input-nested-label'>{this.props.field.label}</div>
                 <div className='form-input-nested-content'>
-                    {this.state.values.map(this.renderEntry)}
+                    {this.props.value.map(this.renderEntry)}
                     {this.renderCreateButton()}
                 </div>
             </div>
@@ -118,17 +110,11 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
     }
 
     private onEntryValueChanged(value: any, formStatus: data.IFormState, index: number) {
+        let newValue = this.props.value.slice();
+        newValue[index] = value;
         this.fieldStatus.nestedStatus[value.id] = formStatus;
         this.updateFieldStatus();
-
-        this.setState((state, props) => {
-            let values = [
-                ...state.values,
-            ]
-            values[index] = value
-            props.onValueChange(this.props.field, values, this.fieldStatus)
-            return { values }
-        })
+        this.props.onValueChange(this.props.field, newValue, this.fieldStatus);
     }
 
     private updateFieldStatus() {

@@ -178,6 +178,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
         super();
         this.onValueChanged = this.onValueChanged.bind(this);
         this.onDeleted = this.onDeleted.bind(this);
+        this.onError = this.onError.bind(this);
     }
 
     render() {

@@ -15,7 +15,7 @@ export interface IFieldInputProps {
     // The context is provided by consumer.
     context: any;
     // The callback when the value has been changed.
-    onValueChange: (field: IField, value: any) => void;
+    onValueChange: (field: IField, value: any, fieldStatus: IFieldState) => void;
     // The callback when error occured.
     onErrorOccured: (field: IField, fieldStatus: IFieldState) => void;
 }

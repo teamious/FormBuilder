@@ -3,7 +3,6 @@ import { IFieldContext } from './IFieldContext';
 import { FieldRegistry } from './FieldRegistry';
 import { IEditableControlSource } from './IEditableControlSource';
 import { IFieldChange } from './IFieldChange';
-import { IFieldState } from './IFormState';
 import { IDropTargetItem, IDragSourceItem} from './IDragDrop';
 import { FormBuilderIDGenerator } from './IFormBuilder';
 

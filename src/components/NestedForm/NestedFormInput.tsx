@@ -36,6 +36,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
         this.onCreateEntry = this.onCreateEntry.bind(this);
         this.onDeleteEntry = this.onDeleteEntry.bind(this);
         this.onEntryValueChanged = this.onEntryValueChanged.bind(this);
+        this.onEntryError = this.onEntryError.bind(this);
         this.fieldStatus = {
             error: '',
             nestedStatus: [],
@@ -67,6 +68,7 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
                 showDeleteButton={showDeleteButton}
                 onChange={this.onEntryValueChanged}
                 onDelete={this.onDeleteEntry}
+                onError={this.onEntryError}
                 attempt={this.props.attempt}
                 nestedFormEntryWrapper={this.props.nestedFormEntryWrapper}
             />
@@ -117,6 +119,13 @@ export class NestedFormInput extends React.PureComponent<data.IGenericFieldInput
         this.props.onValueChange(this.props.field, newValue, this.fieldStatus);
     }
 
+    private onEntryError(formStatus: data.IFormState, index: number) {
+        const value = this.props.value[index];
+        this.fieldStatus.nestedStatus[value.id] = formStatus;
+        this.updateFieldStatus();
+        this.props.onErrorOccured(this.props.field, this.fieldStatus);
+    }
+
     private updateFieldStatus() {
         let error = false;
         for (let id in this.fieldStatus.nestedStatus) {
@@ -159,6 +168,7 @@ interface IEntryProps {
     showDeleteButton: boolean;
     onChange: (value: any, formStatus: data.IFormState, index: number) => void;
     onDelete: (index: number) => void;
+    onError: (formStatus: data.IFormState, index: number) => void;
     attempt?: boolean;
     nestedFormEntryWrapper?: React.ComponentClass<INestedFormEntryWrapperProps>;
 }
@@ -177,6 +187,7 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
             value={this.props.value}
             context={this.props.context}
             onChange={this.onValueChanged}
+            onError={this.onError}
             attempt={this.props.attempt}
         />;
 
@@ -208,5 +219,9 @@ class NestedFormEntry extends React.PureComponent<IEntryProps, any> {
 
     private onValueChanged(value: any, formStatus: data.IFormState) {
         this.props.onChange(value, formStatus, this.props.index);
+    }
+
+    private onError(formStatus: data.IFormState) {
+        this.props.onError(formStatus, this.props.index);
     }
 }

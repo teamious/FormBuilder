@@ -19,6 +19,8 @@ export interface IFormInputProps {
     attempt?: boolean;
 
     onChange: (value: any, state: data.IFormState) => void;
+
+    onError: (state: data.IFormState) => void;
 }
 
 export class FormInput extends React.PureComponent<IFormInputProps, {}> {
@@ -100,6 +102,8 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
         } else {
             delete this.formState[field.id];
         }
+        const formState = this.getFormState();
+        this.props.onError(formState)
     }
 
     private fireValuesInit(value: any) {
@@ -126,8 +130,12 @@ export class FormInput extends React.PureComponent<IFormInputProps, {}> {
     }
 
     public onChange(value: any) {
-        const formState = Object.keys(this.formState).length > 0 ? this.formState : null;
+        const formState = this.getFormState();
         this.props.onChange(value, formState)
+    }
+
+    private getFormState() {
+        return Object.keys(this.formState).length > 0 ? this.formState : null;
     }
 
     // render a list of fields based on the field registry.
